@@ -17,6 +17,10 @@ d)kontrola postępu treningu:
 -statystyki (np. ilosc treningow, łączny czas treningów, przerzucone ciężary, ilość powtórzeń, progres pomiędzy treningami, progres między pierwszym a ostatnim treningiem)  
 e)przypomnienia mailowe o nadchodzącym treningu  
 f)dziennik treningów  
+g) Szybki i wygodny kontakt z trenerami za pomocą chatu
+h) Program lojalnościowy
+i) Prosty zapis na zajecia grupowe, wybierane z listy dziejących się w tym tygodniu
+
 
 
 Języki programowania/technologie:  
