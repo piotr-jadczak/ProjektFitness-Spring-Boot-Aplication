@@ -1,3 +1,7 @@
+#Projekt zespołowy Informatyka rok III
+
+#Grupa: Piotr Jadczak, Maciej Bażak, Karol Dargacz
+
 # ProjektFitness
 
 Nazwa:
