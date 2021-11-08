@@ -5,7 +5,7 @@ import java.time.LocalTime;
 
 public class Training {
 
-
+    private int TrainingId;
     private String name;
     private String description;
     private int maxCapacity;
@@ -91,5 +91,13 @@ public class Training {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getTrainingId() {
+        return TrainingId;
+    }
+
+    public void setTrainingId(int trainingId) {
+        TrainingId = trainingId;
     }
 }

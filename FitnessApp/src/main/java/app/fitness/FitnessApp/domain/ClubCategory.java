@@ -2,6 +2,7 @@ package app.fitness.FitnessApp.domain;
 
 public class ClubCategory {
 
+    private int ClubCategoryId;
     private String name;
 
     public ClubCategory() {
@@ -17,5 +18,13 @@ public class ClubCategory {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getClubCategoryId() {
+        return ClubCategoryId;
+    }
+
+    public void setClubCategoryId(int clubCategoryId) {
+        ClubCategoryId = clubCategoryId;
     }
 }

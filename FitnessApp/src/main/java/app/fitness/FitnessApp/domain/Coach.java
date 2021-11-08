@@ -2,7 +2,9 @@ package app.fitness.FitnessApp.domain;
 
 import java.time.LocalDateTime;
 
-public class Coach extends User {
+public class Coach extends BaseUser {
+
+    private int CoachId;
 
     public Coach() {
     }
@@ -12,5 +14,11 @@ public class Coach extends User {
 
     }
 
+    public int getCoachId() {
+        return CoachId;
+    }
 
+    public void setCoachId(int coachId) {
+        CoachId = coachId;
+    }
 }
