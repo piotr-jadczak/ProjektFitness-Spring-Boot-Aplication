@@ -1,7 +1,7 @@
 package app.fitness.FitnessApp.domain;
 
-public class Club {
 
+public class Club {
 
     private int ClubId;
     private String name;

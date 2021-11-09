@@ -2,8 +2,16 @@ package app.fitness.FitnessApp.domain;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class BaseUser {
 
+	@GeneratedValue
+	@Id
+	private int id;
     private String userName;
     private String password;
     private String email;
@@ -26,7 +34,15 @@ public class BaseUser {
     }
 
 
-    public String getUserName() {
+    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getUserName() {
         return userName;
     }
 
