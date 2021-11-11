@@ -5,27 +5,23 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 @Entity
-public class Coach extends BaseUser {
-
-	
-	@OneToMany(mappedBy = "coach")
-	private List<Training> trainings;
+public class Customer extends BaseUser {
 
 	@ManyToMany
-	private List<Club> clubs;
+	private List<Training> trainings;
 
-	public Coach() {
+	public Customer() {
 		super();
 	}
 
-	public Coach(String login, String password, String email, String firstName, String lastName, Date dob,
+	public Customer(String login, String password, String email, String firstName, String lastName, Date dob,
 			String phoneNumber) {
 		super(login, password, email, firstName, lastName, dob, phoneNumber);
 	}
 
+	
 
 	public List<Training> getTrainings() {
 		return trainings;
@@ -35,19 +31,9 @@ public class Coach extends BaseUser {
 		this.trainings = trainings;
 	}
 
-	public List<Club> getClubs() {
-		return clubs;
-	}
-
-	public void setClubs(List<Club> clubs) {
-		this.clubs = clubs;
-	}
-
 	@Override
 	public String toString() {
-		return "Coach [trainings=" + trainings + ", clubs=" + clubs + "]";
+		return "User [trainings=" + trainings + "]";
 	}
-
-	
 
 }

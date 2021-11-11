@@ -1,23 +1,41 @@
 package app.fitness.FitnessApp.domain;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Owner extends BaseUser {
 
-    private int OwnerId;
+	
+	@OneToMany(mappedBy = "owner")
+	private List<Club> clubs;
 
-    public Owner() {
-    }
+	public Owner() {
+		super();
+	}
 
-    public Owner(String userName, String password, String email, String firstName, String lastName, LocalDateTime doB, String phoneNumber) {
-        super(userName, password, email, firstName, lastName, doB, phoneNumber);
-    }
+	public Owner(String login, String password, String email, String firstName, String lastName, Date dob,
+			String phoneNumber) {
+		super(login, password, email, firstName, lastName, dob, phoneNumber);
+	}
 
-    public int getOwnerId() {
-        return OwnerId;
-    }
+	
 
-    public void setOwnerId(int ownerId) {
-        OwnerId = ownerId;
-    }
+	public List<Club> getClubs() {
+		return clubs;
+	}
+
+	public void setClubs(List<Club> clubs) {
+		this.clubs = clubs;
+	}
+
+	@Override
+	public String toString() {
+		return "Owner [clubs=" + clubs + "]";
+	}
+
+
 }

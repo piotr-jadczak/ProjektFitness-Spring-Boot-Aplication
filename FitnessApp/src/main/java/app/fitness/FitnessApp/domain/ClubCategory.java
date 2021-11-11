@@ -1,30 +1,59 @@
 package app.fitness.FitnessApp.domain;
 
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
 public class ClubCategory {
 
-    private int ClubCategoryId;
+	@Id
+	@GeneratedValue
+	private int id;
     private String name;
 
-    public ClubCategory() {
-    }
+    @OneToMany(mappedBy = "clubCategory")
+    private List<Club> clubs;
 
-    public ClubCategory(String name) {
-        this.name = name;
-    }
+	public ClubCategory() {
+	}
 
-    public String getName() {
-        return name;
-    }
+	public ClubCategory(String name) {
+		super();
+		this.name = name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public int getClubCategoryId() {
-        return ClubCategoryId;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setClubCategoryId(int clubCategoryId) {
-        ClubCategoryId = clubCategoryId;
-    }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<Club> getClubs() {
+		return clubs;
+	}
+
+	public void setClubs(List<Club> clubs) {
+		this.clubs = clubs;
+	}
+
+	@Override
+	public String toString() {
+		return "ClubCategory [id=" + id + ", name=" + name + ", clubs=" + clubs + "]";
+	}
+    
+    
 }
