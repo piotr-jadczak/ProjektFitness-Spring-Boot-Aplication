@@ -22,7 +22,9 @@ public class Owner extends BaseUser {
 		super(login, password, email, firstName, lastName, dob, phoneNumber);
 	}
 
-	
+	public Owner (BaseUser baseUser) {
+		super(baseUser);
+	}
 
 	public List<Club> getClubs() {
 		return clubs;

@@ -26,6 +26,10 @@ public class Coach extends BaseUser {
 		super(login, password, email, firstName, lastName, dob, phoneNumber);
 	}
 
+	public Coach(BaseUser baseUser) {
+		super(baseUser);
+	}
+
 
 	public List<Training> getTrainings() {
 		return trainings;

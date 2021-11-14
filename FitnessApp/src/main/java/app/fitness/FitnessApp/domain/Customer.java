@@ -5,8 +5,10 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "customer")
 public class Customer extends BaseUser {
 
 	@ManyToMany
@@ -19,7 +21,12 @@ public class Customer extends BaseUser {
 	public Customer(String login, String password, String email, String firstName, String lastName, Date dob,
 			String phoneNumber) {
 		super(login, password, email, firstName, lastName, dob, phoneNumber);
+
 	}
+
+	public Customer(BaseUser baseUser) {
+		super(baseUser);
+	};
 
 	
 
