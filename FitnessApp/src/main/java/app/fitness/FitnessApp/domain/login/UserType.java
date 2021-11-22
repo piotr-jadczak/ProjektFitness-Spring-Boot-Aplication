@@ -1,4 +1,4 @@
-package app.fitness.FitnessApp.domain;
+package app.fitness.FitnessApp.domain.login;
 
 public enum UserType {
     CUSTOMER("Użytkownik"),

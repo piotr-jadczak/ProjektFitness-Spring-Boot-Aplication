@@ -1,6 +1,6 @@
 package app.fitness.FitnessApp.controller.web;
 
-import app.fitness.FitnessApp.domain.BaseUserLogin;
+import app.fitness.FitnessApp.domain.login.BaseUserLogin;
 import app.fitness.FitnessApp.repository.CustomerRepository;
 import app.fitness.FitnessApp.service.UserManagerImp;
 import org.springframework.beans.factory.annotation.Autowired;
