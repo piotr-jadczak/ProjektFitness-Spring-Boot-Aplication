@@ -52,6 +52,7 @@ public class BaseUser {
 
 	public BaseUser(BaseUser baseUser) {
 		super();
+		this.id = baseUser.getId();
 		this.login = baseUser.getLogin();
 		this.password = baseUser.getPassword();
 		this.email = baseUser.getEmail();

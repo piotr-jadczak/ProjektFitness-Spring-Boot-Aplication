@@ -7,6 +7,8 @@ import app.fitness.FitnessApp.repository.OwnerRepository;
 import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -18,17 +20,18 @@ public class UserManagerImp implements UserManager {
     private OwnerRepository ownerRepository;
     private CoachRepository coachRepository;
     private EntityManager entityManager;
-
-    private String tmp;
+    private BCryptPasswordEncoder passwordEncoder;
 
     UserManagerImp(@Autowired CustomerRepository customerRepository,
                    @Autowired OwnerRepository ownerRepository,
                    @Autowired CoachRepository coachRepository,
-                   @Autowired EntityManager entityManager) {
+                   @Autowired EntityManager entityManager,
+                   @Autowired BCryptPasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
         this.ownerRepository = ownerRepository;
         this.coachRepository = coachRepository;
         this.entityManager = entityManager;
+        this.passwordEncoder = passwordEncoder;
 
     }
 
@@ -42,12 +45,9 @@ public class UserManagerImp implements UserManager {
         newBaseUser.setDob(user.getDob());
         newBaseUser.setPhoneNumber(user.getPhoneNumber());
 
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
 
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        //String encodedPassword = passwordEncoder.encode(user.getPassword());
-        //user.setPassword(encodedPassword);
-
-        newBaseUser.setPassword(user.getPassword());
+        newBaseUser.setPassword(encodedPassword);
 
         switch (user.getUserType()) {
             case CUSTOMER:
