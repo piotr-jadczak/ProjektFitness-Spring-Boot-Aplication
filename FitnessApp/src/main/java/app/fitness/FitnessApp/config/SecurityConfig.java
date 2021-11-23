@@ -1,7 +1,10 @@
 package app.fitness.FitnessApp.config;
 
+import app.fitness.FitnessApp.domain.login.BaseUserLogin;
 import app.fitness.FitnessApp.domain.login.CustomerUserDetailsService;
+import app.fitness.FitnessApp.domain.login.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,13 +17,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private DataSource dataSource;
+    @Bean
+    @Qualifier("customer-prototype")
+    public BaseUserLogin addCustomerPrototype() {
+        BaseUserLogin customer = new BaseUserLogin("customer", "password", "jan@gmail.com", "Jan", "Kowalski", null , "123456789", UserType.CUSTOMER);
+        return customer;
+    }
 
-    @Autowired
+    @Bean
     public CustomerUserDetailsService customerDetailsService() {
         return new CustomerUserDetailsService();
     }
@@ -33,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(customerDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
@@ -50,19 +56,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/resources/**").permitAll()
-                .antMatchers("/customer-panel").authenticated()
-                .anyRequest().permitAll()
+                    .antMatchers("/resources/**")
+                    .permitAll()
+                    .and()
+                .authorizeRequests()
+                    .antMatchers("/customer_panel")
+                    .authenticated()
                 .and()
                 .formLogin()
-                .usernameParameter("login")
-                    .loginPage("/login/customer")
-                    .defaultSuccessUrl("/customer-panel")
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/customer_panel")
                     .permitAll()
                 .and()
                 .logout()
                     .logoutSuccessUrl("/")
-                    .permitAll();
+                    .permitAll()
+                    .and()
+                .httpBasic();
 
 
     }

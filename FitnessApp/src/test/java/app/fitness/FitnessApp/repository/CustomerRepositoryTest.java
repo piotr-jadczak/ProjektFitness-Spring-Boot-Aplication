@@ -43,4 +43,14 @@ public class CustomerRepositoryTest {
         assertEquals(customer1.getLogin(), dbCustomer.getLogin());
 
 	}
+
+    @Test
+    public void whenSaved_thenFindsByUsername() throws ParseException {
+        String sDate="01/12/2000";
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
+        Customer customer1 = new Customer("admin", "password", "admin@gmail.com", "Jan", "Kowalski", date , "123456789");
+        Customer savedCustomer = customerRepository.save(customer1);
+
+        assertEquals("admin", customerRepository.findByLogin("admin").getLogin());
+    }
 }
