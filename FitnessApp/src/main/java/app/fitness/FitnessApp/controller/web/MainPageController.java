@@ -47,8 +47,29 @@ public class MainPageController {
         if(authentication == null || authentication instanceof AnonymousAuthenticationToken)
             return "login";
 
-        return "redirect:/";
+        return "redirect:/success_login_redirect";
     }
 
+    @GetMapping("/success_login_redirect")
+    public String redirectToPanelPage() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String role = userManager.getAuthorityName(authentication);
+        switch (role) {
+            case "ROLE_CUSTOMER" :
+                return "redirect:/customer_panel";
+            case "ROLE_COACH" :
+                return "redirect:/coach_panel";
+            case "ROLE_OWNER" :
+                return "redirect:/owner_panel";
+        }
+
+        return "redirect:/error_login";
+    }
+
+    @GetMapping("/logout")
+    public String logoutUser() {
+        SecurityContextHolder.clearContext();
+        return "index";
+    }
 
 }

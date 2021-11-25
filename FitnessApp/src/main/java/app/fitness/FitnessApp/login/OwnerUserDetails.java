@@ -2,13 +2,17 @@ package app.fitness.FitnessApp.login;
 
 import app.fitness.FitnessApp.domain.Owner;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class OwnerUserDetails implements UserDetails {
 
     private final Owner owner;
+    private final String role = "ROLE_OWNER";
 
     public OwnerUserDetails(Owner owner) {
         this.owner = owner;
@@ -16,7 +20,11 @@ public class OwnerUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+
+        list.add(new SimpleGrantedAuthority(role));
+
+        return list;
     }
 
     @Override

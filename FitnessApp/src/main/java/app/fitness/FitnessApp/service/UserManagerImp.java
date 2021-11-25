@@ -7,6 +7,9 @@ import app.fitness.FitnessApp.repository.CustomerRepository;
 import app.fitness.FitnessApp.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -71,6 +74,22 @@ public class UserManagerImp implements UserManager {
         }
 
         return newBaseUser;
+    }
+
+    @Override
+    public String getAuthorityName(Authentication authentication) {
+        GrantedAuthority ownerAuthority = new SimpleGrantedAuthority("ROLE_OWNER");
+        GrantedAuthority customerAuthority = new SimpleGrantedAuthority("ROLE_CUSTOMER");
+        GrantedAuthority coachAuthority = new SimpleGrantedAuthority("ROLE_COACH");
+
+        if(authentication.getAuthorities().contains(ownerAuthority))
+            return "ROLE_OWNER";
+        if(authentication.getAuthorities().contains(coachAuthority))
+            return "ROLE_COACH";
+        if(authentication.getAuthorities().contains(customerAuthority))
+            return "ROLE_CUSTOMER";
+
+        return null;
     }
 
 
