@@ -1,20 +1,16 @@
 package app.fitness.FitnessApp.config;
 
-import app.fitness.FitnessApp.domain.login.BaseUserLogin;
-import app.fitness.FitnessApp.domain.login.CustomerUserDetailsService;
-import app.fitness.FitnessApp.domain.login.UserType;
-import org.springframework.beans.factory.annotation.Autowired;
+import app.fitness.FitnessApp.login.BaseUserLogin;
+import app.fitness.FitnessApp.login.CustomerUserDetailsService;
+import app.fitness.FitnessApp.login.UserType;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import javax.sql.DataSource;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -24,6 +20,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public BaseUserLogin addCustomerPrototype() {
         BaseUserLogin customer = new BaseUserLogin("customer", "password", "jan@gmail.com", "Jan", "Kowalski", null , "123456789", UserType.CUSTOMER);
         return customer;
+    }
+
+    @Bean
+    @Qualifier("coach-prototype")
+    public BaseUserLogin addCoachPrototype() {
+        BaseUserLogin coach = new BaseUserLogin("coach", "password", "jan@gmail.com", "Marek", "Dąbrowski", null , "123456789", UserType.COACH);
+        return coach;
+    }
+
+    @Bean
+    @Qualifier("owner-prototype")
+    public BaseUserLogin addOwnerPrototype() {
+        BaseUserLogin owner = new BaseUserLogin("owner", "password", "jan@gmail.com", "Kamil", "Nowak", null , "123456789", UserType.OWNER);
+        return owner;
     }
 
     @Bean

@@ -1,7 +1,8 @@
 package app.fitness.FitnessApp.controller.web;
 
-import app.fitness.FitnessApp.domain.login.BaseUserLogin;
+import app.fitness.FitnessApp.login.BaseUserLogin;
 import app.fitness.FitnessApp.repository.CustomerRepository;
+import app.fitness.FitnessApp.service.UserManager;
 import app.fitness.FitnessApp.service.UserManagerImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -13,11 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class WebAppController {
+public class MainPageController {
 
-    private final UserManagerImp userManagerImp;
+    private final UserManager userManager;
 
-    public WebAppController(@Autowired UserManagerImp userManagerImp) { this.userManagerImp = userManagerImp; }
+    public MainPageController(@Autowired UserManager userManager) { this.userManager = userManager; }
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -36,7 +37,7 @@ public class WebAppController {
 
     @PostMapping("/process_register")
     public String processRegister(BaseUserLogin user) {
-        userManagerImp.addUser(user);
+        userManager.addUser(user);
         return "register_success";
     }
 
@@ -49,11 +50,5 @@ public class WebAppController {
         return "redirect:/";
     }
 
-    @GetMapping("/customer_panel")
-    public String viewCustomerPanel(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        model.addAttribute("logged_customer", currentPrincipalName);
-        return "customer_panel";
-    }
+
 }

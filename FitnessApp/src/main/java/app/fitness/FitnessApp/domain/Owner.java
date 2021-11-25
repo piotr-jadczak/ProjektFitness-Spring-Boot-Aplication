@@ -2,16 +2,18 @@ package app.fitness.FitnessApp.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.SecondaryTable;
 
 @Entity
 public class Owner extends BaseUser {
 
 	
 	@OneToMany(mappedBy = "owner")
-	private List<Club> clubs;
+	private Set<Club> clubs;
 
 	public Owner() {
 		super();
@@ -26,11 +28,11 @@ public class Owner extends BaseUser {
 		super(baseUser);
 	}
 
-	public List<Club> getClubs() {
+	public Set<Club> getClubs() {
 		return clubs;
 	}
 
-	public void setClubs(List<Club> clubs) {
+	public void setClubs(Set<Club> clubs) {
 		this.clubs = clubs;
 	}
 

@@ -2,6 +2,7 @@ package app.fitness.FitnessApp.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -12,10 +13,10 @@ public class Coach extends BaseUser {
 
 	
 	@OneToMany(mappedBy = "coach")
-	private List<Training> trainings;
+	private Set<Training> trainings;
 
 	@ManyToMany
-	private List<Club> clubs;
+	private Set<Club> clubs;
 
 	public Coach() {
 		super();
@@ -31,19 +32,19 @@ public class Coach extends BaseUser {
 	}
 
 
-	public List<Training> getTrainings() {
+	public Set<Training> getTrainings() {
 		return trainings;
 	}
 
-	public void setTrainings(List<Training> trainings) {
+	public void setTrainings(Set<Training> trainings) {
 		this.trainings = trainings;
 	}
 
-	public List<Club> getClubs() {
+	public Set<Club> getClubs() {
 		return clubs;
 	}
 
-	public void setClubs(List<Club> clubs) {
+	public void setClubs(Set<Club> clubs) {
 		this.clubs = clubs;
 	}
 

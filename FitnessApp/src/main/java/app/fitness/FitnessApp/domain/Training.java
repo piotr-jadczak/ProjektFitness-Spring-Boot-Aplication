@@ -2,6 +2,7 @@ package app.fitness.FitnessApp.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class Training {
     private Coach coach;
     
     @ManyToMany(mappedBy = "trainings")
-    private List<Customer> customers;
+    private Set<Customer> customers;
 
 	public Training() {
 	}
@@ -138,11 +139,11 @@ public class Training {
 		this.coach = coach;
 	}
 
-	public List<Customer> getCustomers() {
+	public Set<Customer> getCustomers() {
 		return customers;
 	}
 
-	public void setCustomers(List<Customer> customers) {
+	public void setCustomers(Set<Customer> customers) {
 		this.customers = customers;
 	}
 

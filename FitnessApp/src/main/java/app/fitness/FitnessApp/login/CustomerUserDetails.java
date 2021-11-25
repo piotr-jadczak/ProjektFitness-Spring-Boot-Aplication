@@ -1,4 +1,4 @@
-package app.fitness.FitnessApp.domain.login;
+package app.fitness.FitnessApp.login;
 
 import app.fitness.FitnessApp.domain.Customer;
 import org.springframework.security.core.GrantedAuthority;

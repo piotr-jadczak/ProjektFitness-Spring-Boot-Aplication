@@ -1,6 +1,7 @@
 package app.fitness.FitnessApp.domain;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ public class TrainingCategory {
     private String name;
     
     @OneToMany(mappedBy = "trainingCategory")
-    private List<Training> trainings;
+    private Set<Training> trainings;
 
 	public TrainingCategory() {
 	}
@@ -41,11 +42,11 @@ public class TrainingCategory {
 		this.name = name;
 	}
 
-	public List<Training> getTrainings() {
+	public Set<Training> getTrainings() {
 		return trainings;
 	}
 
-	public void setTrainings(List<Training> trainings) {
+	public void setTrainings(Set<Training> trainings) {
 		this.trainings = trainings;
 	}
 

@@ -1,14 +1,12 @@
 package app.fitness.FitnessApp.service;
 
 import app.fitness.FitnessApp.domain.*;
-import app.fitness.FitnessApp.domain.login.BaseUserLogin;
+import app.fitness.FitnessApp.login.BaseUserLogin;
 import app.fitness.FitnessApp.repository.CoachRepository;
 import app.fitness.FitnessApp.repository.CustomerRepository;
 import app.fitness.FitnessApp.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +27,17 @@ public class UserManagerImp implements UserManager {
                    @Autowired CoachRepository coachRepository,
                    @Autowired EntityManager entityManager,
                    @Autowired PasswordEncoder passwordEncoder,
-                   @Autowired @Qualifier("customer-prototype") BaseUserLogin customer) {
+                   @Autowired @Qualifier("customer-prototype") BaseUserLogin customer,
+                   @Autowired @Qualifier("coach-prototype") BaseUserLogin coach,
+                   @Autowired @Qualifier("owner-prototype") BaseUserLogin owner) {
         this.customerRepository = customerRepository;
         this.ownerRepository = ownerRepository;
         this.coachRepository = coachRepository;
         this.entityManager = entityManager;
         this.passwordEncoder = passwordEncoder;
         addUser(customer);
+        addUser(coach);
+        addUser(owner);
     }
 
     @Override

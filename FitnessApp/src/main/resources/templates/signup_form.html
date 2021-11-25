@@ -15,7 +15,7 @@
         <form th:action="@{/process_register}" th:object="${user}" method="post">
             <label>FitApp Sign up</label>
             <select class="form-control" id="user_type" th:field="*{userType}">
-                <option th:each="userT : ${T(app.fitness.FitnessApp.domain.login.UserType).values()}"
+                <option th:each="userT : ${T(app.fitness.FitnessApp.login.UserType).values()}"
                         th:value="${userT}" th:text="${userT.displayValue}"></option>
             </select>
             <input type="text" th:field="*{login}" placeholder="Login" class="form-control" required />
