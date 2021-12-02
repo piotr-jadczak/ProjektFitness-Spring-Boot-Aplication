@@ -2,6 +2,7 @@ package app.fitness.FitnessApp.domain;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -29,16 +30,17 @@ public class BaseUser {
 	@Column(nullable = false, length = 64)
 	private String lastName;
 
-	@Column(nullable = true, length = 64)
-	private Date dob;
+	@Column(nullable = true)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dob;
 
-	@Column(nullable = true, length = 64)
+	@Column(nullable = true, length = 9)
 	private String phoneNumber;
 
 	public BaseUser() {
 	}
 
-	public BaseUser(String login, String password, String email, String firstName, String lastName, Date dob,
+	public BaseUser(String login, String password, String email, String firstName, String lastName, LocalDate dob,
 			String phoneNumber) {
 		super();
 		this.login = login;
@@ -110,11 +112,11 @@ public class BaseUser {
 		this.lastName = lastName;
 	}
 
-	public Date getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 

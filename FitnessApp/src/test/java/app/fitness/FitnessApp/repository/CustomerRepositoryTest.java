@@ -15,7 +15,7 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-@DataJpaTest //annotation for JPA Database test
+/*@DataJpaTest //annotation for JPA Database test
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) //test works with actual database
 @Rollback(value = false) //commit the changes in database
 public class CustomerRepositoryTest {
@@ -53,4 +53,4 @@ public class CustomerRepositoryTest {
 
         assertEquals("admin", customerRepository.findByLogin("admin").getLogin());
     }
-}
+}*/

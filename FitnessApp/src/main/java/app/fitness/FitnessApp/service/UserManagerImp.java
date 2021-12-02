@@ -51,7 +51,8 @@ public class UserManagerImp implements UserManager {
         newBaseUser.setEmail(user.getEmail());
         newBaseUser.setFirstName(user.getFirstName());
         newBaseUser.setLastName(user.getLastName());
-        newBaseUser.setDob(user.getDob());
+        System.out.println(user.getDob());
+        newBaseUser.setDob(null);
         newBaseUser.setPhoneNumber(user.getPhoneNumber());
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());

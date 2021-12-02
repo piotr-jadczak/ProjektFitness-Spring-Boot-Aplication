@@ -32,7 +32,7 @@ public class MainPageController {
     public String viewRegistrationForm(Model model) {
         model.addAttribute("user", new BaseUserLogin());
 
-        return "signup_form";
+        return "register";
     }
 
     @PostMapping("/process_register")

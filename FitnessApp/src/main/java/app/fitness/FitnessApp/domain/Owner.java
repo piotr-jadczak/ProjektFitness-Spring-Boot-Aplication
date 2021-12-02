@@ -1,5 +1,6 @@
 package app.fitness.FitnessApp.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class Owner extends BaseUser {
 		super();
 	}
 
-	public Owner(String login, String password, String email, String firstName, String lastName, Date dob,
+	public Owner(String login, String password, String email, String firstName, String lastName, LocalDate dob,
 			String phoneNumber) {
 		super(login, password, email, firstName, lastName, dob, phoneNumber);
 	}

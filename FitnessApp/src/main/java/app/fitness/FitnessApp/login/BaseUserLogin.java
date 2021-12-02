@@ -1,5 +1,8 @@
 package app.fitness.FitnessApp.login;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 public class BaseUserLogin {
@@ -8,14 +11,15 @@ public class BaseUserLogin {
     private String email;
     private String firstName;
     private String lastName;
-    private Date dob;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dob;
     private String phoneNumber;
     private UserType userType;
 
     public BaseUserLogin() {
     }
 
-    public BaseUserLogin(String login, String password, String email, String firstName, String lastName, Date dob, String phoneNumber, UserType userType) {
+    public BaseUserLogin(String login, String password, String email, String firstName, String lastName, LocalDate dob, String phoneNumber, UserType userType) {
         this.login = login;
         this.password = password;
         this.email = email;
@@ -66,11 +70,11 @@ public class BaseUserLogin {
         this.lastName = lastName;
     }
 
-    public Date getDob() {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 
