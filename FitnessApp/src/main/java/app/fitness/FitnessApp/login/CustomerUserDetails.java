@@ -13,8 +13,6 @@ import java.util.Set;
 public class CustomerUserDetails implements UserDetails {
 
     private final Customer customer;
-    private final String role = "ROLE_CUSTOMER";
-
 
     public CustomerUserDetails(Customer customer) {
         this.customer = customer;
@@ -23,7 +21,7 @@ public class CustomerUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
 
-        list.add(new SimpleGrantedAuthority(role));
+        list.add(new SimpleGrantedAuthority(UserRole.CUSTOMER.getValue()));
 
         return list;
     }

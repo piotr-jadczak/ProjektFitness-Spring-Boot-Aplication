@@ -2,6 +2,7 @@ package app.fitness.FitnessApp.service;
 
 import app.fitness.FitnessApp.domain.*;
 import app.fitness.FitnessApp.login.BaseUserLogin;
+import app.fitness.FitnessApp.login.UserRole;
 import app.fitness.FitnessApp.repository.CoachRepository;
 import app.fitness.FitnessApp.repository.CustomerRepository;
 import app.fitness.FitnessApp.repository.OwnerRepository;
@@ -78,9 +79,9 @@ public class UserManagerImp implements UserManager {
 
     @Override
     public String getAuthorityName(Authentication authentication) {
-        GrantedAuthority ownerAuthority = new SimpleGrantedAuthority("ROLE_OWNER");
-        GrantedAuthority customerAuthority = new SimpleGrantedAuthority("ROLE_CUSTOMER");
-        GrantedAuthority coachAuthority = new SimpleGrantedAuthority("ROLE_COACH");
+        GrantedAuthority ownerAuthority = new SimpleGrantedAuthority(UserRole.OWNER.getValue());
+        GrantedAuthority customerAuthority = new SimpleGrantedAuthority(UserRole.CUSTOMER.getValue());
+        GrantedAuthority coachAuthority = new SimpleGrantedAuthority(UserRole.COACH.getValue());
 
         if(authentication.getAuthorities().contains(ownerAuthority))
             return "ROLE_OWNER";

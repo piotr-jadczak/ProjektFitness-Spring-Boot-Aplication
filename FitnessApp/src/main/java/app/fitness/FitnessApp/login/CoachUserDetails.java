@@ -12,7 +12,6 @@ import java.util.List;
 public class CoachUserDetails implements UserDetails {
 
     private final Coach coach;
-    private final String role = "ROLE_COACH";
 
     public CoachUserDetails(Coach coach) {
         this.coach = coach;
@@ -22,7 +21,7 @@ public class CoachUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
 
-        list.add(new SimpleGrantedAuthority(role));
+        list.add(new SimpleGrantedAuthority(UserRole.COACH.getValue()));
 
         return list;
     }

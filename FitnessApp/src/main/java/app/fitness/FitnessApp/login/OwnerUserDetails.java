@@ -12,7 +12,6 @@ import java.util.List;
 public class OwnerUserDetails implements UserDetails {
 
     private final Owner owner;
-    private final String role = "ROLE_OWNER";
 
     public OwnerUserDetails(Owner owner) {
         this.owner = owner;
@@ -22,7 +21,7 @@ public class OwnerUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
 
-        list.add(new SimpleGrantedAuthority(role));
+        list.add(new SimpleGrantedAuthority(UserRole.OWNER.getValue()));
 
         return list;
     }

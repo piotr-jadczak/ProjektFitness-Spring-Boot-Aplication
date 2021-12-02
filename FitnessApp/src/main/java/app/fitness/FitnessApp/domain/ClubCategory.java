@@ -3,12 +3,10 @@ package app.fitness.FitnessApp.domain;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "club_category")
 public class ClubCategory {
 
 	@Id
