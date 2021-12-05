@@ -1,6 +1,6 @@
 package app.fitness.FitnessApp.config;
 
-import app.fitness.FitnessApp.login.BaseUserLogin;
+import app.fitness.FitnessApp.login.UserForm;
 import app.fitness.FitnessApp.login.CustomerUserDetailsService;
 import app.fitness.FitnessApp.login.UserType;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,27 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Bean
-    @Qualifier("customer-prototype")
-    public BaseUserLogin addCustomerPrototype() {
-        BaseUserLogin customer = new BaseUserLogin("customer", "password", "jan@gmail.com", "Jan", "Kowalski", null , "123456789", UserType.CUSTOMER);
-        return customer;
-    }
-
-    @Bean
-    @Qualifier("coach-prototype")
-    public BaseUserLogin addCoachPrototype() {
-        BaseUserLogin coach = new BaseUserLogin("coach", "password", "jan@gmail.com", "Marek", "Dąbrowski", null , "123456789", UserType.COACH);
-        return coach;
-    }
-
-    @Bean
-    @Qualifier("owner-prototype")
-    public BaseUserLogin addOwnerPrototype() {
-        BaseUserLogin owner = new BaseUserLogin("owner", "password", "jan@gmail.com", "Kamil", "Nowak", null , "123456789", UserType.OWNER);
-        return owner;
-    }
 
     @Bean
     public CustomerUserDetailsService customerDetailsService() {
@@ -70,15 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/customer_panel")
+                    .antMatchers("/customer-panel")
                     .hasAuthority("ROLE_CUSTOMER")
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/owner_panel")
+                    .antMatchers("/owner-panel")
                     .hasAuthority("ROLE_OWNER")
                 .and()
                 .authorizeRequests()
-                    .antMatchers("/coach_panel")
+                    .antMatchers("/coach-panel")
                     .hasAuthority("ROLE_COACH")
                 .and()
                 .formLogin()

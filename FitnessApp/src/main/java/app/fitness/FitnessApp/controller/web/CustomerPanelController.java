@@ -19,11 +19,11 @@ public class CustomerPanelController {
         this.userManager = userManager;
     }
 
-    @GetMapping("/customer_panel")
+    @GetMapping("/customer-panel")
     public String viewCustomerPanel(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         model.addAttribute("loggedUserLogin", currentPrincipalName);
-        return "customer_panel";
+        return "customer/customer-panel";
     }
 }

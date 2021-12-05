@@ -1,7 +1,7 @@
 package app.fitness.FitnessApp.service;
 
 import app.fitness.FitnessApp.domain.*;
-import app.fitness.FitnessApp.login.BaseUserLogin;
+import app.fitness.FitnessApp.login.UserForm;
 import app.fitness.FitnessApp.login.UserRole;
 import app.fitness.FitnessApp.repository.CoachRepository;
 import app.fitness.FitnessApp.repository.CustomerRepository;
@@ -25,27 +25,20 @@ public class UserManagerImp implements UserManager {
     private EntityManager entityManager;
     private PasswordEncoder passwordEncoder;
 
-
     UserManagerImp(@Autowired CustomerRepository customerRepository,
                    @Autowired OwnerRepository ownerRepository,
                    @Autowired CoachRepository coachRepository,
                    @Autowired EntityManager entityManager,
-                   @Autowired PasswordEncoder passwordEncoder,
-                   @Autowired @Qualifier("customer-prototype") BaseUserLogin customer,
-                   @Autowired @Qualifier("coach-prototype") BaseUserLogin coach,
-                   @Autowired @Qualifier("owner-prototype") BaseUserLogin owner) {
+                   @Autowired PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
         this.ownerRepository = ownerRepository;
         this.coachRepository = coachRepository;
         this.entityManager = entityManager;
         this.passwordEncoder = passwordEncoder;
-        addUser(customer);
-        addUser(coach);
-        addUser(owner);
     }
 
     @Override
-    public BaseUser addUser(BaseUserLogin user) {
+    public BaseUser addUser(UserForm user) {
         BaseUser newBaseUser = new BaseUser();
         newBaseUser.setLogin(user.getLogin());
         newBaseUser.setEmail(user.getEmail());

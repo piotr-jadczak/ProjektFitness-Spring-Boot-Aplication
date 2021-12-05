@@ -1,51 +1,64 @@
 package app.fitness.FitnessApp.controller.web;
 
-import app.fitness.FitnessApp.login.BaseUserLogin;
-import app.fitness.FitnessApp.repository.CustomerRepository;
+import app.fitness.FitnessApp.login.UserForm;
 import app.fitness.FitnessApp.service.UserManager;
-import app.fitness.FitnessApp.service.UserManagerImp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 public class MainPageController {
 
+    private static Logger logger = LoggerFactory.getLogger(MainPageController.class);
+
     private final UserManager userManager;
 
-    public MainPageController(@Autowired UserManager userManager) { this.userManager = userManager; }
-
-    @Autowired
-    private CustomerRepository customerRepository;
+    public MainPageController(@Autowired UserManager userManager) {
+        this.userManager = userManager;
+    }
 
     @GetMapping("")
     public String viewHomePage() {
-        return "index";
+        return "main/index";
     }
 
     @GetMapping("/register")
     public String viewRegistrationForm(Model model) {
-        model.addAttribute("user", new BaseUserLogin());
+        model.addAttribute("user", new UserForm());
 
-        return "register";
+        return "main/register";
     }
 
     @PostMapping("/process_register")
-    public String processRegister(BaseUserLogin user) {
+    public String processRegister(@Valid @ModelAttribute("user") UserForm user, BindingResult bindingResult) {
+        logger.info("Rejestracja poczatek");
+
+        if(bindingResult.hasErrors()) {
+            logger.info("Rejestracja bledy");
+            return "main/register";
+        }
         userManager.addUser(user);
-        return "register_success";
+
+        logger.info("Rejestracja udana");
+        return "main/register_success";
     }
 
     @GetMapping("/login")
     public String viewLoginPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication == null || authentication instanceof AnonymousAuthenticationToken)
-            return "login";
+            return "main/login";
 
         return "redirect:/success_login_redirect";
     }
@@ -56,11 +69,11 @@ public class MainPageController {
         String role = userManager.getAuthorityName(authentication);
         switch (role) {
             case "ROLE_CUSTOMER" :
-                return "redirect:/customer_panel";
+                return "redirect:/customer-panel";
             case "ROLE_COACH" :
-                return "redirect:/coach_panel";
+                return "redirect:/coach-panel";
             case "ROLE_OWNER" :
-                return "redirect:/owner_panel";
+                return "redirect:/owner-panel";
         }
 
         return "redirect:/error_login";
@@ -69,7 +82,7 @@ public class MainPageController {
     @GetMapping("/logout")
     public String logoutUser() {
         SecurityContextHolder.clearContext();
-        return "index";
+        return "main/index";
     }
 
 }

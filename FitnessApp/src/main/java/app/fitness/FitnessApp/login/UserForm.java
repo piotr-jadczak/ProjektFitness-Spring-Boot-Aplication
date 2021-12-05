@@ -1,11 +1,14 @@
 package app.fitness.FitnessApp.login;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.NonNull;
 
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.Date;
 
-public class BaseUserLogin {
+public class UserForm {
+
+    @UniqueLogin
     private String login;
     private String password;
     private String email;
@@ -16,10 +19,10 @@ public class BaseUserLogin {
     private String phoneNumber;
     private UserType userType;
 
-    public BaseUserLogin() {
+    public UserForm() {
     }
 
-    public BaseUserLogin(String login, String password, String email, String firstName, String lastName, LocalDate dob, String phoneNumber, UserType userType) {
+    public UserForm(String login, String password, String email, String firstName, String lastName, LocalDate dob, String phoneNumber, UserType userType) {
         this.login = login;
         this.password = password;
         this.email = email;

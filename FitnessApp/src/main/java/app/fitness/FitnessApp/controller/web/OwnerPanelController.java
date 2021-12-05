@@ -17,11 +17,11 @@ public class OwnerPanelController {
         this.userManager = userManager;
     }
 
-    @GetMapping("/owner_panel")
+    @GetMapping("/owner-panel")
     public String viewOwnerPanel(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         model.addAttribute("loggedUserLogin", currentPrincipalName);
-        return "owner_panel";
+        return "owner/owner-panel";
     }
 }

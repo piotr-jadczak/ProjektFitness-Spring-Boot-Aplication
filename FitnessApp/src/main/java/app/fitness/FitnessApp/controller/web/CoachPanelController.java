@@ -17,11 +17,11 @@ public class CoachPanelController {
         this.userManager = userManager;
     }
 
-    @GetMapping("/coach_panel")
+    @GetMapping("/coach-panel")
     public String viewCoachPanel(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         model.addAttribute("loggedUserLogin", currentPrincipalName);
-        return "coach_panel";
+        return "/coach/coach-panel";
     }
 }
