@@ -39,10 +39,6 @@ public class Owner extends BaseUser {
 		this.clubs = clubs;
 	}
 
-	@Override
-	public String toString() {
-		return "Owner [clubs=" + clubs + "]";
-	}
 
 
 }

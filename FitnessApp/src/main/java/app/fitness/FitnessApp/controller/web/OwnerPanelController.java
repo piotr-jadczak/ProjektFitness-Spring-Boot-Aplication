@@ -63,7 +63,7 @@ public class OwnerPanelController {
     }
 
     @PostMapping("owner-panel/my-clubs")
-    public ModelAndView addClub(@ModelAttribute("clubToAdd") Club clubToAdd, Model model) {
+    public ModelAndView addClub(@ModelAttribute("clubToAdd") Club clubToAdd) {
         clubManager.addClub(clubToAdd);
 
         return new ModelAndView("redirect:/owner-panel/my-clubs");
