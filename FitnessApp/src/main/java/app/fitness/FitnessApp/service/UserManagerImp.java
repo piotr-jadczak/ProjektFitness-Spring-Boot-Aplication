@@ -87,5 +87,12 @@ public class UserManagerImp implements UserManager {
         return null;
     }
 
+    @Override
+    public Owner findOwnerByLogin(String login) {
+        if(ownerRepository.findByLogin(login) != null)
+            return ownerRepository.findByLogin(login);
+        throw new RuntimeException("No owner with login " + login + " exist");
+    }
+
 
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <title>Wszystkie obiekty</title>
+    <th:block th:replace="fragments/components-index :: headContent"></th:block>
+</head>
+<body>
+<header>
+
+</header>
+<div class="py-5 mt-5 bg-white">
+    <div class="container px-4 text-center" >
+        <a th:href="@{/owner-panel}">Powrót do panelu</a><br>
+        <a th:href="@{/logout}">Wyloguj</a><br>
+    </div>
+    <div class="container px-4 text-center" >
+        <div th:each="club : ${clubList}">
+            <a>Nazwa: </a><a th:text="${club.name}"></a><br>
+            <a>Opis: </a><a th:text="${club.description}"></a><br>
+            <a>Addres: </a><a th:text="${club.address}"></a><br>
+            <a>Kategoria: </a><a th:text="${club.clubCategory.getName()}"></a><br>
+            <a>Właściciel: </a><a th:text="${club.owner.fullName()}"></a>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/components-index :: footer"></footer>
+
+</body>
+</html>

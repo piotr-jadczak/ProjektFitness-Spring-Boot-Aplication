@@ -31,11 +31,24 @@ public class Club {
 	public Club() {
 	}
 
-	public Club(String name, String description, String address) {
+	public Club(String name, String description, String address, ClubCategory clubCategory) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.address = address;
+		this.clubCategory = clubCategory;
+	}
+
+	public Club(String name, String description, String address, Owner owner, ClubCategory clubCategory) {
+		this.name = name;
+		this.description = description;
+		this.address = address;
+		this.owner = owner;
+		this.clubCategory = clubCategory;
+	}
+
+	public Club(Owner owner) {
+		this.owner = owner;
 	}
 
 	public int getId() {

@@ -134,4 +134,8 @@ public class BaseUser {
 				+ ", lastName=" + lastName + ", dob=" + dob + ", phoneNumber=" + phoneNumber + "]";
 	}
 
+	public String fullName() {
+		return firstName + " " + lastName;
+	}
+
 }

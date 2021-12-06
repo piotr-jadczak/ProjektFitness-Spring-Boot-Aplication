@@ -1,7 +1,10 @@
 package app.fitness.FitnessApp;
 
+import app.fitness.FitnessApp.domain.Club;
+import app.fitness.FitnessApp.domain.ClubCategory;
 import app.fitness.FitnessApp.login.UserForm;
 import app.fitness.FitnessApp.login.UserType;
+import app.fitness.FitnessApp.service.ClubManager;
 import app.fitness.FitnessApp.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,12 +27,18 @@ public class FitnessAppApplication {
 	public CommandLineRunner setupApp(@Autowired UserManager userManager,
 									  @Autowired @Qualifier("customer-prototype") UserForm customer,
 									  @Autowired @Qualifier("coach-prototype") UserForm coach,
-									  @Autowired @Qualifier("coach-prototype") UserForm owner) {
+									  @Autowired @Qualifier("owner-prototype") UserForm owner,
+									  @Autowired ClubManager clubManager) {
 		return args -> {
 			System.out.println("Application test SetUp");
 			userManager.addUser(customer);
 			userManager.addUser(coach);
 			userManager.addUser(owner);
+			clubManager.addClubCategory(new ClubCategory("siłownia"));
+			clubManager.addClubCategory(new ClubCategory("klub fitness"));
+			clubManager.addClubCategory(new ClubCategory("basen"));
+			clubManager.addClubCategory(new ClubCategory("aquapark"));
+			clubManager.addClubCategory(new ClubCategory("kort tenisowy"));
 		};
 	}
 

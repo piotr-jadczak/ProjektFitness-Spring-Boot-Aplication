@@ -1,5 +1,7 @@
 package app.fitness.FitnessApp.domain;
 
+import org.springframework.lang.NonNull;
+
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ public class ClubCategory {
 	@Id
 	@GeneratedValue
 	private int id;
+	@NonNull
     private String name;
 
     @OneToMany(mappedBy = "clubCategory")

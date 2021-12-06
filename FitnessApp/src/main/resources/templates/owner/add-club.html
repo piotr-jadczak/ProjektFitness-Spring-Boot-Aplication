@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <title>Dodaj obiekt</title>
+    <th:block th:replace="fragments/components-index :: headContent"></th:block>
+</head>
+<body>
+<header>
+
+</header>
+<div class="py-5 mt-5 bg-white">
+    <div class="container px-4 text-center" >
+        <a th:href="@{/owner-panel}">Powrót do panelu</a><br>
+    </div>
+    <div class="container px-4 text-center" style="max-width: 500px;">
+        <form th:action="@{/owner-panel/my-clubs}" th:object="${clubToAdd}" method="post">
+            <fieldset>
+                <legend>Dodaj obiekt</legend>
+                <select class="form-control" id="club_category" th:field="*{clubCategory}">
+                    <option th:each="category : ${categoryList}"
+                            th:value="${category.id}" th:text="${category.name}"></option>
+                </select>
+                <input type="text" th:field="*{name}" placeholder="Nazwa" class="form-control" required /><br>
+                <input type="text" th:field="*{description}" placeholder="Opis" class="form-control" required /><br>
+                <input type="text" th:field="*{address}" placeholder="Address" class="form-control" required /><br>
+                <input type="hidden" th:field="*{owner}">
+                <button type="submit" class="btn btn-primary">Dodaj</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="fragments/components-index :: footer"></footer>
+
+</body>
+</html>
