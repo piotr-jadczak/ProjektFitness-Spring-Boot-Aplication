@@ -21,7 +21,7 @@
         <div th:each="club : ${myClubsList}">
             <a>Nazwa: </a><a th:text="${club.name}"></a><br>
             <a>Opis: </a><a th:text="${club.description}"></a><br>
-            <a>Addres: </a><a th:text="${club.address}"></a><br>
+            <a>Addres: </a><a th:text="${club.getFullAddress()}"></a><br>
             <a>Kategoria: </a><a th:text="${club.clubCategory.getName()}"></a><br>
         </div>
     </div>

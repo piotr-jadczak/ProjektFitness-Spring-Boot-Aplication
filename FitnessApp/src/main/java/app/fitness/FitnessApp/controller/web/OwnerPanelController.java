@@ -9,10 +9,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Controller
 public class OwnerPanelController {
@@ -55,17 +58,24 @@ public class OwnerPanelController {
 
     @GetMapping("/owner-panel/add-club")
     public String viewEditForm(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String ownerLogin = authentication.getName();
         model.addAttribute("categoryList", clubManager.getAllCategories());
-        model.addAttribute("clubToAdd", new Club(userManager.findOwnerByLogin(ownerLogin)));
+        model.addAttribute("clubToAdd", new Club());
         return  "owner/add-club";
     }
 
-    @PostMapping("owner-panel/my-clubs")
-    public ModelAndView addClub(@ModelAttribute("clubToAdd") Club clubToAdd) {
-        clubManager.addClub(clubToAdd);
+    @PostMapping("/owner-panel/my-clubs")
+    public String addClub(@ModelAttribute("clubToAdd") @Valid Club clubToAdd, BindingResult bindingResult, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String ownerLogin = authentication.getName();
+        Owner loggedOwner = userManager.findOwnerByLogin(ownerLogin);
 
-        return new ModelAndView("redirect:/owner-panel/my-clubs");
+        if(bindingResult.hasErrors()) {
+            return "owner/add-club";
+        }
+
+        clubToAdd.setOwner(loggedOwner);
+        clubManager.addClub(clubToAdd);
+        model.addAttribute("myClubsList", clubManager.getAllClubs(loggedOwner));
+        return "owner/my-clubs";
     }
 }

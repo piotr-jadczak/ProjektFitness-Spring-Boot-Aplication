@@ -1,9 +1,11 @@
 package app.fitness.FitnessApp.domain;
 
-import java.util.List;
+import org.springframework.lang.NonNull;
+
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "club")
@@ -12,9 +14,31 @@ public class Club {
 	@Id
 	@GeneratedValue
 	private int id;
+
+	@NonNull
+	@Size(max = 32)
+	@Column(length = 32)
     private String name;
+
+	@NonNull
+	@Size(max = 512)
+	@Column(length = 512)
     private String description;
-    private String address;
+
+	@NonNull
+	@Size(max = 32)
+	@Column(length = 32)
+    private String addressStreet;
+
+	@NonNull
+	@Size(max = 16)
+	@Column(length = 16)
+	private String addressNumber;
+
+	@NonNull
+	@Size(max = 32)
+	@Column(length = 32)
+	private String addressCity;
 
     @ManyToOne
     private Owner owner;
@@ -31,24 +55,22 @@ public class Club {
 	public Club() {
 	}
 
-	public Club(String name, String description, String address, ClubCategory clubCategory) {
-		super();
+	public Club(String name, String description, String addressStreet, String addressNumber, String addressCity, Owner owner, ClubCategory clubCategory) {
 		this.name = name;
 		this.description = description;
-		this.address = address;
-		this.clubCategory = clubCategory;
-	}
-
-	public Club(String name, String description, String address, Owner owner, ClubCategory clubCategory) {
-		this.name = name;
-		this.description = description;
-		this.address = address;
+		this.addressStreet = addressStreet;
+		this.addressNumber = addressNumber;
+		this.addressCity = addressCity;
 		this.owner = owner;
 		this.clubCategory = clubCategory;
 	}
 
-	public Club(Owner owner) {
-		this.owner = owner;
+	public Club(String name, String description, String addressStreet, String addressNumber, String addressCity) {
+		this.name = name;
+		this.description = description;
+		this.addressStreet = addressStreet;
+		this.addressNumber = addressNumber;
+		this.addressCity = addressCity;
 	}
 
 	public int getId() {
@@ -75,12 +97,12 @@ public class Club {
 		this.description = description;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getAddressStreet() {
+		return addressStreet;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAddressStreet(String address) {
+		this.addressStreet = address;
 	}
 
 	public Owner getOwner() {
@@ -115,12 +137,23 @@ public class Club {
 		this.trainings = trainings;
 	}
 
-	@Override
-	public String toString() {
-		return "Club [id=" + id + ", name=" + name + ", description=" + description + ", address=" + address
-				+ ", owner=" + owner + ", clubCategory=" + clubCategory + ", coaches=" + coaches + ", trainings="
-				+ trainings + "]";
+	public String getAddressNumber() {
+		return addressNumber;
 	}
-    
-    
+
+	public void setAddressNumber(String addressNumber) {
+		this.addressNumber = addressNumber;
+	}
+
+	public String getAddressCity() {
+		return addressCity;
+	}
+
+	public void setAddressCity(String addressCity) {
+		this.addressCity = addressCity;
+	}
+
+	public String getFullAddress() {
+		return addressStreet + " " + addressNumber + " " + addressCity;
+	}
 }
