@@ -70,6 +70,7 @@ public class OwnerPanelController {
         Owner loggedOwner = userManager.findOwnerByLogin(ownerLogin);
 
         if(bindingResult.hasErrors()) {
+            model.addAttribute("categoryList", clubManager.getAllCategories());
             return "owner/add-club";
         }
 
