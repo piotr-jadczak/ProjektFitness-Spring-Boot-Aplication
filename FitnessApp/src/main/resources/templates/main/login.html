@@ -2,33 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="pl">
 <head>
   <title>Logowanie</title>
-  <th:block th:replace="fragments/components-index :: headContent"></th:block>
+  <th:block th:replace="fragments/main/components-index :: headContent"></th:block>
 </head>
 <body>
-  <div th:replace="fragments/components-index :: top-menu"></div>
-  <div class="py-5 bg-white">
+  <div th:replace="fragments/main/components-index :: top-menu"></div>
+
+  <div class="py-5 mt-5 bg-white">
     <div class="container px-4 text-center">
-      <form name="f" th:action="@{/login}" method="post">
-        <fieldset>
-          <legend>Please Login</legend>
-          <div th:if="${param.error}" class="alert alert-error">
-            Invalid username and password.
-          </div>
-          <div th:if="${param.logout}" class="alert alert-success">
-            You have been logged out.
-          </div>
-          <label for="username">Username</label><br>
-          <input type="text" id="username" name="username"/><br>
-          <label for="password">Password</label><br>
-          <input type="password" id="password" name="password"/><br>
-          <div class="form-actions">
-            <button type="submit" class="btn">Log in</button>
-          </div>
-        </fieldset>
-      </form>
+       <div th:replace="fragments/main/components-index :: login-form"></div>
     </div>
 
   </div>
-  <footer th:replace="fragments/components-index :: footer"></footer>
+  <footer th:replace="fragments/main/components-index :: footer"></footer>
 </body>
 </html>

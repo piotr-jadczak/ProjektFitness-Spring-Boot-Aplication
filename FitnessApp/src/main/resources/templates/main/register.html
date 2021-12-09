@@ -2,38 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
     <title>Rejestracja</title>
-    <th:block th:replace="fragments/components-index :: headContent"></th:block>
+    <th:block th:replace="fragments/main/components-index :: headContent"></th:block>
 </head>
 <body>
     <header>
         <!-- Sticky top menu -->
-        <div th:replace="fragments/components-index :: top-menu"></div>
+        <div th:replace="fragments/main/components-index :: top-menu"></div>
     </header>
     <div class="py-5 mt-5 bg-white">
         <div class="container px-4 text-center" style="max-width: 500px;">
-            <form th:action="@{/process_register}" th:object="${user}" method="post">
-                <fieldset>
-                    <legend>Zarejestruj się</legend>
-                    <select class="form-control" id="user_type" th:field="*{userType}">
-                        <option th:each="userT : ${T(app.fitness.FitnessApp.login.UserType).values()}"
-                                th:value="${userT}" th:text="${userT.displayValue}"></option>
-                    </select>
-                    <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Name Error</p>
-                    <input type="text" th:field="*{login}" placeholder="Login" class="form-control" required />
-                    <input type="password" th:field="*{password}" placeholder="Password" class="form-control" autocomplete="off" required minlength="8" maxlength="32" />
-                    <input type="email" th:field="*{email}" placeholder="E-mail" class="form-control" required />
-                    <input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control" required minlength="2" maxlength="32"/>
-                    <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control" required minlength="2" maxlength="32" />
-                    <input type="date" th:field="*{dob}" placeholder="Day of birth" class="form-control" required />
-                    <input type="tel" th:field="*{phoneNumber}" placeholder="Telephone Number" class="form-control" required minlength="9" maxlength="9" />
-                    <button type="submit" class="btn btn-primary">Zarejestruj się</button>
-                </fieldset>
-            </form>
-            <div class="hasAccount"><a th:href="@{/login}">Mam już konto</a></div>
+            <div th:replace="fragments/main/components-index :: register-form"></div>
         </div>
     </div>
 
-    <footer th:replace="fragments/components-index :: footer"></footer>
+    <footer th:replace="fragments/main/components-index :: footer"></footer>
 
 </body>
 </html>
