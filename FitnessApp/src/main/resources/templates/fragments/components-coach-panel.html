@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <th:block th:fragment="headContent">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <script th:href="@{/js/jquery.js}"></script>
+        <script th:href="@{/js/bootstrap/bootstrap.js}"></script>
+        <link th:href="@{/css/bootstrap/bootstrap.css}" rel="stylesheet"/>
+        <!-- script to expand menu -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </th:block>
+</head>
+<body>
+
+<div th:fragment="top-menu">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <div class="container px-4">
+            <a class="navbar-brand" th:href="@{/}">
+                <img th:src="@{/images/logo_transparent.png}"  />
+                Fit App
+            </a>
+            <!-- <a class="navbar-brand" th:href="@{/}">FitApp</a> -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto" id="navbar-full-width">
+                    <li class="nav-item"><a class="nav-link" href="#main-content">Dostępne Zajęcia</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#main-content">Moje Zajęcia</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#main-content">Prowadzone Zajęcia</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#main-content">Statystyki</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#main-content">Obiekty Sportowe</a></li>
+                    <li class="nav-item dropdown" id="nav-item-right">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img th:src="@{/images/avatarTransparent.png}" width="40" height="40" class="rounded-circle">
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">O Nas</a>
+                            <a class="dropdown-item" href="#">Kontakt</a>
+                            <a class="dropdown-item" href="#">Ustawienia Profilu</a>
+                            <a class="dropdown-item" th:href="@{/logout}">Wyloguj</a>
+                        </div>
+                    </li>
+
+                    <!-- <li class="nav-item"><a class="nav-link" th:href="@{/customer-panel}"><img th:src="@{/images/logo_transparent.png}" /></a></li>  Tu bedzie popbierac avatara -->
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div th:fragment="main-content">
+    <section id="main-content" class="py-5 bg-white">
+        <div class="container px-4">
+            <div class="row gx-4 justify-content-center">
+                <div class="col-lg-8">
+                    <h2>Statistics</h2>
+                    <p class="lead">This is a great place to view statistics. This is where we will download personal user data to be viewed by the user</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac tincidunt tellus. Sed diam velit, egestas vel feugiat quis, aliquet vel lorem. Proin euismod sodales nibh quis imperdiet. Vestibulum suscipit pharetra lectus at hendrerit. Integer ac interdum justo, id viverra justo. Etiam ornare lacus dapibus ante vulputate, et lobortis orci maximus. Pellentesque a orci id ante ullamcorper cursus non porta mi. Aenean in nisi at felis varius ullamcorper aliquet vel nunc. Morbi dictum egestas eros, sed rhoncus nibh ultrices facilisis. Integer pretium odio vel justo mollis laoreet. Etiam ut nibh vehicula, dignissim odio vel, ultricies metus.</p>
+
+                    <p>Integer interdum nibh quis enim porttitor fringilla. Nullam semper at lorem eu mollis. Donec commodo dui vel diam dapibus volutpat. Praesent velit odio, luctus eu neque vel, iaculis maximus leo. Duis sit amet magna enim. Nulla bibendum semper iaculis. Suspendisse vel consequat arcu. Donec fringilla nibh ex, vitae suscipit est vestibulum nec. Nam placerat est ipsum, vitae sollicitudin arcu lacinia non. Etiam hendrerit neque ac quam rhoncus accumsan. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent sed dui semper, lacinia est in, accumsan nisl. Donec vestibulum lorem sed mattis dictum. Maecenas sem tortor, dapibus pretium felis in, scelerisque pellentesque libero.</p>
+
+                    <p>Nam tincidunt sed quam eu varius. Nunc molestie elit mauris, quis euismod erat varius nec. Donec placerat commodo massa, molestie commodo neque luctus at. Etiam risus sem, lacinia a imperdiet sollicitudin, vestibulum id libero. Sed aliquet condimentum orci ac imperdiet. In malesuada fringilla nisl vitae tempus. Quisque sit amet neque varius, accumsan leo quis, facilisis arcu. Nunc aliquam mattis nisi non mollis. Nam mollis risus in nulla tempor elementum. Integer congue lacinia magna a iaculis. Ut ut tincidunt tortor. In id ligula diam.</p>
+
+                    <p>Nunc sapien dolor, commodo a convallis vitae, pellentesque a erat. Donec ac accumsan orci, in malesuada metus. In vitae metus et diam suscipit auctor sed at libero. Suspendisse sollicitudin, orci id tempus lacinia, nulla diam elementum libero, non malesuada risus velit eget ex. Mauris a quam turpis. Aliquam posuere dolor nulla, nec maximus orci imperdiet ut. In placerat cursus ligula, eu sodales ante molestie sit amet. Nulla a ante eleifend, consequat elit ut, luctus tellus.</p>
+
+                    <p>Quisque tempus felis id ligula pellentesque, a vehicula odio semper. Praesent tincidunt tortor sit amet felis accumsan, quis tincidunt quam commodo. Sed blandit, dolor quis consequat ornare, risus sem bibendum nisi, vitae vulputate ligula tellus sed libero. Fusce in mollis elit. Nam at orci sit amet turpis rutrum ornare. Duis eget convallis dolor, eu euismod tortor. Phasellus rhoncus elementum est ut commodo.</p>
+
+                    <p>Ut magna arcu, lacinia id condimentum ut, sagittis vel nisi. Quisque gravida consectetur tristique. Fusce mattis nulla at sem commodo sollicitudin. Donec consequat lacus ex, at tempus lorem luctus a. Nulla dapibus, magna vel interdum mattis, magna augue auctor nisi, et tincidunt massa ligula vel mauris. Donec lacinia eu lectus quis imperdiet. Phasellus eleifend lorem in aliquam faucibus. Sed blandit eros ut risus vulputate, ac lacinia libero finibus.</p>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lacinia imperdiet maximus. Cras commodo vel felis vel lobortis. Nunc ultrices nisi mauris, et volutpat odio sagittis nec. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras aliquet nisl ac lorem fringilla lacinia. Nulla ac augue non felis ultrices commodo. Ut et efficitur augue, a consectetur magna. Suspendisse sodales dolor ante, vitae ultricies urna mattis eget. Vivamus sit amet mi auctor, dapibus dolor hendrerit, varius elit. Donec commodo a odio vehicula varius. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+
+                    <p>Donec ornare justo sagittis malesuada sagittis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae mauris nibh. Nulla massa nisl, finibus id mollis nec, pellentesque eget lacus. Proin in volutpat massa, sed pulvinar turpis. Nunc interdum pellentesque vestibulum. Quisque ac risus vel augue pharetra vehicula nec et nisi. Duis sed consectetur massa. Vestibulum in imperdiet erat. Nulla bibendum turpis quis mi commodo venenatis. Ut id posuere sem. Donec efficitur posuere vehicula.</p>
+
+                    <p>Cras facilisis dignissim mi, nec ultricies leo dictum ut. Curabitur suscipit nulla tortor, in fermentum ante placerat quis. Ut quam nunc, imperdiet eget pharetra placerat, eleifend quis eros. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque commodo convallis ex eu iaculis. Vestibulum augue orci, euismod id leo tristique, venenatis pulvinar enim. Pellentesque sed volutpat purus. Aenean eget ullamcorper elit. Aenean eget maximus mauris, vitae tempus felis. Praesent egestas, ligula vitae tempus tristique, diam quam bibendum eros, a ultrices nisl arcu vitae est. Nam dolor augue, ullamcorper eget ex vel, interdum eleifend dolor. Vivamus lorem leo, sodales sit amet vehicula ac, commodo sit amet turpis. Curabitur sem neque, venenatis vel rutrum in, imperdiet ac orci. Aenean congue sollicitudin est eget scelerisque. Vivamus molestie et odio sit amet ultrices. Nulla pellentesque tortor quis leo mollis pretium.</p>
+
+                    <p>Suspendisse nec metus ultricies ligula malesuada porta. Donec congue sapien facilisis lectus lacinia laoreet. Donec laoreet lorem vel eros rhoncus, quis semper magna aliquet. Praesent imperdiet nibh est, sollicitudin iaculis dolor facilisis in. Quisque maximus a sapien at porta. Integer rutrum eu leo et pharetra. Morbi non pretium dolor, et elementum est.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer th:fragment="footer" class="py-5 bg-dark">
+    <div class="container px-4">
+        <p class="m-0 text-center text-white">Copyright &copy; FitApp 2021</p>
+    </div>
+</footer>
+
+</body>
+</html>
