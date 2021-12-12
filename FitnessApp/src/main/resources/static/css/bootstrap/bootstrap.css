@@ -8973,4 +8973,13 @@ a.text-dark:hover, a.text-dark:focus {
     border: 1px solid #ddd !important;
   }
 }
+
+#nav-item-right{
+    margin-left:auto;
+}
+
+#navbar-full-width{
+    width:100%;
+    align-items:center;
+}
 /*# sourceMappingURL=bootstrap.css.map */

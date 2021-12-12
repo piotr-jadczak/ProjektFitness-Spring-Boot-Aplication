@@ -5,9 +5,15 @@
   <th:block th:replace="fragments/main/components-index :: headContent"></th:block>
 </head>
 <body>
-<header>
 
+<header class="py-xl-5 mt-5 bg-primary bg-gradient text-white">
+  <div th:replace="fragments/main/components-index :: top-menu"></div>
 </header>
+
+<div class="container px-4 text-center">
+
+</div>
+
 <div class="py-5 mt-5 bg-white">
   <div class="container px-4 text-center" >
     <a th:href="@{/owner-panel/all-clubs}">Wszystkie obiekty</a><br>
