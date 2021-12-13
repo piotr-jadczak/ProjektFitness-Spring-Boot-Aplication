@@ -49,11 +49,6 @@ public class Coach extends BaseUser {
 		this.clubs = clubs;
 	}
 
-	@Override
-	public String toString() {
-		return "Coach [trainings=" + trainings + ", clubs=" + clubs + "]";
-	}
-
 	
 
 }

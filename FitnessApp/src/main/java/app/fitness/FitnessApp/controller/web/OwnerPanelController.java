@@ -4,6 +4,9 @@ import app.fitness.FitnessApp.domain.Club;
 import app.fitness.FitnessApp.domain.Owner;
 import app.fitness.FitnessApp.service.ClubManager;
 import app.fitness.FitnessApp.service.UserManager;
+import app.fitness.FitnessApp.validators.UniqueLoginValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,13 +15,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 
 @Controller
 public class OwnerPanelController {
+
+    private static Logger logger = LoggerFactory.getLogger(OwnerPanelController.class);
 
     private final UserManager userManager;
     private final ClubManager clubManager;
@@ -56,10 +63,23 @@ public class OwnerPanelController {
         return "owner/my-clubs";
     }
 
-    @GetMapping("/owner-panel/add-club")
-    public String viewEditForm(Model model) {
+    @GetMapping("/owner-panel/add-club/{id}")
+    public String viewEditForm(@PathVariable String id, Model model) {
+        int entityID = Integer.parseInt(id);
+        if(clubManager.isClubInDB(entityID)) {
+            String ownerLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+            Club clubToEdit = clubManager.getClub(entityID);
+            if(userManager.findOwnerByLogin(ownerLogin).getId() == clubToEdit.getOwner().getId()) {
+                model.addAttribute("clubToAdd", clubToEdit);
+            }
+            else {
+                return "errors/error403";
+            }
+        }
+        else {
+            model.addAttribute("clubToAdd", new Club());
+        }
         model.addAttribute("categoryList", clubManager.getAllCategories());
-        model.addAttribute("clubToAdd", new Club());
         return  "owner/add-club";
     }
 
@@ -74,9 +94,25 @@ public class OwnerPanelController {
             return "owner/add-club";
         }
 
-        clubToAdd.setOwner(loggedOwner);
-        clubManager.addClub(clubToAdd);
+        String id = String.valueOf(clubToAdd.getId());
+        logger.info("Id clubu " + id);
+        if(clubManager.isClubInDB(clubToAdd.getId())) {
+            clubManager.updateClub(clubToAdd);
+        }
+        else {
+            clubToAdd.setOwner(loggedOwner);
+            clubManager.addClub(clubToAdd);
+        }
+
         model.addAttribute("myClubsList", clubManager.getAllClubs(loggedOwner));
         return "owner/my-clubs";
+    }
+
+    @GetMapping("/owner-panel/delete-club/{id}")
+    public ModelAndView deleteChair(@PathVariable String id) {
+        int entityID = Integer.parseInt(id);
+        clubManager.deleteClub(entityID);
+
+        return new ModelAndView("redirect:/owner-panel/my-clubs");
     }
 }

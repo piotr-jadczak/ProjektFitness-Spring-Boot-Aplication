@@ -15,7 +15,6 @@ public class BaseUser {
 	@Id
 	private int id;
 
-	//@Column(nullable = false, unique = true, length = 32)
 	private String login;
 
 	@Column(nullable = false)

@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class Club {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@NonNull

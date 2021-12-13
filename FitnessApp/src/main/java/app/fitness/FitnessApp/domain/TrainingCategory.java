@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class TrainingCategory {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private int id;
     private String name;
     

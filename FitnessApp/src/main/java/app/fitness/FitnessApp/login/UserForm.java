@@ -1,7 +1,8 @@
 package app.fitness.FitnessApp.login;
 
+import app.fitness.FitnessApp.validators.UniqueEmail;
+import app.fitness.FitnessApp.validators.UniqueLogin;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -10,7 +11,9 @@ public class UserForm {
 
     @UniqueLogin
     private String login;
+    @Size(min=8, message = "Password must be at least 8 characters long")
     private String password;
+    @UniqueEmail
     private String email;
     private String firstName;
     private String lastName;

@@ -1,4 +1,4 @@
-package app.fitness.FitnessApp.login;
+package app.fitness.FitnessApp.validators;
 
 import app.fitness.FitnessApp.repository.CoachRepository;
 import app.fitness.FitnessApp.repository.CustomerRepository;

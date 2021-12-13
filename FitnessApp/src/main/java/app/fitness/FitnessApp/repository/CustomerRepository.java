@@ -12,4 +12,7 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer>{
     @Query("SELECT record From Customer record WHERE record.login=?1")
     public Customer findByLogin(String login);
 
+    @Query("SELECT record FROM Customer record WHERE record.email=?1")
+    public Customer findByEmail(String email);
+
 }

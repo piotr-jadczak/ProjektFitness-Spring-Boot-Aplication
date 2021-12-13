@@ -45,21 +45,21 @@ public class FitnessAppApplication {
 	@Bean
 	@Qualifier("customer-prototype")
 	public UserForm addCustomerPrototype() {
-		UserForm customer = new UserForm("customer", "password", "jan@gmail.com", "Jan", "Kowalski", null , "123456789", UserType.CUSTOMER);
+		UserForm customer = new UserForm("customer", "password", "jan1@gmail.com", "Jan", "Kowalski", null , "123456789", UserType.CUSTOMER);
 		return customer;
 	}
 
 	@Bean
 	@Qualifier("coach-prototype")
 	public UserForm addCoachPrototype() {
-		UserForm coach = new UserForm("coach", "password", "jan@gmail.com", "Marek", "Dąbrowski", null , "123456789", UserType.COACH);
+		UserForm coach = new UserForm("coach", "password", "jan2@gmail.com", "Marek", "Dąbrowski", null , "123456789", UserType.COACH);
 		return coach;
 	}
 
 	@Bean
 	@Qualifier("owner-prototype")
 	public UserForm addOwnerPrototype() {
-		UserForm owner = new UserForm("owner", "password", "jan@gmail.com", "Kamil", "Nowak", null , "123456789", UserType.OWNER);
+		UserForm owner = new UserForm("owner", "password", "jan3@gmail.com", "Kamil", "Nowak", null , "123456789", UserType.OWNER);
 		return owner;
 	}
 

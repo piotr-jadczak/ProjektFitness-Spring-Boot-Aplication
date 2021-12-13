@@ -1,8 +1,6 @@
 package app.fitness.FitnessApp.domain;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -28,7 +26,7 @@ public class Customer extends BaseUser {
 
 	public Customer(BaseUser baseUser) {
 		super(baseUser);
-	};
+	}
 
 	
 
@@ -40,9 +38,5 @@ public class Customer extends BaseUser {
 		this.trainings = trainings;
 	}
 
-	@Override
-	public String toString() {
-		return "User [trainings=" + trainings + "]";
-	}
 
 }

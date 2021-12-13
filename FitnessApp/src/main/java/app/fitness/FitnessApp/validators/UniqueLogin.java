@@ -1,4 +1,4 @@
-package app.fitness.FitnessApp.login;
+package app.fitness.FitnessApp.validators;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

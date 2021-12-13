@@ -11,7 +11,7 @@
 <div class="py-5 mt-5 bg-white">
     <div class="container px-4 text-center" >
         <a th:href="@{/owner-panel}">Powrót do panelu</a><br>
-        <a th:href="@{/owner-panel/add-club}">Dodaj obiekt</a><br>
+        <a th:href="@{/owner-panel/add-club/0}">Dodaj obiekt</a><br>
         <a th:href="@{/logout}">Wyloguj</a><br>
 
     </div>
@@ -23,6 +23,8 @@
             <a>Opis: </a><a th:text="${club.description}"></a><br>
             <a>Addres: </a><a th:text="${club.getFullAddress()}"></a><br>
             <a>Kategoria: </a><a th:text="${club.clubCategory.getName()}"></a><br>
+            <a th:href="@{/owner-panel/add-club/{id}(id=${club.id})}">Edytuj obiekt</a><br>
+            <a th:href="@{/owner-panel/delete-club/{id}(id=${club.id})}">Usuń obiekt</a>
         </div>
     </div>
 </div>
