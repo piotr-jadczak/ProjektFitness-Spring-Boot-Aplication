@@ -2,11 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
     <title>Dodaj obiekt</title>
-    <th:block th:replace="fragments/main/components-index :: headContent"></th:block>
+    <th:block th:replace="fragments/components-owner-panel :: headContent"></th:block>
 </head>
 <body>
 <header>
-
+    <!-- Sticky top menu -->
+    <div th:replace="fragments/components-owner-panel :: top-menu"></div>
 </header>
 <div class="py-5 mt-5 bg-white">
     <div class="container px-4 text-center" >
