@@ -36,7 +36,7 @@
     </div>
 
     <div th:fragment="gym-image">
-        <img th:src="@{/images/Gym.jpg}"  />
+        <img class="index-image" th:src="@{/images/Gym.jpg}"  />
     </div>
 
     <div th:fragment="about-us">
@@ -188,6 +188,7 @@
         </div>
         <div class="hasAccount"><a th:href="@{/login}">Mam już konto</a></div>
     </div>
+
 
     <footer th:fragment="footer" class="py-5 bg-dark">
         <div class="container px-4">
