@@ -23,8 +23,15 @@
             <a>Opis: </a><a th:text="${club.description}"></a><br>
             <a>Addres: </a><a th:text="${club.getFullAddress()}"></a><br>
             <a>Kategoria: </a><a th:text="${club.clubCategory.getName()}"></a><br>
+            <div th:if="${club.coaches.size() > 0}">
+                <a>Trenerzy:</a>
+                <ul>
+                    <li th:each="coach : ${club.coaches}" th:text="${coach.fullName()}"></li>
+                </ul>
+            </div>
             <a th:href="@{/owner-panel/add-club/{id}(id=${club.id})}">Edytuj obiekt</a><br>
-            <a th:href="@{/owner-panel/delete-club/{id}(id=${club.id})}">Usuń obiekt</a>
+            <a th:href="@{/owner-panel/delete-club/{id}(id=${club.id})}">Usuń obiekt</a><br>
+            <a th:href="@{/owner-panel/add-coaches/{id}(id=${club.id})}">Edytuj trenerów</a>
         </div>
     </div>
 </div>

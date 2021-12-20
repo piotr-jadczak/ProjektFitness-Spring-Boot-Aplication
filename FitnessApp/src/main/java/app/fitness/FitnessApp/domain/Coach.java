@@ -16,7 +16,7 @@ public class Coach extends BaseUser {
 	@OneToMany(mappedBy = "coach")
 	private Set<Training> trainings;
 
-	@ManyToMany
+	@ManyToMany(mappedBy = "coaches")
 	private Set<Club> clubs;
 
 	public Coach() {

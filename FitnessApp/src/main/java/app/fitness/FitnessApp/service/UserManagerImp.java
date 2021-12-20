@@ -94,5 +94,10 @@ public class UserManagerImp implements UserManager {
         throw new RuntimeException("No owner with login " + login + " exist");
     }
 
+    @Override
+    public Coach findCoachById(int id) {
+        return coachRepository.findById(id);
+    }
+
 
 }

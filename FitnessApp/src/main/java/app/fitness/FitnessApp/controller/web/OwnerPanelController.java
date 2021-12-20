@@ -1,6 +1,7 @@
 package app.fitness.FitnessApp.controller.web;
 
 import app.fitness.FitnessApp.domain.Club;
+import app.fitness.FitnessApp.domain.Coach;
 import app.fitness.FitnessApp.domain.Owner;
 import app.fitness.FitnessApp.service.ClubManager;
 import app.fitness.FitnessApp.service.UserManager;
@@ -21,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class OwnerPanelController {
@@ -114,5 +117,45 @@ public class OwnerPanelController {
         clubManager.deleteClub(entityID);
 
         return new ModelAndView("redirect:/owner-panel/my-clubs");
+    }
+
+    @GetMapping("/owner-panel/add-coaches/{id}")
+    public String viewCoachesForm(@PathVariable String id, Model model) {
+
+        List<Coach> allCoaches = clubManager.getAllCoaches().collect(Collectors.toList());
+
+        List<Coach> presentCoaches = clubManager.getAllCoachesInClub(clubManager.getClub(Integer.parseInt(id))).collect(Collectors.toList());
+
+        allCoaches.removeAll(presentCoaches);
+
+        model.addAttribute("availableCoaches", allCoaches);
+        model.addAttribute("presentCoaches", presentCoaches);
+        model.addAttribute("currentClub", clubManager.getClub(Integer.parseInt(id)));
+
+        return "owner/add-coaches";
+    }
+
+    @GetMapping("/owner-panel/add-coaches/{clubId}/{coachId}")
+    public ModelAndView addCoachToClub(@PathVariable("clubId") String clubId, @PathVariable("coachId") String coachId, Model model) {
+        Coach coach = userManager.findCoachById(Integer.parseInt(coachId));
+        Club club = clubManager.getClub(Integer.parseInt(clubId));
+        logger.info(coach.getLogin());
+        logger.info(club.getName());
+        clubManager.addCoachToClub(coach, club);
+
+
+        return new ModelAndView("redirect:/owner-panel/add-coaches/{clubId}");
+    }
+
+    @GetMapping("/owner-panel/delete-coaches/{clubId}/{coachId}")
+    public ModelAndView removeCoachFromClub(@PathVariable("clubId") String clubId, @PathVariable("coachId") String coachId, Model model) {
+        Coach coach = userManager.findCoachById(Integer.parseInt(coachId));
+        Club club = clubManager.getClub(Integer.parseInt(clubId));
+        logger.info(coach.getLogin());
+        logger.info(club.getName());
+        clubManager.removeCoachFromClub(coach, club);
+
+
+        return new ModelAndView("redirect:/owner-panel/add-coaches/{clubId}");
     }
 }

@@ -1,6 +1,7 @@
 package app.fitness.FitnessApp.repository;
 
 import app.fitness.FitnessApp.domain.ClubCategory;
+import app.fitness.FitnessApp.domain.Coach;
 import app.fitness.FitnessApp.domain.Owner;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +12,7 @@ import app.fitness.FitnessApp.domain.Club;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface ClubRepository extends CrudRepository<Club, Integer>{

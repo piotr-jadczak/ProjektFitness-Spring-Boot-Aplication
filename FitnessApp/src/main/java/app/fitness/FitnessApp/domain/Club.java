@@ -5,6 +5,7 @@ import org.springframework.lang.NonNull;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -46,7 +47,12 @@ public class Club {
     @ManyToOne
     private ClubCategory clubCategory;
     
-    @ManyToMany(mappedBy = "clubs")
+    @ManyToMany
+	@JoinTable (
+			name = "club_coache",
+			joinColumns = @JoinColumn(name = "club_id"),
+			inverseJoinColumns = @JoinColumn(name = "coach_id")
+	)
     private Set<Coach> coaches;
     
     @OneToMany(mappedBy = "club")
@@ -155,5 +161,13 @@ public class Club {
 
 	public String getFullAddress() {
 		return addressStreet + " " + addressNumber + " " + addressCity;
+	}
+
+	public void addCoach(Coach coach) {
+		coaches.add(coach);
+	}
+
+	public void removeCoach(Coach coach) {
+		coaches.remove(coach);
 	}
 }

@@ -28,17 +28,26 @@ public class FitnessAppApplication {
 									  @Autowired @Qualifier("customer-prototype") UserForm customer,
 									  @Autowired @Qualifier("coach-prototype") UserForm coach,
 									  @Autowired @Qualifier("owner-prototype") UserForm owner,
-									  @Autowired ClubManager clubManager) {
+									  @Autowired ClubManager clubManager,
+									  @Autowired @Qualifier("coach-prototype2") UserForm coach2,
+									  @Autowired @Qualifier("coach-prototype3") UserForm coach3,
+									  @Autowired @Qualifier("club-prototype") Club club) {
 		return args -> {
 			System.out.println("Application test SetUp");
 			userManager.addUser(customer);
 			userManager.addUser(coach);
 			userManager.addUser(owner);
+			userManager.addUser(coach2);
+			userManager.addUser(coach3);
 			clubManager.addClubCategory(new ClubCategory("siłownia"));
 			clubManager.addClubCategory(new ClubCategory("klub fitness"));
 			clubManager.addClubCategory(new ClubCategory("basen"));
 			clubManager.addClubCategory(new ClubCategory("aquapark"));
 			clubManager.addClubCategory(new ClubCategory("kort tenisowy"));
+			club.setOwner(userManager.findOwnerByLogin("owner"));
+			club.setClubCategory(clubManager.getAllCategories().get(0));
+			clubManager.addClub(club);
+
 		};
 	}
 
@@ -61,6 +70,27 @@ public class FitnessAppApplication {
 	public UserForm addOwnerPrototype() {
 		UserForm owner = new UserForm("owner", "password", "jan3@gmail.com", "Kamil", "Nowak", null , "123456789", UserType.OWNER);
 		return owner;
+	}
+
+	@Bean
+	@Qualifier("coach-prototype2")
+	public UserForm addCoachPrototype2() {
+		UserForm coach = new UserForm("coach2", "password", "jan4@gmail.com", "Martyna", "Kowlaczyk", null , "123456789", UserType.COACH);
+		return coach;
+	}
+
+	@Bean
+	@Qualifier("coach-prototype3")
+	public UserForm addCoachPrototype3() {
+		UserForm coach = new UserForm("coach3", "password", "jan5@gmail.com", "Aneta", "Jaworska", null , "123456789", UserType.COACH);
+		return coach;
+	}
+
+	@Bean
+	@Qualifier("club-prototype")
+	public Club addClubPrototype() {
+		Club club = new Club("Best gym", "To najlepsza siłownia w Trojmieście", "Pomorska", "23/4", "Gdańsk");
+		return club;
 	}
 
 }

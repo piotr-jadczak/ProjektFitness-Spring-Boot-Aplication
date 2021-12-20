@@ -137,4 +137,6 @@ public class BaseUser {
 		return firstName + " " + lastName;
 	}
 
+	public String fullNameAndEmail() { return fullName() + " " + email; }
+
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <title>Dodaj trenerów</title>
+    <th:block th:replace="fragments/components-owner-panel :: headContent"></th:block>
+</head>
+<body>
+<header>
+    <!-- Sticky top menu -->
+    <div th:replace="fragments/components-owner-panel :: top-menu"></div>
+</header>
+<div class="py-5 mt-5 bg-white">
+    <div class="container px-4 text-center" >
+        <a th:href="@{/owner-panel/my-clubs/}">Powrót do panelu</a><br>
+    </div>
+    <div class="container px-4 text-center" style="max-width: 500px;">
+        <h1 th:text="${currentClub.name}"></h1>
+        <div>
+            <h2>Przypisani trenerzy</h2>
+            <div th:each="coach : ${presentCoaches}">
+                <a th:href="@{/owner-panel/delete-coaches/{clubId}/{coachId}(clubId = ${currentClub.id}, coachId = ${coach.id})}">Usun</a>
+                <a th:text="${coach.fullNameAndEmail()}"></a>
+            </div>
+        </div>
+        <div>
+            <h2>Dostępni trenerzy</h2>
+            <div th:each="coach : ${availableCoaches}">
+                <a th:href="@{/owner-panel/add-coaches/{clubId}/{coachId}(clubId = ${currentClub.id}, coachId = ${coach.id})}">Dodaj</a>
+                <a th:text="${coach.fullNameAndEmail()}"></a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer th:replace="fragments/main/components-index :: footer"></footer>
+
+</body>
+</html>
