@@ -25,12 +25,19 @@
                     <b>Opis: </b><a th:text="${club.description}"></a><br>
                     <b>Addres: </b><a th:text="${club.getFullAddress()}"></a><br>
                     <b>Kategoria: </b><a th:text="${club.clubCategory.getName()}"></a><br>
+                    <div th:if="${club.coaches.size() > 0}">
+                        <b>Trenerzy: </b>
+                            <a th:each="coach : ${club.coaches}" th:text="${coach.fullName()}"></a>
+                    </div>
                     <div class="flex-button">
                         <div class="sport-object-button">
                             <a class="btn btn-primary" th:href="@{/owner-panel/add-club/{id}(id=${club.id})}" role="button">Edytuj obiekt</a>
                         </div>
                         <div class="sport-object-button">
                             <a class="btn btn-info" th:href="@{/owner-panel/delete-club/{id}(id=${club.id})}" role="button">Usuń obiekt</a>
+                        </div>
+                        <div class="sport-object-button">
+                            <a class="btn btn-info" th:href="@{/owner-panel/add-coaches/{id}(id=${club.id})}" role="button">Edytuj trenerów</a>
                         </div>
                     </div>
 
