@@ -6,7 +6,7 @@
 </head>
 <body>
 <header>
-    <th:block th:replace="fragments/components-owner-panel :: headContent"></th:block>
+    <div th:replace="fragments/components-owner-panel :: top-menu"></div>
 </header>
 <div class="py-5 mt-5 bg-white">
     <div class="container px-4 text-center" >
@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<footer th:replace="fragments/main/components-index :: footer"></footer>
+<footer th:replace="fragments/components-owner-panel :: footer"></footer>
 
 </body>
 </html>

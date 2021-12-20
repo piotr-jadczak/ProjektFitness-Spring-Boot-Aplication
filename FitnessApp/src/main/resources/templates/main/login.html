@@ -5,14 +5,17 @@
   <th:block th:replace="fragments/main/components-index :: headContent"></th:block>
 </head>
 <body>
-  <div th:replace="fragments/main/components-index :: top-menu"></div>
+  <div class="login-wrapper">
+    <div th:replace="fragments/main/components-index :: top-menu"></div>
 
-  <div class="py-5 mt-5 bg-white">
-    <div class="container px-4 text-center">
-       <div th:replace="fragments/main/components-index :: login-form"></div>
+    <div class="py-5 mt-5 bg-white">
+      <div class="container px-4 text-center">
+        <div th:replace="fragments/main/components-index :: login-form"></div>
+      </div>
+
     </div>
-
   </div>
-  <footer th:replace="fragments/main/components-index :: footer"></footer>
+
+  <footer th:replace="fragments/main/components-login :: footer"></footer>
 </body>
 </html>

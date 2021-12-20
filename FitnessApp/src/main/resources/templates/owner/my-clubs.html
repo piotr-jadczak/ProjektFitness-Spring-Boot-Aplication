@@ -17,26 +17,30 @@
     </div>
 </div>
 <div class="py-5 bg-white">
-    <div class="container px-4 text-center" >
+    <div class="d-flex flex-wrap justify-content-center">
         <div th:each="club : ${myClubsList}">
-            <a>Nazwa: </a><a th:text="${club.name}"></a><br>
-            <a>Opis: </a><a th:text="${club.description}"></a><br>
-            <a>Addres: </a><a th:text="${club.getFullAddress()}"></a><br>
-            <a>Kategoria: </a><a th:text="${club.clubCategory.getName()}"></a><br>
-            <div th:if="${club.coaches.size() > 0}">
-                <a>Trenerzy:</a>
-                <ul>
-                    <li th:each="coach : ${club.coaches}" th:text="${coach.fullName()}"></li>
-                </ul>
+            <div class="p-2">
+                <div class="sport-object">
+                    <b>Nazwa: </b><a th:text="${club.name}"></a><br>
+                    <b>Opis: </b><a th:text="${club.description}"></a><br>
+                    <b>Addres: </b><a th:text="${club.getFullAddress()}"></a><br>
+                    <b>Kategoria: </b><a th:text="${club.clubCategory.getName()}"></a><br>
+                    <div class="flex-button">
+                        <div class="sport-object-button">
+                            <a class="btn btn-primary" th:href="@{/owner-panel/add-club/{id}(id=${club.id})}" role="button">Edytuj obiekt</a>
+                        </div>
+                        <div class="sport-object-button">
+                            <a class="btn btn-info" th:href="@{/owner-panel/delete-club/{id}(id=${club.id})}" role="button">Usuń obiekt</a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <a th:href="@{/owner-panel/add-club/{id}(id=${club.id})}">Edytuj obiekt</a><br>
-            <a th:href="@{/owner-panel/delete-club/{id}(id=${club.id})}">Usuń obiekt</a><br>
-            <a th:href="@{/owner-panel/add-coaches/{id}(id=${club.id})}">Edytuj trenerów</a>
         </div>
     </div>
 </div>
 
-<footer th:replace="fragments/main/components-index :: footer"></footer>
+<footer th:replace="fragments/components-owner-panel :: footer"></footer>
 
 </body>
 </html>

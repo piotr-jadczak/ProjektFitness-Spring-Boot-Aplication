@@ -9088,6 +9088,56 @@ a.text-dark:hover, a.text-dark:focus {
 	background: #109177;
 }
 
+.sport-object
+{
+    background-color: #f1f1f100;
+    width: auto;
+    margin: 10px;
+    border-style: solid;
+    border-top:    -1px  rgba(255, 255, 0, 0);
+    border-right:  -1px rgb(0, 0, 0);
+    border-bottom: -1px rgb(0, 0, 0);
+    border-left:   -1px rgb(0, 0, 0);
+    box-shadow: 0px 0px 4px 2px rgb(0 0 0 / 23%);
+
+}
+
+.sport-object:hover
+{
+      background-color: #D9D9D9;
+}
+
+.sport-object > sport-object-button
+{
+    text-align: center;
+    margin: 5px;
+    display: inline-block;
+}
+
+.index-image
+{
+    height:250px;
+    width:100%;
+    object-fit: cover;
+}
+
+.login-wrapper
+{
+    padding-bottom: 120px;
+}
+
+.sticky-footer
+{
+    position: absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+}
+
+.mt-index
+{
+    margin-top: 1rem !important;
+}
 
 
 

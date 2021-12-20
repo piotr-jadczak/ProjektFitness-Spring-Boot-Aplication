@@ -82,6 +82,39 @@
     </section>
 </div>
 
+<div th:fragment="add-clubForm">
+    <div class="container px-4 text-center" style="max-width: 500px;">
+        <div class="form-style-register">
+            <form th:action="@{/owner-panel/my-clubs}" th:object="${clubToAdd}" method="post">
+                <fieldset>
+                    <legend>Dodaj obiekt</legend>
+                    <select class="form-control" id="club_category" th:field="*{clubCategory}">
+                        <option th:each="category : ${categoryList}"
+                                th:value="${category.id}" th:text="${category.name}"></option>
+                    </select>
+
+                    <input type="text" th:field="*{name}" placeholder="Nazwa" required /><br>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
+
+                    <textarea th:field="*{description}" placeholder="Opis" rows="8" cols="50"></textarea>
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</p>
+
+                    <input type="text" th:field="*{addressStreet}" placeholder="Ulica" required /><br>
+                    <p th:if="${#fields.hasErrors('addressStreet')}" th:errors="*{addressStreet}">Name Error</p>
+
+                    <input type="text" th:field="*{addressNumber}" placeholder="Numer budynku" required /><br>
+                    <p th:if="${#fields.hasErrors('addressNumber')}" th:errors="*{addressNumber}">Name Error</p>
+
+                    <input type="text" th:field="*{addressCity}" placeholder="Miasto" required /><br>
+                    <input type="hidden" th:field="*{id}">
+                    <p th:if="${#fields.hasErrors('addressCity')}" th:errors="*{addressCity}">Name Error</p>
+                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
 <footer th:fragment="footer" class="py-5 bg-dark">
     <div class="container px-4">
         <p class="m-0 text-center text-white">Copyright &copy; FitApp 2021</p>

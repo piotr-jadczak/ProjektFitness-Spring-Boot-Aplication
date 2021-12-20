@@ -13,37 +13,10 @@
     <div class="container px-4 text-center" >
         <a th:href="@{/owner-panel}">Powrót do panelu</a><br>
     </div>
-    <div class="container px-4 text-center" style="max-width: 500px;">
-        <form th:action="@{/owner-panel/my-clubs}" th:object="${clubToAdd}" method="post">
-            <fieldset>
-                <legend>Dodaj obiekt</legend>
-                <select class="form-control" id="club_category" th:field="*{clubCategory}">
-                    <option th:each="category : ${categoryList}"
-                            th:value="${category.id}" th:text="${category.name}"></option>
-                </select>
-
-                <input type="text" th:field="*{name}" placeholder="Nazwa" class="form-control" required /><br>
-                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
-
-                <textarea th:field="*{description}" placeholder="Opis" rows="8" cols="50"></textarea>
-                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</p>
-
-                <input type="text" th:field="*{addressStreet}" placeholder="Ulica" class="form-control" required /><br>
-                <p th:if="${#fields.hasErrors('addressStreet')}" th:errors="*{addressStreet}">Name Error</p>
-
-                <input type="text" th:field="*{addressNumber}" placeholder="Number budynku" class="form-control" required /><br>
-                <p th:if="${#fields.hasErrors('addressNumber')}" th:errors="*{addressNumber}">Name Error</p>
-
-                <input type="text" th:field="*{addressCity}" placeholder="Miasto" class="form-control" required /><br>
-                <input type="hidden" th:field="*{id}">
-                <p th:if="${#fields.hasErrors('addressCity')}" th:errors="*{addressCity}">Name Error</p>
-                <button type="submit" class="btn btn-primary">Dodaj</button>
-            </fieldset>
-        </form>
-    </div>
+    <div th:replace="fragments/components-owner-panel :: add-clubForm"></div>
 </div>
 
-<footer th:replace="fragments/main/components-index :: footer"></footer>
+<footer th:replace="fragments/components-owner-panel :: footer"></footer>
 
 </body>
 </html>
