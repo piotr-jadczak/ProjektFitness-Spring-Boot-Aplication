@@ -121,68 +121,71 @@
 
 
     <div th:fragment="login-form">
-        <form name="f" th:action="@{/login}" method="post">
-            <fieldset>
-                <legend>Please Login</legend>
-                <div th:if="${param.error}" class="alert alert-error">
-                    Invalid username and password.
-                </div>
-                <div th:if="${param.logout}" class="alert alert-success">
-                    You have been logged out.
-                </div>
-                <div class="form-group">
-                    <label for="username">Username</label><br>
-                    <input type="text" id="username" name="username"/><br>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label><br>
-                    <input type="password" id="password" name="password"/><br>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                </div>
-            </fieldset>
-        </form>
+        <div class="form-style-register">
+            <form name="f" th:action="@{/login}" method="post">
+                <fieldset>
+                    <legend>Please Login</legend>
+                    <div th:if="${param.error}" class="alert alert-error">
+                        Invalid username and password.
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-success">
+                        You have been logged out.
+                    </div>
+                    <div>
+                        <input type="text" id="username" name="username" placeholder="login"/><br>
+                    </div>
+                    <div>
+                        <input type="password" id="password" name="password" placeholder="password"/><br>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary">Log in</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
         <div class="hasAccount"><a th:href="@{/register}">Nie posiadam konta</a></div>
     </div>
 
+
     <div th:fragment="register-form">
-        <form th:action="@{/process_register}" th:object="${user}" method="post">
-            <fieldset>
-                <legend>Zarejestruj się</legend>
-                <div class="form-group">
-                    <select class="form-control" id="user_type" th:field="*{userType}">
-                        <option th:each="userT : ${T(app.fitness.FitnessApp.login.UserType).values()}"
-                                th:value="${userT}" th:text="${userT.displayValue}"></option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <p class="text-danger" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Name Error</p>
-                    <input type="text" th:field="*{login}" placeholder="Login" class="form-control" required />
-                </div>
-                <div class="form-group">
+        <div class="form-style-register">
+            <form th:action="@{/process_register}" th:object="${user}" method="post">
+                <fieldset>
+                    <legend>Rejestracja</legend>
+                    <div>
+                        <select class="form-control" id="user_type" th:field="*{userType}">
+                            <option th:each="userT : ${T(app.fitness.FitnessApp.login.UserType).values()}"
+                                    th:value="${userT}" th:text="${userT.displayValue}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <p class="text-danger" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Name Error</p>
+                        <input type="text" th:field="*{login}" placeholder="Login" required />
+                    </div>
+                    <div>
                         <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</p>
-                    <input type="password" th:field="*{password}" placeholder="Password" class="form-control" autocomplete="off" required minlength="8" maxlength="32" />
-                </div>
-                <div class="form-group">
-                    <p class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</p>
-                    <input type="email" th:field="*{email}" placeholder="E-mail" class="form-control" required />
-                </div>
-                <div class="form-group">
-                    <input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control" required minlength="2" maxlength="32"/>
-                </div>
-                <div class="form-group">
-                    <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control" required minlength="2" maxlength="32" />
-                </div>
-                <div class="form-group">
-                    <input type="date" th:field="*{dob}" placeholder="Day of birth" class="form-control" required />
-                </div>
-                <div class="form-group">
-                    <input type="tel" th:field="*{phoneNumber}" placeholder="Telephone Number" class="form-control" required minlength="9" maxlength="9" />
-                </div>
-                <button type="submit" class="btn btn-primary">Zarejestruj się</button>
-            </fieldset>
-        </form>
+                        <input type="password" th:field="*{password}" placeholder="Password" autocomplete="off" required minlength="8" maxlength="32" />
+                    </div>
+                    <div>
+                        <p class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</p>
+                        <input type="email" th:field="*{email}" placeholder="E-mail" required />
+                    </div>
+                    <div>
+                        <input type="text" th:field="*{firstName}" placeholder="First Name" required minlength="2" maxlength="32"/>
+                    </div>
+                    <div>
+                        <input type="text" th:field="*{lastName}" placeholder="Last Name" required minlength="2" maxlength="32" />
+                    </div>
+                    <div>
+                        <input type="date" th:field="*{dob}" placeholder="Day of birth" required />
+                    </div>
+                    <div>
+                        <input type="tel" th:field="*{phoneNumber}" placeholder="Telephone Number" required minlength="9" maxlength="9" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Zarejestruj się</button>
+                </fieldset>
+            </form>
+        </div>
         <div class="hasAccount"><a th:href="@{/login}">Mam już konto</a></div>
     </div>
 
