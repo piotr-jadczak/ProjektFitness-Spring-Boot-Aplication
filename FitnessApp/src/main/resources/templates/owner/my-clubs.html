@@ -25,7 +25,7 @@
                     <b>Opis: </b><a th:text="${club.description}"></a><br>
                     <b>Addres: </b><a th:text="${club.getFullAddress()}"></a><br>
                     <b>Kategoria: </b><a th:text="${club.clubCategory.getName()}"></a><br>
-                    <div th:if="${club.coaches.size() > 0}">
+                    <div th:if="${club.coaches != null && club.coaches.size() > 0}">
                         <b>Trenerzy: </b>
                             <a th:each="coach : ${club.coaches}" th:text="${coach.fullName()}"></a>
                     </div>

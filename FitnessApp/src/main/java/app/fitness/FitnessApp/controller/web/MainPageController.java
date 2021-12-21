@@ -85,4 +85,9 @@ public class MainPageController {
         return "main/index";
     }
 
+    @GetMapping("errors/error403")
+    public String view403Error() {
+        return "errors/error403";
+    }
+
 }

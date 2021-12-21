@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -123,9 +124,7 @@ public class OwnerPanelController {
     public String viewCoachesForm(@PathVariable String id, Model model) {
 
         List<Coach> allCoaches = clubManager.getAllCoaches().collect(Collectors.toList());
-
         List<Coach> presentCoaches = clubManager.getAllCoachesInClub(clubManager.getClub(Integer.parseInt(id))).collect(Collectors.toList());
-
         allCoaches.removeAll(presentCoaches);
 
         model.addAttribute("availableCoaches", allCoaches);
@@ -137,24 +136,32 @@ public class OwnerPanelController {
 
     @GetMapping("/owner-panel/add-coaches/{clubId}/{coachId}")
     public ModelAndView addCoachToClub(@PathVariable("clubId") String clubId, @PathVariable("coachId") String coachId, Model model) {
+        //authentication
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(!loggedUserLogin.equals(clubManager.getClub(Integer.parseInt(clubId)).getOwner().getLogin()))
+            return  new ModelAndView("redirect:/errors/error403");
+        //end authentication
         Coach coach = userManager.findCoachById(Integer.parseInt(coachId));
         Club club = clubManager.getClub(Integer.parseInt(clubId));
         logger.info(coach.getLogin());
         logger.info(club.getName());
         clubManager.addCoachToClub(coach, club);
 
-
         return new ModelAndView("redirect:/owner-panel/add-coaches/{clubId}");
     }
 
     @GetMapping("/owner-panel/delete-coaches/{clubId}/{coachId}")
     public ModelAndView removeCoachFromClub(@PathVariable("clubId") String clubId, @PathVariable("coachId") String coachId, Model model) {
+        //authentication
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(!loggedUserLogin.equals(clubManager.getClub(Integer.parseInt(clubId)).getOwner().getLogin()))
+            return  new ModelAndView("redirect:/errors/error403");
+        //end authentication
         Coach coach = userManager.findCoachById(Integer.parseInt(coachId));
         Club club = clubManager.getClub(Integer.parseInt(clubId));
         logger.info(coach.getLogin());
         logger.info(club.getName());
         clubManager.removeCoachFromClub(coach, club);
-
 
         return new ModelAndView("redirect:/owner-panel/add-coaches/{clubId}");
     }
