@@ -48,11 +48,4 @@ public class TrainingCategory {
 		this.trainings = trainings;
 	}
 
-	@Override
-	public String toString() {
-		return "TrainingCategory [id=" + id + ", name=" + name + ", trainings=" + trainings + "]";
-	}
-    
-    
-
 }

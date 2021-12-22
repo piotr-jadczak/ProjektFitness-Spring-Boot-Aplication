@@ -12,4 +12,5 @@ public interface UserManager {
     String getAuthorityName(Authentication authentication);
     Owner findOwnerByLogin(String login);
     Coach findCoachById(int id);
+    Coach findCoachByLogin(String login);
 }

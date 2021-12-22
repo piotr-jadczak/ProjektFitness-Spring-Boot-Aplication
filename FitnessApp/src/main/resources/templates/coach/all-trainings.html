@@ -13,7 +13,16 @@
         <a th:href="@{/coach-panel}">Powrót do panelu</a><br>
     </div>
     <div class="container px-4 text-center" >
-
+        <div th:each="training : ${allTrainings}">
+            <b>Nazwa: </b><a th:text="${training.name}"></a><br>
+            <b>Opis: </b><a th:text="${training.description}"></a><br>
+            <b>Kategoria: </b><a th:text="${training.trainingCategory.getName()}"></a><br>
+            <b>Klub: </b><a th:text="${training.club.getName()}"></a><br>
+            <b>Trener: </b><a th:text="${training.coach.fullName()}"></a><br>
+            <b>Maksymalna liczba uczestników: </b><a th:text="${training.maxParticipants}"></a><br>
+            <b>Zapisanych uczestników: </b><a th:text="${training.currentParticipants}"></a><br>
+            <b>Cena: </b><a th:text="${training.price}"></a><br>
+        </div>
     </div>
 </div>
 

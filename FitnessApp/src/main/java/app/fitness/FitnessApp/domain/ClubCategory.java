@@ -52,10 +52,4 @@ public class ClubCategory {
 		this.clubs = clubs;
 	}
 
-	@Override
-	public String toString() {
-		return "ClubCategory [id=" + id + ", name=" + name + ", clubs=" + clubs + "]";
-	}
-    
-    
 }

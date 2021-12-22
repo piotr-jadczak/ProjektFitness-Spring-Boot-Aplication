@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <title>Dodaj trening</title>
+    <th:block th:replace="fragments/components-coach-panel :: headContent"></th:block>
+</head>
+<body>
+<header>
+    <div th:replace="fragments/components-coach-panel :: top-menu"></div>
+</header>
+<div class="py-5 mt-5 bg-white">
+    <div class="container px-4 text-center" >
+        <a th:href="@{/coach-panel}">Powrót do panelu</a><br>
+    </div>
+    <div>
+        <div class="container px-4 text-center" style="max-width: 500px;">
+            <div>
+                <form th:action="@{/coach-panel/my-trainings}" th:object="${trainingToAdd}" method="post">
+                    <fieldset>
+                        <legend>Dodaj trening</legend>
+                        <select class="form-control" id="training_category" th:field="*{trainingCategory}">
+                            <option th:each="category : ${trainingCategories}"
+                                    th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                        <select class="form-control" id="training_club" th:field="*{club}">
+                            <option th:each="club : ${availableClubs}"
+                                    th:value="${club.id}" th:text="${club.name}"></option>
+                        </select>
+
+                        <input type="text" th:field="*{name}" placeholder="Nazwa" required /><br>
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
+
+                        <textarea th:field="*{description}" placeholder="Opis" rows="8" cols="50"></textarea>
+                        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</p>
+
+                        <label for="max_participants">Maksymalna liczba uczestników </label><br>
+                        <input type="number" id="max_participants" min="1" th:field="*{maxParticipants}" placeholder="Maksymalna liczba uczestników" required /><br>
+                        <p th:if="${#fields.hasErrors('maxParticipants')}" th:errors="*{maxParticipants}">Name Error</p>
+
+                        <label for="day_of_week">Dzień tygodnia</label><br>
+                        <select class="form-control" id="day_of_week" th:field="*{dayOfWeek}">
+                            <option th:each="dayT : ${T(app.fitness.FitnessApp.domain.extra.DayOfWeek).values()}"
+                                    th:value="${dayT}" th:text="${dayT.getDisplayValue()}"></option>
+                        </select>
+
+                        <label for="start_time">Godzina rozpoczęcia</label><br>
+                        <input type="time" id="start_time" th:field="*{startTime}" required /><br>
+                        <label for="end_time">Godzina zakończenia</label><br>
+                        <input type="time" id="end_time" th:field="*{endTime}" required /><br>
+
+                        <label for="price">Cena</label><br>
+                        <input type="number" id="price" step="0.01" min="0" th:field="*{price}" placeholder="Cena" required /><br>
+                        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Name Error</p>
+
+                        <input type="hidden" th:field="*{id}">
+                        <button type="submit" class="btn btn-primary">Dodaj</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/components-owner-panel :: footer"></footer>
+
+</body>
+</html>

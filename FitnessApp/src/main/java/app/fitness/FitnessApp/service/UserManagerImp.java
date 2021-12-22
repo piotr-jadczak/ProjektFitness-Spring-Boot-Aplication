@@ -99,5 +99,12 @@ public class UserManagerImp implements UserManager {
         return coachRepository.findById(id);
     }
 
+    @Override
+    public Coach findCoachByLogin(String login) {
+        if(coachRepository.findByLogin(login) != null)
+            return coachRepository.findByLogin(login);
+        throw new RuntimeException("No coach with login " + login + " exist");
+    }
+
 
 }
