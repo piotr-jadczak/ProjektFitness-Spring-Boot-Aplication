@@ -11,10 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.stream.Collectors;
@@ -55,8 +53,8 @@ public class CoachPanelController {
         return "/coach/my-trainings";
     }
 
-    @GetMapping("coach-panel/add-training")
-    public String viewTrainingForm(Model model) {
+    @GetMapping("coach-panel/add-training/{id}")
+    public String viewTrainingForm(@PathVariable("id") String id, Model model) {
 
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
         Coach loggedCoach = userManager.findCoachByLogin(loggedUserLogin);
@@ -64,7 +62,20 @@ public class CoachPanelController {
         if(loggedCoach.getClubs() == null || loggedCoach.getClubs().size() <= 0)
             throw new CoachNotInAnyClubException("Nie możesz dodać treningu ponieważ nie jesteś w żadnym obiekcie sportowym");
 
-        model.addAttribute("trainingToAdd", new Training());
+        int entityID = Integer.parseInt(id);
+        if(trainingManager.isTrainingInDB(entityID)) {
+            Training trainingToEdit = trainingManager.getTraining(entityID);
+            if(userManager.findCoachByLogin(loggedUserLogin).getId() == trainingToEdit.getCoach().getId()) {
+                model.addAttribute("trainingToAdd", trainingToEdit);
+            }
+            else {
+                return "errors/error403";
+            }
+        }
+        else {
+            model.addAttribute("trainingToAdd", new Training());
+        }
+
         model.addAttribute("trainingCategories", trainingManager.getAllTrainingCategories().collect(Collectors.toList()));
         model.addAttribute("availableClubs", loggedCoach.getClubs());
 
@@ -76,11 +87,30 @@ public class CoachPanelController {
 
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
         Coach loggedCoach = userManager.findCoachByLogin(loggedUserLogin);
-        trainingToAdd.setCoach(loggedCoach);
-        trainingManager.addTraining(trainingToAdd);
+
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("trainingCategories", trainingManager.getAllTrainingCategories().collect(Collectors.toList()));
+            model.addAttribute("availableClubs", loggedCoach.getClubs());
+            return "/coach/add-training";
+        }
+        if(trainingManager.isTrainingInDB(trainingToAdd.getId())) {
+            trainingManager.updateTraining(trainingToAdd);
+        }
+        else {
+            trainingToAdd.setCoach(loggedCoach);
+            trainingManager.addTraining(trainingToAdd);
+        }
 
         model.addAttribute("coachTrainings", trainingManager.getAllTrainings(loggedCoach));
         return "/coach/my-trainings";
+    }
+
+    @GetMapping("/coach-panel/delete-training/{id}")
+    public ModelAndView deleteTraining(@PathVariable String id) {
+        int entityID = Integer.parseInt(id);
+        trainingManager.deleteTraining(entityID);
+
+        return new ModelAndView("redirect:/coach-panel/my-trainings");
     }
 
     @ExceptionHandler(CoachNotInAnyClubException.class)

@@ -11,7 +11,7 @@
 <div class="py-5 mt-5 bg-white">
     <div class="container px-4 text-center" >
         <a th:href="@{/coach-panel}">Powrót do panelu</a><br>
-        <a th:href="@{/coach-panel/add-training}">Dodaj trening</a><br>
+        <a th:href="@{/coach-panel/add-training/0}">Dodaj trening</a><br>
     </div>
     <div th:if="${exceptionMessage}">
         <a th:text="${exceptionMessage}"></a>
@@ -25,6 +25,12 @@
             <b>Maksymalna liczba uczestników: </b><a th:text="${training.maxParticipants}"></a><br>
             <b>Zapisanych uczestników: </b><a th:text="${training.currentParticipants}"></a><br>
             <b>Cena: </b><a th:text="${training.price}"></a><br>
+            <div>
+                <a th:href="@{/coach-panel/add-training/{id}(id=${training.id})}" role="button">Edytuj trening</a>
+            </div>
+            <div>
+                <a th:href="@{/coach-panel/delete-training/{id}(id=${training.id})}" role="button">Usuń trening</a>
+            </div>
         </div>
     </div>
 </div>

@@ -14,4 +14,8 @@ public interface TrainingManager {
     void addTraining(Training training);
     List<Training> getAllTrainings(Coach coach);
     Stream<Training> getAllTrainings();
+    boolean isTrainingInDB(int id);
+    void updateTraining(Training training);
+    Training getTraining(int id);
+    void deleteTraining(int id);
 }

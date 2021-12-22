@@ -98,8 +98,6 @@ public class OwnerPanelController {
             return "owner/add-club";
         }
 
-        String id = String.valueOf(clubToAdd.getId());
-        logger.info("Id clubu " + id);
         if(clubManager.isClubInDB(clubToAdd.getId())) {
             clubManager.updateClub(clubToAdd);
         }
@@ -113,7 +111,7 @@ public class OwnerPanelController {
     }
 
     @GetMapping("/owner-panel/delete-club/{id}")
-    public ModelAndView deleteChair(@PathVariable String id) {
+    public ModelAndView deleteClub(@PathVariable String id) {
         int entityID = Integer.parseInt(id);
         clubManager.deleteClub(entityID);
 
