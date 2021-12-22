@@ -1,7 +1,8 @@
 package app.fitness.FitnessApp.domain;
 
-import java.util.Date;
-import java.util.List;
+import app.fitness.FitnessApp.domain.extra.DayOfWeek;
+
+import java.time.LocalTime;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -15,10 +16,13 @@ public class Training {
     private int id;
     private String name;
     private String description;
-    private int maxNumberOfUsers;
-    private Date startTime;
-    private Date endTime;
-    private int pointReward;
+    private int maxParticipants;
+	private int currentParticipants = 0;
+
+    private DayOfWeek dayOfWeek;
+    private LocalTime startTime;
+    private LocalTime endTime;
+
     private double price;
 
     @ManyToOne
@@ -36,121 +40,122 @@ public class Training {
 	public Training() {
 	}
 
-	public Training(String name, String description, int maxNumberOfUsers, Date startTime, Date endTime,
-			int pointReward, double price) {
-		super();
-		this.name = name;
-		this.description = description;
-		this.maxNumberOfUsers = maxNumberOfUsers;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.pointReward = pointReward;
-		this.price = price;
-	}
+    public Training(String name, String description, int maxParticipants, int currentParticipants, DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime, double price, Club club, TrainingCategory trainingCategory, Coach coach, Set<Customer> customers) {
+        this.name = name;
+        this.description = description;
+        this.maxParticipants = maxParticipants;
+        this.currentParticipants = currentParticipants;
+        this.dayOfWeek = dayOfWeek;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.price = price;
+        this.club = club;
+        this.trainingCategory = trainingCategory;
+        this.coach = coach;
+        this.customers = customers;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public int getMaxNumberOfUsers() {
-		return maxNumberOfUsers;
-	}
+    public int getMaxParticipants() {
+        return maxParticipants;
+    }
 
-	public void setMaxNumberOfUsers(int maxNumberOfUsers) {
-		this.maxNumberOfUsers = maxNumberOfUsers;
-	}
+    public void setMaxParticipants(int maxParticipants) {
+        this.maxParticipants = maxParticipants;
+    }
 
-	public Date getStartTime() {
-		return startTime;
-	}
+    public int getCurrentParticipants() {
+        return currentParticipants;
+    }
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
+    public void setCurrentParticipants(int currentParticipants) {
+        this.currentParticipants = currentParticipants;
+    }
 
-	public Date getEndTime() {
-		return endTime;
-	}
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
 
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
 
-	public int getPointReward() {
-		return pointReward;
-	}
+    public LocalTime getStartTime() {
+        return startTime;
+    }
 
-	public void setPointReward(int pointReward) {
-		this.pointReward = pointReward;
-	}
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
 
-	public double getPrice() {
-		return price;
-	}
+    public LocalTime getEndTime() {
+        return endTime;
+    }
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
 
-	public Club getClub() {
-		return club;
-	}
+    public double getPrice() {
+        return price;
+    }
 
-	public void setClub(Club club) {
-		this.club = club;
-	}
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-	public TrainingCategory getTrainingCategory() {
-		return trainingCategory;
-	}
+    public Club getClub() {
+        return club;
+    }
 
-	public void setTrainingCategory(TrainingCategory trainingCategory) {
-		this.trainingCategory = trainingCategory;
-	}
+    public void setClub(Club club) {
+        this.club = club;
+    }
 
-	public Coach getCoach() {
-		return coach;
-	}
+    public TrainingCategory getTrainingCategory() {
+        return trainingCategory;
+    }
 
-	public void setCoach(Coach coach) {
-		this.coach = coach;
-	}
+    public void setTrainingCategory(TrainingCategory trainingCategory) {
+        this.trainingCategory = trainingCategory;
+    }
 
-	public Set<Customer> getCustomers() {
-		return customers;
-	}
+    public Coach getCoach() {
+        return coach;
+    }
 
-	public void setCustomers(Set<Customer> customers) {
-		this.customers = customers;
-	}
+    public void setCoach(Coach coach) {
+        this.coach = coach;
+    }
 
-	@Override
-	public String toString() {
-		return "Training [id=" + id + ", name=" + name + ", description=" + description + ", maxNumberOfUsers="
-				+ maxNumberOfUsers + ", startTime=" + startTime + ", endTime=" + endTime + ", pointReward="
-				+ pointReward + ", price=" + price + ", club=" + club + ", trainingCategory=" + trainingCategory
-				+ ", coach=" + coach + ", customers=" + customers + "]";
-	}
-    
-    
+    public Set<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
+    }
 }

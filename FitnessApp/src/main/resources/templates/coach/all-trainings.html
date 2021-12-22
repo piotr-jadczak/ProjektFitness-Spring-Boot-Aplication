@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <title>Wszystkie obiekty</title>
+    <th:block th:replace="fragments/components-coach-panel :: headContent"></th:block>
+</head>
+<body>
+<header>
+    <div th:replace="fragments/components-coach-panel :: top-menu"></div>
+</header>
+<div class="py-5 mt-5 bg-white">
+    <div class="container px-4 text-center" >
+        <a th:href="@{/coach-panel}">Powrót do panelu</a><br>
+    </div>
+    <div class="container px-4 text-center" >
+
+    </div>
+</div>
+
+<footer th:replace="fragments/components-owner-panel :: footer"></footer>
+
+</body>
+</html>

@@ -24,4 +24,16 @@ public class CoachPanelController {
         model.addAttribute("loggedUserLogin", currentPrincipalName);
         return "/coach/coach-panel";
     }
+
+    @GetMapping("/coach-panel/all-trainings")
+    public String viewAllTrainings(Model model) {
+
+        return "/coach/all-trainings";
+    }
+
+    @GetMapping("/coach-panel/my-trainings")
+    public String viewMyTrainings(Model model) {
+
+        return "/coach/my-trainings";
+    }
 }

@@ -2,9 +2,11 @@ package app.fitness.FitnessApp;
 
 import app.fitness.FitnessApp.domain.Club;
 import app.fitness.FitnessApp.domain.ClubCategory;
+import app.fitness.FitnessApp.domain.TrainingCategory;
 import app.fitness.FitnessApp.login.UserForm;
 import app.fitness.FitnessApp.login.UserType;
 import app.fitness.FitnessApp.service.ClubManager;
+import app.fitness.FitnessApp.service.TrainingManager;
 import app.fitness.FitnessApp.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,7 +33,8 @@ public class FitnessAppApplication {
 									  @Autowired ClubManager clubManager,
 									  @Autowired @Qualifier("coach-prototype2") UserForm coach2,
 									  @Autowired @Qualifier("coach-prototype3") UserForm coach3,
-									  @Autowired @Qualifier("club-prototype") Club club) {
+									  @Autowired @Qualifier("club-prototype") Club club,
+									  @Autowired TrainingManager trainingManager) {
 		return args -> {
 			System.out.println("Application test SetUp");
 			userManager.addUser(customer);
@@ -47,6 +50,10 @@ public class FitnessAppApplication {
 			club.setOwner(userManager.findOwnerByLogin("owner"));
 			club.setClubCategory(clubManager.getAllCategories().get(0));
 			clubManager.addClub(club);
+			trainingManager.addTrainingCategory(new TrainingCategory("Trening personalny"));
+			trainingManager.addTrainingCategory(new TrainingCategory("Trening grupowy"));
+			trainingManager.addTrainingCategory(new TrainingCategory("Trening personalny dla dzieci"));
+			trainingManager.addTrainingCategory(new TrainingCategory("Trening grupowy dla dzieci"));
 
 		};
 	}
