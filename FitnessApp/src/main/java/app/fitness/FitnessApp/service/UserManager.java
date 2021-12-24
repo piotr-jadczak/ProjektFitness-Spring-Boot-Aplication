@@ -1,10 +1,11 @@
 package app.fitness.FitnessApp.service;
 
-import app.fitness.FitnessApp.domain.BaseUser;
-import app.fitness.FitnessApp.domain.Coach;
-import app.fitness.FitnessApp.domain.Owner;
+import app.fitness.FitnessApp.domain.*;
 import app.fitness.FitnessApp.login.UserForm;
 import org.springframework.security.core.Authentication;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 public interface UserManager {
 
@@ -13,4 +14,5 @@ public interface UserManager {
     Owner findOwnerByLogin(String login);
     Coach findCoachById(int id);
     Coach findCoachByLogin(String login);
+    Customer findCustomerByLogin(String login);
 }

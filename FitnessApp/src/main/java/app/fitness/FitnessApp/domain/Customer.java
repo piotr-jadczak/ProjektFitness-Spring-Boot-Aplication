@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name = "customer")
 public class Customer extends BaseUser {
 
-	@ManyToMany
+	@ManyToMany(mappedBy = "customers")
 	private Set<Training> trainings;
 
 	public Customer() {
@@ -27,8 +27,6 @@ public class Customer extends BaseUser {
 	public Customer(BaseUser baseUser) {
 		super(baseUser);
 	}
-
-	
 
 	public Set<Training> getTrainings() {
 		return trainings;

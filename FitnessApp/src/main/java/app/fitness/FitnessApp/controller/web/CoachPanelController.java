@@ -53,7 +53,7 @@ public class CoachPanelController {
         return "/coach/my-trainings";
     }
 
-    @GetMapping("coach-panel/add-training/{id}")
+    @GetMapping("/coach-panel/add-training/{id}")
     public String viewTrainingForm(@PathVariable("id") String id, Model model) {
 
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -82,7 +82,7 @@ public class CoachPanelController {
         return "/coach/add-training";
     }
 
-    @PostMapping("coach-panel/my-trainings")
+    @PostMapping("/coach-panel/my-trainings")
     public String addTraining(@ModelAttribute("trainingToAdd") Training trainingToAdd, BindingResult bindingResult, Model model) {
 
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();

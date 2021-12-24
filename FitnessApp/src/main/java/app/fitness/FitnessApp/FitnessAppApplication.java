@@ -2,7 +2,9 @@ package app.fitness.FitnessApp;
 
 import app.fitness.FitnessApp.domain.Club;
 import app.fitness.FitnessApp.domain.ClubCategory;
+import app.fitness.FitnessApp.domain.Training;
 import app.fitness.FitnessApp.domain.TrainingCategory;
+import app.fitness.FitnessApp.domain.extra.DayOfWeek;
 import app.fitness.FitnessApp.login.UserForm;
 import app.fitness.FitnessApp.login.UserType;
 import app.fitness.FitnessApp.service.ClubManager;
@@ -14,6 +16,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.time.LocalTime;
+import java.util.stream.Collectors;
 
 
 @SpringBootApplication
@@ -54,6 +59,13 @@ public class FitnessAppApplication {
 			trainingManager.addTrainingCategory(new TrainingCategory("Trening grupowy"));
 			trainingManager.addTrainingCategory(new TrainingCategory("Trening personalny dla dzieci"));
 			trainingManager.addTrainingCategory(new TrainingCategory("Trening grupowy dla dzieci"));
+//			clubManager.addCoachToClub(userManager.findCoachByLogin("coach"), clubManager.getClub(1));
+
+//			training.setTrainingCategory(trainingManager.getAllTrainingCategories().collect(Collectors.toList()).get(0));
+//			training.setCoach(userManager.findCoachByLogin("coach"));
+//			training.setClub(clubManager.getClub(1));
+//			trainingManager.addTraining(training);
+
 
 		};
 	}
@@ -99,5 +111,13 @@ public class FitnessAppApplication {
 		Club club = new Club("Best gym", "To najlepsza siłownia w Trojmieście", "Pomorska", "23/4", "Gdańsk");
 		return club;
 	}
+
+//	@Bean
+//	@Qualifier("training-prototype")
+//	public Training addTrainingPrototype() {
+//		//Training training = new Training("Trening siłowy dla początkujących", "Ten trening jest super", 8, 0, DayOfWeek.MONDAY, LocalTime.MIDNIGHT, LocalTime.MIDNIGHT, 50);
+//		Training training = new Training();
+//		return training;
+//	}
 
 }

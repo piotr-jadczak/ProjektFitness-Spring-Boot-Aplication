@@ -33,8 +33,13 @@ public class Training {
     
     @ManyToOne
     private Coach coach;
-    
-    @ManyToMany(mappedBy = "trainings")
+
+    @ManyToMany
+    @JoinTable (
+            name = "customer_training",
+            joinColumns = @JoinColumn(name = "training_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id")
+    )
     private Set<Customer> customers;
 
 	public Training() {
@@ -53,6 +58,17 @@ public class Training {
         this.trainingCategory = trainingCategory;
         this.coach = coach;
         this.customers = customers;
+    }
+
+    public Training(String name, String description, int maxParticipants, int currentParticipants, DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime, double price) {
+        this.name = name;
+        this.description = description;
+        this.maxParticipants = maxParticipants;
+        this.currentParticipants = currentParticipants;
+        this.dayOfWeek = dayOfWeek;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.price = price;
     }
 
     public int getId() {
@@ -157,5 +173,21 @@ public class Training {
 
     public void setCustomers(Set<Customer> customers) {
         this.customers = customers;
+    }
+
+    public boolean isTrainingFull() {
+        return availableSpots() == 0;
+    }
+
+    private int availableSpots() {
+        return this.getMaxParticipants() - this.getCurrentParticipants();
+    }
+
+    public String getEnrolledCustomers() {
+        return this.getCurrentParticipants() + "/" + this.getMaxParticipants();
+    }
+
+    public void addCustomer(Customer customer) {
+        customers.add(customer);
     }
 }

@@ -1,6 +1,7 @@
 package app.fitness.FitnessApp.service;
 
 import app.fitness.FitnessApp.domain.Coach;
+import app.fitness.FitnessApp.domain.Customer;
 import app.fitness.FitnessApp.domain.Training;
 import app.fitness.FitnessApp.domain.TrainingCategory;
 import app.fitness.FitnessApp.repository.CoachRepository;
@@ -74,4 +75,15 @@ public class TrainingManagerImp implements TrainingManager {
     public void deleteTraining(int id) {
         trainingRepository.deleteTrainingById(id);
     }
+
+    @Override
+    public void enrollCustomer(Customer customer, int trainingId) {
+        Training training = trainingRepository.findById(trainingId).get();
+        if(!training.isTrainingFull()) {
+            training.setCurrentParticipants(training.getCurrentParticipants()+1);
+            training.addCustomer(customer);
+            trainingRepository.save(training);
+        }
+    }
+
 }

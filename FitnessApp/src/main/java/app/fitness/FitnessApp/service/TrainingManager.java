@@ -1,6 +1,7 @@
 package app.fitness.FitnessApp.service;
 
 import app.fitness.FitnessApp.domain.Coach;
+import app.fitness.FitnessApp.domain.Customer;
 import app.fitness.FitnessApp.domain.Training;
 import app.fitness.FitnessApp.domain.TrainingCategory;
 
@@ -18,4 +19,5 @@ public interface TrainingManager {
     void updateTraining(Training training);
     Training getTraining(int id);
     void deleteTraining(int id);
+    void enrollCustomer(Customer customer, int trainingId);
 }

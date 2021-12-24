@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
-    <title>Moje obiekty</title>
+    <title>Moje zajęcia</title>
     <th:block th:replace="fragments/components-coach-panel :: headContent"></th:block>
 </head>
 <body>
@@ -11,7 +11,7 @@
 <div class="py-5 mt-5 bg-white">
     <div class="container px-4 text-center" >
         <a th:href="@{/coach-panel}">Powrót do panelu</a><br>
-        <a th:href="@{/coach-panel/add-training/0}">Dodaj trening</a><br>
+        <a th:href="@{/coach-panel/add-training/0}">Dodaj zajęcia</a><br>
     </div>
     <div th:if="${exceptionMessage}">
         <a th:text="${exceptionMessage}"></a>
@@ -26,10 +26,10 @@
             <b>Zapisanych uczestników: </b><a th:text="${training.currentParticipants}"></a><br>
             <b>Cena: </b><a th:text="${training.price}"></a><br>
             <div>
-                <a th:href="@{/coach-panel/add-training/{id}(id=${training.id})}" role="button">Edytuj trening</a>
+                <a th:href="@{/coach-panel/add-training/{id}(id=${training.id})}" role="button">Edytuj</a>
             </div>
             <div>
-                <a th:href="@{/coach-panel/delete-training/{id}(id=${training.id})}" role="button">Usuń trening</a>
+                <a th:href="@{/coach-panel/delete-training/{id}(id=${training.id})}" role="button">Usuń</a>
             </div>
         </div>
     </div>

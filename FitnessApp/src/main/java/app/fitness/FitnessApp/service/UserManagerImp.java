@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class UserManagerImp implements UserManager {
@@ -104,6 +106,13 @@ public class UserManagerImp implements UserManager {
         if(coachRepository.findByLogin(login) != null)
             return coachRepository.findByLogin(login);
         throw new RuntimeException("No coach with login " + login + " exist");
+    }
+
+    @Override
+    public Customer findCustomerByLogin(String login) {
+        if(customerRepository.findByLogin(login) != null)
+            return customerRepository.findByLogin(login);
+        throw new RuntimeException("No customer with login " + login + " exist");
     }
 
 

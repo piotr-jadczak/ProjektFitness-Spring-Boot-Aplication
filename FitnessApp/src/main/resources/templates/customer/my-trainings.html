@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <title>Moje zajęcia</title>
+    <th:block th:replace="fragments/components-customer-panel :: headContent"></th:block>
+</head>
+<body>
+<header>
+    <div th:replace="fragments/components-customer-panel :: top-menu"></div>
+</header>
+<div class="py-5 mt-5 bg-white">
+    <div class="container px-4 text-center" >
+        <a th:href="@{/customer-panel}">Powrót do panelu</a><br>
+    </div>
+
+</div>
+
+<footer th:replace="fragments/components-customer-panel :: footer"></footer>
+
+</body>
+</html>
