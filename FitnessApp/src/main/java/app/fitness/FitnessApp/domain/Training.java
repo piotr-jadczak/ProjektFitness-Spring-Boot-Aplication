@@ -190,4 +190,8 @@ public class Training {
     public void addCustomer(Customer customer) {
         customers.add(customer);
     }
+
+    public void removeCustomer(Customer customer) {
+            customers.remove(customer);
+    }
 }

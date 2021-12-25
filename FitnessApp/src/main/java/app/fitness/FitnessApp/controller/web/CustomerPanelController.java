@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +53,9 @@ public class CustomerPanelController {
     @GetMapping("/customer-panel/my-trainings")
     public String viewMyTrainings(Model model) {
 
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        Customer loggedCustomer = userManager.findCustomerByLogin(loggedUserLogin);
+        model.addAttribute("myTrainings", new ArrayList<>(loggedCustomer.getTrainings()));
         return "customer/my-trainings";
     }
 
@@ -70,5 +74,16 @@ public class CustomerPanelController {
         trainingManager.enrollCustomer(loggedCustomer, Integer.parseInt(id));
 
         return "redirect:/customer-panel/available-trainings";
+    }
+
+    @GetMapping("/customer-panel/resign/{id}")
+    public String resignFromTraining(@PathVariable("id") String id, Model model) {
+
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        Customer loggedCustomer = userManager.findCustomerByLogin(loggedUserLogin);
+
+        trainingManager.resignCustomer(loggedCustomer, Integer.parseInt(id));
+
+        return "redirect:/customer-panel/my-trainings";
     }
 }

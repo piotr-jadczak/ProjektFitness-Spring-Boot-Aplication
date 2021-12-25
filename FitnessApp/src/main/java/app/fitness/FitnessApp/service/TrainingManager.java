@@ -20,4 +20,5 @@ public interface TrainingManager {
     Training getTraining(int id);
     void deleteTraining(int id);
     void enrollCustomer(Customer customer, int trainingId);
+    void resignCustomer(Customer customer, int trainingId);
 }

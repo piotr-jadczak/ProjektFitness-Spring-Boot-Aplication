@@ -12,6 +12,20 @@
     <div class="container px-4 text-center" >
         <a th:href="@{/customer-panel}">Powrót do panelu</a><br>
     </div>
+    <div class="container px-4 text-center" >
+        <div th:each="training : ${myTrainings}">
+            <b>Nazwa: </b><a th:text="${training.name}"></a><br>
+            <b>Opis: </b><a th:text="${training.description}"></a><br>
+            <b>Kategoria: </b><a th:text="${training.trainingCategory.getName()}"></a><br>
+            <b>Klub: </b><a th:text="${training.club.getName()}"></a><br>
+            <b>Trener: </b><a th:text="${training.coach.fullName()}"></a><br>
+            <b>Zapisanych: </b><a th:text="${training.getEnrolledCustomers()}"></a><br>
+            <b>Cena: </b><a th:text="${training.price}"></a><br>
+            <div>
+                <a th:href="@{/customer-panel/resign/{id}(id=${training.id})}" role="button">Zrezygnuj</a>
+            </div>
+        </div>
+    </div>
 
 </div>
 

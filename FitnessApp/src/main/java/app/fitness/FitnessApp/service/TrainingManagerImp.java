@@ -79,9 +79,20 @@ public class TrainingManagerImp implements TrainingManager {
     @Override
     public void enrollCustomer(Customer customer, int trainingId) {
         Training training = trainingRepository.findById(trainingId).get();
-        if(!training.isTrainingFull()) {
+        if(!training.isTrainingFull() && !training.getCustomers().contains(customer)) {
             training.setCurrentParticipants(training.getCurrentParticipants()+1);
             training.addCustomer(customer);
+            trainingRepository.save(training);
+        }
+    }
+
+    @Override
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    public void resignCustomer(Customer customer, int trainingId) {
+        Training training = trainingRepository.findById(trainingId).get();
+        if(training.getCustomers().contains(customer)) {
+            training.removeCustomer(customer);
+            training.setCurrentParticipants(training.getCurrentParticipants()-1);
             trainingRepository.save(training);
         }
     }
