@@ -163,4 +163,10 @@ public class OwnerPanelController {
 
         return new ModelAndView("redirect:/owner-panel/add-coaches/{clubId}");
     }
+
+    @GetMapping("/owner-panel/profile")
+    public String viewProfile(Model model) {
+
+        return "owner/profile";
+    }
 }

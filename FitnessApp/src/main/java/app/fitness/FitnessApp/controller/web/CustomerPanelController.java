@@ -86,4 +86,10 @@ public class CustomerPanelController {
 
         return "redirect:/customer-panel/my-trainings";
     }
+
+    @GetMapping("/customer-panel/profile")
+    public String viewProfile(Model model) {
+
+        return "customer/profile";
+    }
 }

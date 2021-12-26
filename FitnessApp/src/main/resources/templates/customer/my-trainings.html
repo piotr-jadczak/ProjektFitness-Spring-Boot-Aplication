@@ -10,9 +10,6 @@
 </header>
 <div class="py-5 mt-5 bg-white">
     <div class="container px-4 text-center" >
-        <a th:href="@{/customer-panel}">Powrót do panelu</a><br>
-    </div>
-    <div class="container px-4 text-center" >
         <div th:each="training : ${myTrainings}">
             <b>Nazwa: </b><a th:text="${training.name}"></a><br>
             <b>Opis: </b><a th:text="${training.description}"></a><br>

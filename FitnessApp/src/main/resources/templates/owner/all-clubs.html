@@ -10,9 +10,6 @@
 </header>
 <div class="py-5 mt-5 bg-white">
     <div class="container px-4 text-center" >
-        <a th:href="@{/owner-panel}">Powrót do panelu</a><br>
-    </div>
-    <div class="container px-4 text-center" >
         <div th:each="club : ${clubList}">
             <a>Nazwa: </a><a th:text="${club.name}"></a><br>
             <a>Opis: </a><a th:text="${club.description}"></a><br>

@@ -113,6 +113,12 @@ public class CoachPanelController {
         return new ModelAndView("redirect:/coach-panel/my-trainings");
     }
 
+    @GetMapping("/coach-panel/profile")
+    public String viewProfile(Model model) {
+
+        return "coach/profile";
+    }
+
     @ExceptionHandler(CoachNotInAnyClubException.class)
     public String handleCoachNotInAnyClubException(CoachNotInAnyClubException exc, RedirectAttributes redirectAttributes) {
 

@@ -10,9 +10,6 @@
     <div th:replace="fragments/components-owner-panel :: top-menu"></div>
 </header>
 <div class="py-5 mt-5 bg-white">
-    <div class="container px-4 text-center" >
-        <a th:href="@{/owner-panel/my-clubs/}">Powrót do panelu</a><br>
-    </div>
     <div class="container px-4 text-center" style="max-width: 500px;">
         <h1 th:text="${currentClub.name}"></h1>
         <div>
