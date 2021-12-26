@@ -1,5 +1,6 @@
 package app.fitness.FitnessApp.controller.web;
 
+import app.fitness.FitnessApp.domain.Coach;
 import app.fitness.FitnessApp.domain.Customer;
 import app.fitness.FitnessApp.domain.Training;
 import app.fitness.FitnessApp.repository.CustomerRepository;
@@ -90,6 +91,9 @@ public class CustomerPanelController {
     @GetMapping("/customer-panel/profile")
     public String viewProfile(Model model) {
 
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        Customer loggedCustomer = userManager.findCustomerByLogin(loggedUserLogin);
+        model.addAttribute("profileDetails", loggedCustomer);
         return "customer/profile";
     }
 }

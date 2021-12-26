@@ -116,6 +116,9 @@ public class CoachPanelController {
     @GetMapping("/coach-panel/profile")
     public String viewProfile(Model model) {
 
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        Coach loggedCoach = userManager.findCoachByLogin(loggedUserLogin);
+        model.addAttribute("profileDetails", loggedCoach);
         return "coach/profile";
     }
 

@@ -9,7 +9,15 @@
     <div th:replace="fragments/components-customer-panel :: top-menu"></div>
 </header>
 <div class="py-5 mt-5 bg-white">
-
+    <div class="container px-4 text-center" >
+        <div th:object="${profileDetails}">
+            <b>Imię: </b><a th:text="${profileDetails.firstName}"></a><br>
+            <b>Nazwisko: </b><a th:text="${profileDetails.lastName}"></a><br>
+            <b>Adres-email: </b><a th:text="${profileDetails.email}"></a><br>
+            <b>Data urodzenia: </b><a th:text="${profileDetails.dob}"></a><br>
+            <b>Numer telefonu: </b><a th:text="${profileDetails.phoneNumber}"></a><br>
+        </div>
+    </div>
 </div>
 
 <footer th:replace="fragments/components-customer-panel :: footer"></footer>

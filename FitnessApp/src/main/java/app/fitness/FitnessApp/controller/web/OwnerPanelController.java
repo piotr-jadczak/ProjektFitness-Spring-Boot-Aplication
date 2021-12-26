@@ -167,6 +167,9 @@ public class OwnerPanelController {
     @GetMapping("/owner-panel/profile")
     public String viewProfile(Model model) {
 
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        Owner loggedOwner = userManager.findOwnerByLogin(loggedUserLogin);
+        model.addAttribute("profileDetails", loggedOwner);
         return "owner/profile";
     }
 }
