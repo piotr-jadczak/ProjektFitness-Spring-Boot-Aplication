@@ -3,6 +3,7 @@ package app.fitness.FitnessApp.controller.web;
 import app.fitness.FitnessApp.domain.Coach;
 import app.fitness.FitnessApp.domain.Customer;
 import app.fitness.FitnessApp.domain.Training;
+import app.fitness.FitnessApp.domain.extra.ProfileForm;
 import app.fitness.FitnessApp.repository.CustomerRepository;
 import app.fitness.FitnessApp.service.TrainingManager;
 import app.fitness.FitnessApp.service.UserManager;
@@ -12,9 +13,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -95,5 +100,26 @@ public class CustomerPanelController {
         Customer loggedCustomer = userManager.findCustomerByLogin(loggedUserLogin);
         model.addAttribute("profileDetails", loggedCustomer);
         return "customer/profile";
+    }
+
+    @GetMapping("customer-panel/edit-profile")
+    public String viewEditProfileForm(Model model) {
+
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        Customer loggedCustomer = userManager.findCustomerByLogin(loggedUserLogin);
+        model.addAttribute("profileDetails", userManager.castToProfileForm(loggedCustomer));
+        return "customer/edit-profile";
+    }
+
+    @PostMapping("customer-panel/profile")
+    public String changeCustomerDetails(@Valid @ModelAttribute("profileDetails") ProfileForm profileForm, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "customer/edit-profile";
+        }
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        userManager.updateUserDetails(profileForm, loggedUserLogin);
+
+        return "redirect:/customer-panel/profile";
     }
 }

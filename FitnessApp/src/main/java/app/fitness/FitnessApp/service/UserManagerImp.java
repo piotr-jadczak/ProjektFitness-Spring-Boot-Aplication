@@ -1,6 +1,7 @@
 package app.fitness.FitnessApp.service;
 
 import app.fitness.FitnessApp.domain.*;
+import app.fitness.FitnessApp.domain.extra.ProfileForm;
 import app.fitness.FitnessApp.login.UserForm;
 import app.fitness.FitnessApp.login.UserRole;
 import app.fitness.FitnessApp.repository.CoachRepository;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -113,6 +115,36 @@ public class UserManagerImp implements UserManager {
         if(customerRepository.findByLogin(login) != null)
             return customerRepository.findByLogin(login);
         throw new RuntimeException("No customer with login " + login + " exist");
+    }
+
+    @Override
+    public ProfileForm castToProfileForm(BaseUser user) {
+
+        ProfileForm profileForm = new ProfileForm(user.getFirstName(), user.getLastName(), user.getEmail(), user.getDob(), user.getPhoneNumber());
+
+        return profileForm;
+    }
+
+    @Override
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    public void updateUserDetails(ProfileForm profileForm, String login) {
+
+        if(coachRepository.findByLogin(login) != null) {
+            Coach coachToUpdate = findCoachByLogin(login);
+            coachRepository.updateCoachDetails(profileForm.getFirstName(), profileForm.getLastName(), profileForm.getEmail(), profileForm.getDob(), profileForm.getPhoneNumber(), coachToUpdate.getId());
+            return;
+        }
+        if(customerRepository.findByLogin(login) != null) {
+            Customer customerToUpdate = findCustomerByLogin(login);
+            customerRepository.updateCustomerDetails(profileForm.getFirstName(), profileForm.getLastName(), profileForm.getEmail(), profileForm.getDob(), profileForm.getPhoneNumber(), customerToUpdate.getId());
+            return;
+        }
+        if(ownerRepository.findByLogin(login) != null) {
+            Owner ownerToUpdate = findOwnerByLogin(login);
+            ownerRepository.updateOwnerDetails(profileForm.getFirstName(), profileForm.getLastName(), profileForm.getEmail(), profileForm.getDob(), profileForm.getPhoneNumber(), ownerToUpdate.getId());
+            return;
+        }
+
     }
 
 

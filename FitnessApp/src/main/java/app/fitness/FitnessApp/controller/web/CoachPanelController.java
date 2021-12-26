@@ -2,6 +2,7 @@ package app.fitness.FitnessApp.controller.web;
 
 import app.fitness.FitnessApp.domain.Coach;
 import app.fitness.FitnessApp.domain.Training;
+import app.fitness.FitnessApp.domain.extra.ProfileForm;
 import app.fitness.FitnessApp.exception.CoachNotInAnyClubException;
 import app.fitness.FitnessApp.service.TrainingManager;
 import app.fitness.FitnessApp.service.UserManager;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.stream.Collectors;
 
 @Controller
@@ -120,6 +122,27 @@ public class CoachPanelController {
         Coach loggedCoach = userManager.findCoachByLogin(loggedUserLogin);
         model.addAttribute("profileDetails", loggedCoach);
         return "coach/profile";
+    }
+
+    @GetMapping("coach-panel/edit-profile")
+    public String viewEditProfileForm(Model model) {
+
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        Coach loggedCoach = userManager.findCoachByLogin(loggedUserLogin);
+        model.addAttribute("profileDetails", userManager.castToProfileForm(loggedCoach));
+        return "coach/edit-profile";
+    }
+
+    @PostMapping("coach-panel/profile")
+    public String changeCoachDetails(@Valid @ModelAttribute("profileDetails") ProfileForm profileForm, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "coach/edit-profile";
+        }
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        userManager.updateUserDetails(profileForm, loggedUserLogin);
+
+        return "redirect:/coach-panel/profile";
     }
 
     @ExceptionHandler(CoachNotInAnyClubException.class)

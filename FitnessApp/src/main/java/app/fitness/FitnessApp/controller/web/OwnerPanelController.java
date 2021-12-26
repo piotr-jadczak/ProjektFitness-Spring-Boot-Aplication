@@ -2,7 +2,9 @@ package app.fitness.FitnessApp.controller.web;
 
 import app.fitness.FitnessApp.domain.Club;
 import app.fitness.FitnessApp.domain.Coach;
+import app.fitness.FitnessApp.domain.Customer;
 import app.fitness.FitnessApp.domain.Owner;
+import app.fitness.FitnessApp.domain.extra.ProfileForm;
 import app.fitness.FitnessApp.service.ClubManager;
 import app.fitness.FitnessApp.service.UserManager;
 import app.fitness.FitnessApp.validators.UniqueLoginValidator;
@@ -171,5 +173,26 @@ public class OwnerPanelController {
         Owner loggedOwner = userManager.findOwnerByLogin(loggedUserLogin);
         model.addAttribute("profileDetails", loggedOwner);
         return "owner/profile";
+    }
+
+    @GetMapping("owner-panel/edit-profile")
+    public String viewEditProfileForm(Model model) {
+
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        Owner loggedOwner = userManager.findOwnerByLogin(loggedUserLogin);
+        model.addAttribute("profileDetails", userManager.castToProfileForm(loggedOwner));
+        return "owner/edit-profile";
+    }
+
+    @PostMapping("owner-panel/profile")
+    public String changeOwnerDetails(@Valid @ModelAttribute("profileDetails") ProfileForm profileForm, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "owner/edit-profile";
+        }
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        userManager.updateUserDetails(profileForm, loggedUserLogin);
+
+        return "redirect:/owner-panel/profile";
     }
 }
