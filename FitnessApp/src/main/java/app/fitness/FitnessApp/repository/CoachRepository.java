@@ -25,4 +25,8 @@ public interface CoachRepository extends CrudRepository<Coach, Integer>{
     @Query("UPDATE Coach c SET c.firstName=?1, c.lastName=?2, c.email=?3, c.dob = ?4, c.phoneNumber=?5 WHERE c.id=?6")
     public void updateCoachDetails(String firstName, String lastName, String email, LocalDate dob, String phoneNumber, int id);
 
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE Coach c SET c.password =?1 WHERE c.id = ?2")
+    public void updateCoachPassword(String password, int id);
+
 }

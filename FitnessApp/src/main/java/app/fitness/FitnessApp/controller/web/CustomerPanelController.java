@@ -3,7 +3,9 @@ package app.fitness.FitnessApp.controller.web;
 import app.fitness.FitnessApp.domain.Coach;
 import app.fitness.FitnessApp.domain.Customer;
 import app.fitness.FitnessApp.domain.Training;
+import app.fitness.FitnessApp.domain.extra.PasswordForm;
 import app.fitness.FitnessApp.domain.extra.ProfileForm;
+import app.fitness.FitnessApp.exception.WrongOldPasswordException;
 import app.fitness.FitnessApp.repository.CustomerRepository;
 import app.fitness.FitnessApp.service.TrainingManager;
 import app.fitness.FitnessApp.service.UserManager;
@@ -14,10 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -122,4 +122,40 @@ public class CustomerPanelController {
 
         return "redirect:/customer-panel/profile";
     }
+
+    @GetMapping("/customer-panel/change-password")
+    public String changePasswordForm(Model model) {
+
+        PasswordForm newForm = new PasswordForm();
+        model.addAttribute("passwordForm", newForm);
+        return "customer/change-password";
+    }
+
+    @PostMapping("/customer-panel/change-password")
+    public String changeCustomerPassword(@Valid @ModelAttribute("passwordForm") PasswordForm passwordForm, BindingResult bindingResult, Model model) {
+
+        if(bindingResult.hasErrors()) {
+            return "customer/change-password";
+        }
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(userManager.isCorrectPassword(loggedUserLogin,passwordForm.getOldPassword())) {
+            userManager.userChangePassword(loggedUserLogin, passwordForm.getNewPassword());
+        }
+        else {
+            throw new WrongOldPasswordException("Hasło jest nieprawidłowe");
+        }
+
+
+        return "redirect:/customer-panel/profile";
+    }
+
+    @ExceptionHandler(WrongOldPasswordException.class)
+    public String handleWrongOldPasswordException(WrongOldPasswordException exc, RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("wrongPasswordException",
+                exc.getMessage());
+
+        return "redirect:/customer-panel/change-password";
+    }
+
 }

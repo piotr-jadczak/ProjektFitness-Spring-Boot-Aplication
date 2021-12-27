@@ -2,10 +2,15 @@ package app.fitness.FitnessApp.controller.web;
 
 import app.fitness.FitnessApp.domain.Coach;
 import app.fitness.FitnessApp.domain.Training;
+import app.fitness.FitnessApp.domain.extra.PasswordForm;
 import app.fitness.FitnessApp.domain.extra.ProfileForm;
 import app.fitness.FitnessApp.exception.CoachNotInAnyClubException;
+import app.fitness.FitnessApp.exception.WrongOldPasswordException;
 import app.fitness.FitnessApp.service.TrainingManager;
 import app.fitness.FitnessApp.service.UserManager;
+import app.fitness.FitnessApp.service.UserManagerImp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +35,8 @@ public class CoachPanelController {
         this.userManager = userManager;
         this.trainingManager = trainingManager;
     }
+
+    private static Logger logger = LoggerFactory.getLogger(CoachPanelController.class);
 
     @GetMapping("/coach-panel")
     public String viewCoachPanel(Model model) {
@@ -145,6 +152,32 @@ public class CoachPanelController {
         return "redirect:/coach-panel/profile";
     }
 
+    @GetMapping("/coach-panel/change-password")
+    public String changePasswordForm(Model model) {
+
+        PasswordForm newForm = new PasswordForm();
+        model.addAttribute("passwordForm", newForm);
+        return "coach/change-password";
+    }
+
+    @PostMapping("/coach-panel/change-password")
+    public String changeCoachPassword(@Valid @ModelAttribute("passwordForm") PasswordForm passwordForm, BindingResult bindingResult, Model model) {
+
+        if(bindingResult.hasErrors()) {
+            return "coach/change-password";
+        }
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(userManager.isCorrectPassword(loggedUserLogin,passwordForm.getOldPassword())) {
+            userManager.userChangePassword(loggedUserLogin, passwordForm.getNewPassword());
+        }
+        else {
+            throw new WrongOldPasswordException("Hasło jest nieprawidłowe");
+        }
+
+
+        return "redirect:/coach-panel/profile";
+    }
+
     @ExceptionHandler(CoachNotInAnyClubException.class)
     public String handleCoachNotInAnyClubException(CoachNotInAnyClubException exc, RedirectAttributes redirectAttributes) {
 
@@ -152,5 +185,14 @@ public class CoachPanelController {
                 exc.getMessage());
 
         return "redirect:/coach-panel/my-trainings";
+    }
+
+    @ExceptionHandler(WrongOldPasswordException.class)
+    public String handleWrongOldPasswordException(WrongOldPasswordException exc, RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("wrongPasswordException",
+                exc.getMessage());
+
+        return "redirect:/coach-panel/change-password";
     }
 }

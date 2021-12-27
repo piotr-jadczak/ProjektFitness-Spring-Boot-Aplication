@@ -4,7 +4,9 @@ import app.fitness.FitnessApp.domain.Club;
 import app.fitness.FitnessApp.domain.Coach;
 import app.fitness.FitnessApp.domain.Customer;
 import app.fitness.FitnessApp.domain.Owner;
+import app.fitness.FitnessApp.domain.extra.PasswordForm;
 import app.fitness.FitnessApp.domain.extra.ProfileForm;
+import app.fitness.FitnessApp.exception.WrongOldPasswordException;
 import app.fitness.FitnessApp.service.ClubManager;
 import app.fitness.FitnessApp.service.UserManager;
 import app.fitness.FitnessApp.validators.UniqueLoginValidator;
@@ -16,11 +18,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
@@ -194,5 +194,40 @@ public class OwnerPanelController {
         userManager.updateUserDetails(profileForm, loggedUserLogin);
 
         return "redirect:/owner-panel/profile";
+    }
+
+    @GetMapping("/owner-panel/change-password")
+    public String changePasswordForm(Model model) {
+
+        PasswordForm newForm = new PasswordForm();
+        model.addAttribute("passwordForm", newForm);
+        return "owner/change-password";
+    }
+
+    @PostMapping("/owner-panel/change-password")
+    public String changeOwnerPassword(@Valid @ModelAttribute("passwordForm") PasswordForm passwordForm, BindingResult bindingResult, Model model) {
+
+        if(bindingResult.hasErrors()) {
+            return "owner/change-password";
+        }
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(userManager.isCorrectPassword(loggedUserLogin,passwordForm.getOldPassword())) {
+            userManager.userChangePassword(loggedUserLogin, passwordForm.getNewPassword());
+        }
+        else {
+            throw new WrongOldPasswordException("Hasło jest nieprawidłowe");
+        }
+
+
+        return "redirect:/owner-panel/profile";
+    }
+
+    @ExceptionHandler(WrongOldPasswordException.class)
+    public String handleWrongOldPasswordException(WrongOldPasswordException exc, RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("wrongPasswordException",
+                exc.getMessage());
+
+        return "redirect:/owner-panel/change-password";
     }
 }

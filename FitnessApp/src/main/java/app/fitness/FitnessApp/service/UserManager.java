@@ -18,4 +18,6 @@ public interface UserManager {
     Customer findCustomerByLogin(String login);
     ProfileForm castToProfileForm(BaseUser user);
     void updateUserDetails(ProfileForm profileForm, String login);
+    boolean isCorrectPassword(String login, String currentPassword);
+    void userChangePassword(String login, String newPassword);
 }

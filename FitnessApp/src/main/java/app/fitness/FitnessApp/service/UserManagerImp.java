@@ -1,5 +1,6 @@
 package app.fitness.FitnessApp.service;
 
+import app.fitness.FitnessApp.controller.web.MainPageController;
 import app.fitness.FitnessApp.domain.*;
 import app.fitness.FitnessApp.domain.extra.ProfileForm;
 import app.fitness.FitnessApp.login.UserForm;
@@ -7,6 +8,8 @@ import app.fitness.FitnessApp.login.UserRole;
 import app.fitness.FitnessApp.repository.CoachRepository;
 import app.fitness.FitnessApp.repository.CustomerRepository;
 import app.fitness.FitnessApp.repository.OwnerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -40,6 +43,8 @@ public class UserManagerImp implements UserManager {
         this.entityManager = entityManager;
         this.passwordEncoder = passwordEncoder;
     }
+
+    private static Logger logger = LoggerFactory.getLogger(UserManagerImp.class);
 
     @Override
     public BaseUser addUser(UserForm user) {
@@ -145,6 +150,46 @@ public class UserManagerImp implements UserManager {
             return;
         }
 
+    }
+
+    @Override
+    public boolean isCorrectPassword(String login, String currentPassword) {
+
+        if(coachRepository.findByLogin(login) != null) {
+            Coach coachToUpdate = findCoachByLogin(login);
+            return passwordEncoder.matches(currentPassword, coachToUpdate.getPassword());
+
+        }
+        if(customerRepository.findByLogin(login) != null) {
+            Customer customerToUpdate = findCustomerByLogin(login);
+            return passwordEncoder.matches(currentPassword, customerToUpdate.getPassword());
+        }
+        if(ownerRepository.findByLogin(login) != null) {
+            Owner ownerToUpdate = findOwnerByLogin(login);
+            return passwordEncoder.matches(currentPassword, ownerToUpdate.getPassword());
+        }
+        return false;
+    }
+
+    @Override
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    public void userChangePassword(String login, String newPassword) {
+
+        if(coachRepository.findByLogin(login) != null) {
+            Coach coachToUpdate = findCoachByLogin(login);
+            coachRepository.updateCoachPassword(passwordEncoder.encode(newPassword), coachToUpdate.getId());
+            return;
+        }
+        if(customerRepository.findByLogin(login) != null) {
+            Customer customerToUpdate = findCustomerByLogin(login);
+            customerRepository.updateCustomerPassword(passwordEncoder.encode(newPassword), customerToUpdate.getId());
+            return;
+        }
+        if(ownerRepository.findByLogin(login) != null) {
+            Owner ownerToUpdate = findOwnerByLogin(login);
+            ownerRepository.updateOwnerPassword(passwordEncoder.encode(newPassword), ownerToUpdate.getId());
+            return;
+        }
     }
 
 
