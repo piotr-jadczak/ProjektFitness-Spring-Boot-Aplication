@@ -20,4 +20,5 @@ public interface UserManager {
     void updateUserDetails(ProfileForm profileForm, String login);
     boolean isCorrectPassword(String login, String currentPassword);
     void userChangePassword(String login, String newPassword);
+    void changeProfilePicture(String login, byte[] byteImage);
 }

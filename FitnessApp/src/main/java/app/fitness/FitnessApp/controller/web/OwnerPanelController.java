@@ -13,17 +13,21 @@ import app.fitness.FitnessApp.validators.UniqueLoginValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -222,6 +226,25 @@ public class OwnerPanelController {
         return "redirect:/owner-panel/profile";
     }
 
+    @GetMapping("/owner-panel/get-image/{login}")
+    @ResponseBody
+    public byte[] serveFile(@PathVariable("login") String userLogin) {
+
+        Owner loggedOwner = userManager.findOwnerByLogin(userLogin);
+        ByteArrayResource file = new ByteArrayResource(loggedOwner.getProfileImage());
+
+        return file.getByteArray();
+    }
+
+    @PostMapping("/owner-panel/change-image")
+    public String addProfilePicture(@RequestParam("picture") MultipartFile multipartImage) throws IOException {
+
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        userManager.changeProfilePicture(loggedUserLogin, multipartImage.getBytes());
+
+        return "redirect:/owner-panel/profile";
+    }
+
     @ExceptionHandler(WrongOldPasswordException.class)
     public String handleWrongOldPasswordException(WrongOldPasswordException exc, RedirectAttributes redirectAttributes) {
 
@@ -229,5 +252,17 @@ public class OwnerPanelController {
                 exc.getMessage());
 
         return "redirect:/owner-panel/change-password";
+    }
+
+    @ModelAttribute("profileImage")
+    public String getProfileImageIfSet() {
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        Owner loggedOwner = userManager.findOwnerByLogin(loggedUserLogin);
+        String profileImage = null;
+        if(loggedOwner.getProfileImage() != null) {
+            profileImage = MvcUriComponentsBuilder.fromMethodName(OwnerPanelController.class,
+                    "serveFile", loggedUserLogin).build().toUri().toString();
+        }
+        return profileImage;
     }
 }

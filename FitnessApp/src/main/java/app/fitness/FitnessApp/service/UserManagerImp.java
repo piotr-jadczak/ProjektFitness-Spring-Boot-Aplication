@@ -192,5 +192,29 @@ public class UserManagerImp implements UserManager {
         }
     }
 
+    @Override
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    public void changeProfilePicture(String login, byte[] byteImage) {
+
+        if(coachRepository.findByLogin(login) != null) {
+            Coach coachToUpdate = findCoachByLogin(login);
+            coachToUpdate.setProfileImage(byteImage);
+            coachRepository.save(coachToUpdate);
+            return;
+        }
+        if(customerRepository.findByLogin(login) != null) {
+            Customer customerToUpdate = findCustomerByLogin(login);
+            customerToUpdate.setProfileImage(byteImage);
+            customerRepository.save(customerToUpdate);
+            return;
+        }
+        if(ownerRepository.findByLogin(login) != null) {
+            Owner ownerToUpdate = findOwnerByLogin(login);
+            ownerToUpdate.setProfileImage(byteImage);
+            ownerRepository.save(ownerToUpdate);
+            return;
+        }
+    }
+
 
 }

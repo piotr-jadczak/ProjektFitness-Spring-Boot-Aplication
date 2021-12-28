@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import app.fitness.FitnessApp.domain.Coach;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -28,5 +29,6 @@ public interface CoachRepository extends CrudRepository<Coach, Integer>{
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Coach c SET c.password =?1 WHERE c.id = ?2")
     public void updateCoachPassword(String password, int id);
+
 
 }

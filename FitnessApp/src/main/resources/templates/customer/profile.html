@@ -9,7 +9,18 @@
     <div th:replace="fragments/components-customer-panel :: top-menu"></div>
 </header>
 <div class="py-5 mt-5 bg-white">
+    </div>
     <div class="container px-4 text-center" >
+        <div th:if="${profileImage}">
+            <img th:src="${profileImage}"  width="150px" height="150px" >
+        </div>
+        <div>
+            <form method="POST" enctype="multipart/form-data" action="/customer-panel/change-image">
+                <input type="file" name="picture"  accept="image/png, image/jpeg" /><br>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="submit" value="Zapisz" />
+            </form>
+        </div>
         <div th:object="${profileDetails}">
             <b>Imię: </b><a th:text="${profileDetails.firstName}"></a><br>
             <b>Nazwisko: </b><a th:text="${profileDetails.lastName}"></a><br>

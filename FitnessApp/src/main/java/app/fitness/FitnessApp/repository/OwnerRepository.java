@@ -28,4 +28,5 @@ public interface OwnerRepository extends CrudRepository<Owner, Integer>{
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Owner c SET c.password =?1 WHERE c.id = ?2")
     public void updateOwnerPassword(String password, int id);
+
 }

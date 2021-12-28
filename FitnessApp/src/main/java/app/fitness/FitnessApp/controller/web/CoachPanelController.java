@@ -9,19 +9,29 @@ import app.fitness.FitnessApp.exception.WrongOldPasswordException;
 import app.fitness.FitnessApp.service.TrainingManager;
 import app.fitness.FitnessApp.service.UserManager;
 import app.fitness.FitnessApp.service.UserManagerImp;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.awt.*;
+import java.io.IOException;
 import java.util.stream.Collectors;
 
 @Controller
@@ -178,6 +188,25 @@ public class CoachPanelController {
         return "redirect:/coach-panel/profile";
     }
 
+    @PostMapping("/coach-panel/change-image")
+    public String addProfilePicture(@RequestParam("picture") MultipartFile multipartImage) throws IOException {
+
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        userManager.changeProfilePicture(loggedUserLogin, multipartImage.getBytes());
+
+        return "redirect:/coach-panel/profile";
+    }
+
+    @GetMapping("/coach-panel/get-image/{login}")
+    @ResponseBody
+    public byte[] serveFile(@PathVariable("login") String userLogin) {
+
+        Coach loggedCoach = userManager.findCoachByLogin(userLogin);
+        ByteArrayResource file = new ByteArrayResource(loggedCoach.getProfileImage());
+
+        return file.getByteArray();
+    }
+
     @ExceptionHandler(CoachNotInAnyClubException.class)
     public String handleCoachNotInAnyClubException(CoachNotInAnyClubException exc, RedirectAttributes redirectAttributes) {
 
@@ -194,5 +223,17 @@ public class CoachPanelController {
                 exc.getMessage());
 
         return "redirect:/coach-panel/change-password";
+    }
+
+    @ModelAttribute("profileImage")
+    public String getProfileImageIfSet() {
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        Coach loggedCoach = userManager.findCoachByLogin(loggedUserLogin);
+        String profileImage = null;
+        if(loggedCoach.getProfileImage() != null) {
+            profileImage = MvcUriComponentsBuilder.fromMethodName(CoachPanelController.class,
+                    "serveFile", loggedUserLogin).build().toUri().toString();
+        }
+        return profileImage;
     }
 }

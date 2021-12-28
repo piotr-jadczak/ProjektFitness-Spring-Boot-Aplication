@@ -1,5 +1,6 @@
 package app.fitness.FitnessApp.domain;
 
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -35,6 +36,10 @@ public class BaseUser {
 
 	@Column(nullable = true, length = 9)
 	private String phoneNumber;
+
+	@Lob
+	@Type(type = "org.hibernate.type.ImageType")
+	byte[] profileImage;
 
 	public BaseUser() {
 	}
@@ -125,6 +130,14 @@ public class BaseUser {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public byte[] getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(byte[] profileImage) {
+		this.profileImage = profileImage;
 	}
 
 	@Override

@@ -11,15 +11,19 @@ import app.fitness.FitnessApp.service.TrainingManager;
 import app.fitness.FitnessApp.service.UserManager;
 import app.fitness.FitnessApp.service.UserManagerImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -149,6 +153,25 @@ public class CustomerPanelController {
         return "redirect:/customer-panel/profile";
     }
 
+    @GetMapping("/customer-panel/get-image/{login}")
+    @ResponseBody
+    public byte[] serveFile(@PathVariable("login") String userLogin) {
+
+        Customer loggedCustomer = userManager.findCustomerByLogin(userLogin);
+        ByteArrayResource file = new ByteArrayResource(loggedCustomer.getProfileImage());
+
+        return file.getByteArray();
+    }
+
+    @PostMapping("/customer-panel/change-image")
+    public String addProfilePicture(@RequestParam("picture") MultipartFile multipartImage) throws IOException {
+
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        userManager.changeProfilePicture(loggedUserLogin, multipartImage.getBytes());
+
+        return "redirect:/customer-panel/profile";
+    }
+
     @ExceptionHandler(WrongOldPasswordException.class)
     public String handleWrongOldPasswordException(WrongOldPasswordException exc, RedirectAttributes redirectAttributes) {
 
@@ -157,5 +180,19 @@ public class CustomerPanelController {
 
         return "redirect:/customer-panel/change-password";
     }
+
+    @ModelAttribute("profileImage")
+    public String getProfileImageIfSet() {
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        Customer loggedCustomer = userManager.findCustomerByLogin(loggedUserLogin);
+        String profileImage = null;
+        if(loggedCustomer.getProfileImage() != null) {
+            profileImage = MvcUriComponentsBuilder.fromMethodName(CustomerPanelController.class,
+                    "serveFile", loggedUserLogin).build().toUri().toString();
+        }
+        return profileImage;
+    }
+
+
 
 }
