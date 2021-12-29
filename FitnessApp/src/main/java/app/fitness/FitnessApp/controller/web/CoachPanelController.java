@@ -1,9 +1,12 @@
 package app.fitness.FitnessApp.controller.web;
 
 import app.fitness.FitnessApp.domain.Coach;
+import app.fitness.FitnessApp.domain.OneTimeDate;
+import app.fitness.FitnessApp.domain.RegularDate;
 import app.fitness.FitnessApp.domain.Training;
 import app.fitness.FitnessApp.domain.extra.PasswordForm;
 import app.fitness.FitnessApp.domain.extra.ProfileForm;
+import app.fitness.FitnessApp.domain.extra.TrainingForm;
 import app.fitness.FitnessApp.exception.CoachNotInAnyClubException;
 import app.fitness.FitnessApp.exception.WrongOldPasswordException;
 import app.fitness.FitnessApp.service.TrainingManager;
@@ -32,6 +35,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 @Controller
@@ -85,14 +89,23 @@ public class CoachPanelController {
         if(trainingManager.isTrainingInDB(entityID)) {
             Training trainingToEdit = trainingManager.getTraining(entityID);
             if(userManager.findCoachByLogin(loggedUserLogin).getId() == trainingToEdit.getCoach().getId()) {
-                model.addAttribute("trainingToAdd", trainingToEdit);
+                TrainingForm trainingForm = new TrainingForm(trainingToEdit);
+                model.addAttribute("trainingToAdd", trainingForm);
             }
             else {
                 return "errors/error403";
             }
         }
         else {
-            model.addAttribute("trainingToAdd", new Training());
+            TrainingForm trainingForm = new TrainingForm();
+            trainingForm.setOneTimeDates(new ArrayList<>());
+            trainingForm.setRegularDates(new ArrayList<>());
+            for(int i=0; i<5; i++) {
+                trainingForm.addOneTimeDate(new OneTimeDate());
+                trainingForm.addRegularDate(new RegularDate());
+            }
+
+            model.addAttribute("trainingToAdd", trainingForm);
         }
 
         model.addAttribute("trainingCategories", trainingManager.getAllTrainingCategories().collect(Collectors.toList()));
@@ -102,7 +115,7 @@ public class CoachPanelController {
     }
 
     @PostMapping("/coach-panel/my-trainings")
-    public String addTraining(@ModelAttribute("trainingToAdd") Training trainingToAdd, BindingResult bindingResult, Model model) {
+    public String addTrainingFormDetails(@ModelAttribute("trainingToAdd") TrainingForm trainingToAdd, BindingResult bindingResult, Model model) {
 
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
         Coach loggedCoach = userManager.findCoachByLogin(loggedUserLogin);
@@ -112,17 +125,19 @@ public class CoachPanelController {
             model.addAttribute("availableClubs", loggedCoach.getClubs());
             return "/coach/add-training";
         }
+
         if(trainingManager.isTrainingInDB(trainingToAdd.getId())) {
             trainingManager.updateTraining(trainingToAdd);
         }
         else {
+
             trainingToAdd.setCoach(loggedCoach);
             trainingManager.addTraining(trainingToAdd);
         }
 
-        model.addAttribute("coachTrainings", trainingManager.getAllTrainings(loggedCoach));
-        return "/coach/my-trainings";
+        return "redirect:/coach-panel/my-trainings";
     }
+
 
     @GetMapping("/coach-panel/delete-training/{id}")
     public ModelAndView deleteTraining(@PathVariable String id) {

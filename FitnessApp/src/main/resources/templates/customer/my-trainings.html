@@ -18,6 +18,20 @@
             <b>Trener: </b><a th:text="${training.coach.fullName()}"></a><br>
             <b>Zapisanych: </b><a th:text="${training.getEnrolledCustomers()}"></a><br>
             <b>Cena: </b><a th:text="${training.price}"></a><br>
+
+            <div th:if="${training.oneTimeDates != null && training.oneTimeDates.size() > 0}">
+                <a>Terminy zajęć:</a>
+                <div th:each="date : ${training.oneTimeDates}">
+                    <a th:text="${date}"></a>
+                </div>
+            </div>
+
+            <div th:if="${training.regularDates != null && training.regularDates.size() > 0}">
+                <a>Terminy zajęć:</a>
+                <div th:each="date : ${training.regularDates}">
+                    <a th:text="${date}"></a>
+                </div>
+            </div>
             <div>
                 <a th:href="@{/customer-panel/resign/{id}(id=${training.id})}" role="button">Zrezygnuj</a>
             </div>

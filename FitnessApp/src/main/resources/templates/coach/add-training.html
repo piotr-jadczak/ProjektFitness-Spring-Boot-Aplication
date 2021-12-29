@@ -3,6 +3,18 @@
 <head>
     <title>Dodaj trening</title>
     <th:block th:replace="fragments/components-coach-panel :: headContent"></th:block>
+    <script type="text/javascript">
+        function showDiv(i) {
+            if(i == 'ONETIME') {
+                document.getElementById(i).style.display = 'block';
+                document.getElementById('REGULAR').style.display = 'none';
+            }
+            else {
+                document.getElementById(i).style.display = 'block';
+                document.getElementById('ONETIME').style.display = 'none';
+            }
+        }
+    </script>
 </head>
 <body>
 <header>
@@ -15,6 +27,7 @@
                 <form th:action="@{/coach-panel/my-trainings}" th:object="${trainingToAdd}" method="post">
                     <fieldset>
                         <legend>Dodaj trening</legend>
+                        <input type="hidden" th:field="*{id}">
                         <select class="form-control" id="training_category" th:field="*{trainingCategory}">
                             <option th:each="category : ${trainingCategories}"
                                     th:value="${category.id}" th:text="${category.name}"></option>
@@ -34,22 +47,54 @@
                         <input type="number" id="max_participants" min="1" th:field="*{maxParticipants}" placeholder="Maksymalna liczba uczestników" required /><br>
                         <p th:if="${#fields.hasErrors('maxParticipants')}" th:errors="*{maxParticipants}">Name Error</p>
 
-                        <label for="day_of_week">Dzień tygodnia</label><br>
-                        <select class="form-control" id="day_of_week" th:field="*{dayOfWeek}">
-                            <option th:each="dayT : ${T(app.fitness.FitnessApp.domain.extra.DayOfWeek).values()}"
-                                    th:value="${dayT}" th:text="${dayT.getDisplayValue()}"></option>
-                        </select>
-
-                        <label for="start_time">Godzina rozpoczęcia</label><br>
-                        <input type="time" id="start_time" th:field="*{startTime}" required /><br>
-                        <label for="end_time">Godzina zakończenia</label><br>
-                        <input type="time" id="end_time" th:field="*{endTime}" required /><br>
-
                         <label for="price">Cena</label><br>
                         <input type="number" id="price" step="0.01" min="0" th:field="*{price}" placeholder="Cena" required /><br>
                         <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Name Error</p>
-
-                        <input type="hidden" th:field="*{id}">
+                        <select class="form-control" id="training_type" th:field="*{trainingType}" onclick="showDiv(value);">
+                            <option th:each="trainingT : ${T(app.fitness.FitnessApp.domain.extra.TrainingType).values()}"
+                                    th:value="${trainingT}" th:text="${trainingT.displayValue}"></option>
+                        </select>
+                        <div id="ONETIME" style="display: none;">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th> Data</th>
+                                    <th> Godzina rozpoczęcia</th>
+                                    <th> Godzina zakończenia</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="date, itemStat : *{oneTimeDates}">
+                                    <td><input type="date" th:field="*{oneTimeDates[__${itemStat.index}__].date}" /></td>
+                                    <td><input type="time" th:field="*{oneTimeDates[__${itemStat.index}__].startTime}" /></td>
+                                    <td><input type="time" th:field="*{oneTimeDates[__${itemStat.index}__].endTime}" /></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="REGULAR" style="display: none;">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th> Dzień tygodnia</th>
+                                    <th> Godzina rozpoczęcia</th>
+                                    <th> Godzina zakończenia</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="date, itemStat : *{oneTimeDates}">
+                                    <td>
+                                        <select class="form-control" th:field="*{regularDates[__${itemStat.index}__].dayOfWeek}">
+                                            <option th:each="dayT : ${T(app.fitness.FitnessApp.domain.extra.DayOfWeek).values()}"
+                                                    th:value="${dayT}" th:text="${dayT.displayValue}"></option>
+                                        </select>
+                                    </td>
+                                    <td><input type="time" th:field="*{regularDates[__${itemStat.index}__].startTime}" /></td>
+                                    <td><input type="time" th:field="*{regularDates[__${itemStat.index}__].endTime}" /></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <button type="submit" class="btn btn-primary">Dodaj</button>
                     </fieldset>
                 </form>

@@ -23,11 +23,29 @@
             <b>Klub: </b><a th:text="${training.club.getName()}"></a><br>
             <b>Maksymalna liczba uczestników: </b><a th:text="${training.maxParticipants}"></a><br>
             <b>Zapisanych uczestników: </b><a th:text="${training.currentParticipants}"></a><br>
-            <div th:if="${training.customers != null && training.customers.size() > 0}" th:each="customer : ${training.customers}">
-                <a>Uczestnicy:</a>
-                <br><a th:text="${customer.fullName()}"></a>
-            </div>
             <b>Cena: </b><a th:text="${training.price}"></a><br>
+
+            <div th:if="${training.oneTimeDates != null && training.oneTimeDates.size() > 0}">
+                <a>Terminy zajęć:</a>
+                <div th:each="date : ${training.oneTimeDates}">
+                    <a th:text="${date}"></a>
+                </div>
+            </div>
+
+            <div th:if="${training.regularDates != null && training.regularDates.size() > 0}">
+                <a>Terminy zajęć:</a>
+                <div th:each="date : ${training.regularDates}">
+                    <a th:text="${date}"></a>
+                </div>
+            </div>
+
+            <div th:if="${training.customers != null && training.customers.size() > 0}" >
+                <a>Uczestnicy</a>
+                <div th:each="customer : ${training.customers}">
+                    <a th:text="${customer.fullName()}"></a>
+                </div>
+            </div>
+
             <div>
                 <a th:href="@{/coach-panel/add-training/{id}(id=${training.id})}" role="button">Edytuj</a>
             </div>

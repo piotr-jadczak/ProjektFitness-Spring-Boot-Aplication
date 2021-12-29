@@ -1,8 +1,11 @@
 package app.fitness.FitnessApp.domain;
 
 import app.fitness.FitnessApp.domain.extra.DayOfWeek;
+import app.fitness.FitnessApp.domain.extra.TrainingForm;
+import app.fitness.FitnessApp.domain.extra.TrainingType;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -14,14 +17,11 @@ public class Training {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
+    private TrainingType trainingType;
     private String name;
     private String description;
     private int maxParticipants;
 	private int currentParticipants = 0;
-
-    private DayOfWeek dayOfWeek;
-    private LocalTime startTime;
-    private LocalTime endTime;
 
     private double price;
 
@@ -42,33 +42,30 @@ public class Training {
     )
     private Set<Customer> customers;
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "training_one_time_dates", joinColumns = @JoinColumn(name = "training_id"))
+    @Column(name = "one_time_date")
+    private Set<OneTimeDate> oneTimeDates;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "training_regular_dates", joinColumns = @JoinColumn(name = "training_id"))
+    @Column(name = "regular_date")
+    private Set<RegularDate> regularDates;
+
 	public Training() {
 	}
 
-    public Training(String name, String description, int maxParticipants, int currentParticipants, DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime, double price, Club club, TrainingCategory trainingCategory, Coach coach, Set<Customer> customers) {
+    public Training(TrainingType trainingType, String name, String description, int maxParticipants,
+                    int currentParticipants, double price, Club club, TrainingCategory trainingCategory, Coach coach) {
+        this.trainingType = trainingType;
         this.name = name;
         this.description = description;
         this.maxParticipants = maxParticipants;
         this.currentParticipants = currentParticipants;
-        this.dayOfWeek = dayOfWeek;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.price = price;
         this.club = club;
         this.trainingCategory = trainingCategory;
         this.coach = coach;
-        this.customers = customers;
-    }
-
-    public Training(String name, String description, int maxParticipants, int currentParticipants, DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime, double price) {
-        this.name = name;
-        this.description = description;
-        this.maxParticipants = maxParticipants;
-        this.currentParticipants = currentParticipants;
-        this.dayOfWeek = dayOfWeek;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.price = price;
     }
 
     public int getId() {
@@ -109,30 +106,6 @@ public class Training {
 
     public void setCurrentParticipants(int currentParticipants) {
         this.currentParticipants = currentParticipants;
-    }
-
-    public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
     }
 
     public double getPrice() {
@@ -193,5 +166,57 @@ public class Training {
 
     public void removeCustomer(Customer customer) {
             customers.remove(customer);
+    }
+
+    public TrainingType getTrainingType() {
+        return trainingType;
+    }
+
+    public void setTrainingType(TrainingType trainingType) {
+        this.trainingType = trainingType;
+    }
+
+    public Set<OneTimeDate> getOneTimeDates() {
+        return oneTimeDates;
+    }
+
+    public void setOneTimeDates(Set<OneTimeDate> oneTimeDates) {
+        this.oneTimeDates = oneTimeDates;
+    }
+
+    public Set<RegularDate> getRegularDates() {
+        return regularDates;
+    }
+
+    public void setRegularDates(Set<RegularDate> regularDates) {
+        this.regularDates = regularDates;
+    }
+
+    public void addOneTimeDate(OneTimeDate oneTimeDate) {
+        oneTimeDates.add(oneTimeDate);
+    }
+
+    public void removeOneTimeDate(OneTimeDate oneTimeDate) {
+        oneTimeDates.remove(oneTimeDate);
+    }
+
+    public void addRegularDate(RegularDate regularDate) {
+        regularDates.add(regularDate);
+    }
+
+    public void removeRegularDate(RegularDate regularDate) {
+        regularDates.remove(regularDate);
+    }
+
+    public void update(TrainingForm trainingForm) {
+        oneTimeDates.clear();
+        regularDates.clear();
+        this.trainingType = trainingForm.getTrainingType();
+        this.name = trainingForm.getName();
+        this.description = trainingForm.getDescription();
+        this.maxParticipants = trainingForm.getMaxParticipants();
+        this.price = trainingForm.getPrice();
+        this.club = trainingForm.getClub();
+        this.trainingCategory = trainingForm.getTrainingCategory();
     }
 }

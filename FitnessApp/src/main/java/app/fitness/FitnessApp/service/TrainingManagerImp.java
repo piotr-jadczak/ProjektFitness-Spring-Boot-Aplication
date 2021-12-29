@@ -1,9 +1,8 @@
 package app.fitness.FitnessApp.service;
 
-import app.fitness.FitnessApp.domain.Coach;
-import app.fitness.FitnessApp.domain.Customer;
-import app.fitness.FitnessApp.domain.Training;
-import app.fitness.FitnessApp.domain.TrainingCategory;
+import app.fitness.FitnessApp.domain.*;
+import app.fitness.FitnessApp.domain.extra.TrainingForm;
+import app.fitness.FitnessApp.domain.extra.TrainingType;
 import app.fitness.FitnessApp.repository.CoachRepository;
 import app.fitness.FitnessApp.repository.TrainingCategoryRepository;
 import app.fitness.FitnessApp.repository.TrainingRepository;
@@ -11,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -61,9 +64,21 @@ public class TrainingManagerImp implements TrainingManager {
     }
 
     @Override
-    @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public void updateTraining(Training training) {
-        trainingRepository.updateClubInfo(training.getId(), training.getName(), training.getDescription(), training.getMaxParticipants(), training.getDayOfWeek(), training.getStartTime(), training.getEndTime(), training.getPrice(), training.getClub(), training.getTrainingCategory());
+    public void updateTraining(TrainingForm trainingForm) {
+        Training savedTraining = getTraining(trainingForm.getId());
+        savedTraining.update(trainingForm);
+        if(savedTraining.getTrainingType() == TrainingType.ONETIME) {
+            trainingForm.filterValidOneTimeDates();
+            Set<OneTimeDate> dateSet = new HashSet<>(trainingForm.getOneTimeDates());
+            savedTraining.setOneTimeDates(dateSet);
+        }
+        if(savedTraining.getTrainingType() == TrainingType.REGULAR) {
+            trainingForm.filterValidRegularDates();
+            Set<RegularDate> dateSet = new HashSet<>(trainingForm.getRegularDates());
+            savedTraining.setRegularDates(dateSet);
+        }
+
+        trainingRepository.save(savedTraining);
     }
 
     @Override
@@ -96,5 +111,25 @@ public class TrainingManagerImp implements TrainingManager {
             trainingRepository.save(training);
         }
     }
+
+    @Override
+    public void addTraining(TrainingForm trainingForm) {
+        Training training = new Training(trainingForm.getTrainingType(), trainingForm.getName(), trainingForm.getDescription(), trainingForm.getMaxParticipants(),
+                0, trainingForm.getPrice(), trainingForm.getClub(), trainingForm.getTrainingCategory(), trainingForm.getCoach());
+
+        if(training.getTrainingType() == TrainingType.ONETIME) {
+            trainingForm.filterValidOneTimeDates();
+            Set<OneTimeDate> dateSet = new HashSet<>(trainingForm.getOneTimeDates());
+            training.setOneTimeDates(dateSet);
+        }
+        if(training.getTrainingType() == TrainingType.REGULAR) {
+            trainingForm.filterValidRegularDates();
+            Set<RegularDate> dateSet = new HashSet<>(trainingForm.getRegularDates());
+            training.setRegularDates(dateSet);
+        }
+
+        trainingRepository.save(training);
+    }
+
 
 }
