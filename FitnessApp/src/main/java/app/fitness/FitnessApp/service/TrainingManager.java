@@ -23,4 +23,5 @@ public interface TrainingManager {
     void enrollCustomer(Customer customer, int trainingId);
     void resignCustomer(Customer customer, int trainingId);
     void addTraining(TrainingForm trainingForm);
+    Stream<List<Training>> groupTrainingsByClub(List<Training> trainings);
 }

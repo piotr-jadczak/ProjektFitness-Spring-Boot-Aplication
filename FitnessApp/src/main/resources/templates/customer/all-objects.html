@@ -9,7 +9,43 @@
     <div th:replace="fragments/components-customer-panel :: top-menu"></div>
 </header>
 <div class="py-5 mt-5 bg-white">
+    <div class="container px-4 text-center" >
+        <div th:each="clubTrainings : ${wrapTrainings}">
+            <div th:object="${clubTrainings.club}">
+                <p th:text="*{clubCategory.getName()}"></p><br>
+                <p th:text="*{name}"></p><br>
+                <p th:text="*{description}"></p><br>
+                <p th:text="*{fullAddress}"></p><br>
+            </div>
+            <div th:each="training : ${clubTrainings.trainings}">
+                <b>Nazwa: </b><a th:text="${training.name}"></a><br>
+                <b>Opis: </b><a th:text="${training.description}"></a><br>
+                <b>Kategoria: </b><a th:text="${training.trainingCategory.getName()}"></a><br>
+                <b>Klub: </b><a th:text="${training.club.getName()}"></a><br>
+                <b>Trener: </b><a th:text="${training.coach.fullName()}"></a><br>
+                <b>Zapisanych: </b><a th:text="${training.getEnrolledCustomers()}"></a><br>
+                <b>Cena: </b><a th:text="${training.price}"></a><br>
 
+                <div th:if="${training.oneTimeDates != null && training.oneTimeDates.size() > 0}">
+                    <a>Terminy zajęć:</a>
+                    <div th:each="date : ${training.oneTimeDates}">
+                        <a th:text="${date}"></a>
+                    </div>
+                </div>
+
+                <div th:if="${training.regularDates != null && training.regularDates.size() > 0}">
+                    <a>Terminy zajęć:</a>
+                    <div th:each="date : ${training.regularDates}">
+                        <a th:text="${date}"></a>
+                    </div>
+                </div>
+
+                <div>
+                    <a th:href="@{/customer-panel/enroll-object/{id}(id=${training.id})}" role="button">Zapisz się</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <footer th:replace="fragments/components-customer-panel :: footer"></footer>

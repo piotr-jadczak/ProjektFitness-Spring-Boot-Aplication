@@ -10,11 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -129,6 +126,14 @@ public class TrainingManagerImp implements TrainingManager {
         }
 
         trainingRepository.save(training);
+    }
+
+    @Override
+    public Stream<List<Training>> groupTrainingsByClub(List<Training> trainings) {
+
+        Map<Integer, List<Training>> trainingsByClub = trainings.stream().collect(Collectors.groupingBy(t -> t.getClub().getId(), Collectors.mapping((Training t) -> t, Collectors.toList())));
+
+        return trainingsByClub.values().stream();
     }
 
 

@@ -1,12 +1,15 @@
 package app.fitness.FitnessApp.controller.web;
 
+import app.fitness.FitnessApp.domain.Club;
 import app.fitness.FitnessApp.domain.Coach;
 import app.fitness.FitnessApp.domain.Customer;
 import app.fitness.FitnessApp.domain.Training;
+import app.fitness.FitnessApp.domain.extra.ClubTrainingsWrapper;
 import app.fitness.FitnessApp.domain.extra.PasswordForm;
 import app.fitness.FitnessApp.domain.extra.ProfileForm;
 import app.fitness.FitnessApp.exception.WrongOldPasswordException;
 import app.fitness.FitnessApp.repository.CustomerRepository;
+import app.fitness.FitnessApp.service.ClubManager;
 import app.fitness.FitnessApp.service.TrainingManager;
 import app.fitness.FitnessApp.service.UserManager;
 import app.fitness.FitnessApp.service.UserManagerImp;
@@ -33,11 +36,14 @@ public class CustomerPanelController {
 
     private final UserManager userManager;
     private final TrainingManager trainingManager;
+    private final ClubManager clubManager;
 
     public CustomerPanelController(@Autowired UserManager userManager,
-                                   @Autowired TrainingManager trainingManager) {
+                                   @Autowired TrainingManager trainingManager,
+                                   @Autowired ClubManager clubManager) {
         this.userManager = userManager;
         this.trainingManager = trainingManager;
+        this.clubManager = clubManager;
     }
 
     @GetMapping("/customer-panel")
@@ -72,6 +78,21 @@ public class CustomerPanelController {
     @GetMapping("/customer-panel/all-objects")
     public String viewAllObjects(Model model) {
 
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<Training> allNotFullTrainings = trainingManager.getAllTrainings().filter(t -> !t.isTrainingFull()).collect(Collectors.toList());
+        List<Training> customerTrainings = userManager.findCustomerByLogin(loggedUserLogin).getTrainings().stream().collect(Collectors.toList());
+
+        allNotFullTrainings.removeAll(customerTrainings);
+        List<List<Training>> groupedTrainings = trainingManager.groupTrainingsByClub(allNotFullTrainings).collect(Collectors.toList());
+        List<ClubTrainingsWrapper> wrappedTrainings = new ArrayList<>();
+        for(List<Training> trainings : groupedTrainings) {
+            Club club = clubManager.getClub(trainings.get(0).getClub().getId());
+            ClubTrainingsWrapper wrapper = new ClubTrainingsWrapper(club, trainings);
+            wrappedTrainings.add(wrapper);
+        }
+
+        model.addAttribute("wrapTrainings", wrappedTrainings);
+
         return "customer/all-objects";
     }
 
@@ -84,6 +105,17 @@ public class CustomerPanelController {
         trainingManager.enrollCustomer(loggedCustomer, Integer.parseInt(id));
 
         return "redirect:/customer-panel/available-trainings";
+    }
+
+    @GetMapping("/customer-panel/enroll-object/{id}")
+    public String enrollOnTrainingInObject(@PathVariable("id") String id, Model model) {
+
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        Customer loggedCustomer = userManager.findCustomerByLogin(loggedUserLogin);
+
+        trainingManager.enrollCustomer(loggedCustomer, Integer.parseInt(id));
+
+        return "redirect:/customer-panel/all-objects";
     }
 
     @GetMapping("/customer-panel/resign/{id}")
