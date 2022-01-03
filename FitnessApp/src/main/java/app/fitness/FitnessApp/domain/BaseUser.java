@@ -4,6 +4,7 @@ import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -151,5 +152,12 @@ public class BaseUser {
 	}
 
 	public String fullNameAndEmail() { return fullName() + " " + email; }
+
+	public String dobFormatted() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+		if(dob != null)
+			return dob.format(formatter).toString();
+		return "";
+	}
 
 }

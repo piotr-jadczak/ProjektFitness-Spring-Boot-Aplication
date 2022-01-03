@@ -120,11 +120,11 @@ public class CoachPanelController {
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
         Coach loggedCoach = userManager.findCoachByLogin(loggedUserLogin);
 
-        if(bindingResult.hasErrors()) {
-            model.addAttribute("trainingCategories", trainingManager.getAllTrainingCategories().collect(Collectors.toList()));
-            model.addAttribute("availableClubs", loggedCoach.getClubs());
-            return "/coach/add-training";
-        }
+//        if(bindingResult.hasErrors()) {
+//            model.addAttribute("trainingCategories", trainingManager.getAllTrainingCategories().collect(Collectors.toList()));
+//            model.addAttribute("availableClubs", loggedCoach.getClubs());
+//            return "/coach/add-training";
+//        }
 
         if(trainingManager.isTrainingInDB(trainingToAdd.getId())) {
             trainingManager.updateTraining(trainingToAdd);

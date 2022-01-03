@@ -12,10 +12,10 @@
     <div class="container px-4 text-center" >
         <div th:each="clubTrainings : ${wrapTrainings}">
             <div th:object="${clubTrainings.club}">
-                <p th:text="*{clubCategory.getName()}"></p><br>
-                <p th:text="*{name}"></p><br>
-                <p th:text="*{description}"></p><br>
-                <p th:text="*{fullAddress}"></p><br>
+                <a th:text="*{clubCategory.getName()}"></a><br>
+                <a th:text="*{name}"></a><br>
+                <a th:text="*{description}"></a><br>
+                <a th:text="*{fullAddress}"></a><br>
             </div>
             <div th:each="training : ${clubTrainings.trainings}">
                 <b>Nazwa: </b><a th:text="${training.name}"></a><br>

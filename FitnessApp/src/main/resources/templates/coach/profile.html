@@ -24,7 +24,7 @@
             <b>Imię: </b><a th:text="${profileDetails.firstName}"></a><br>
             <b>Nazwisko: </b><a th:text="${profileDetails.lastName}"></a><br>
             <b>Adres-email: </b><a th:text="${profileDetails.email}"></a><br>
-            <b>Data urodzenia: </b><a th:text="${profileDetails.dob}"></a><br>
+            <b>Data urodzenia: </b><a th:text="${profileDetails.dobFormatted()}"></a><br>
             <b>Numer telefonu: </b><a th:text="${profileDetails.phoneNumber}"></a><br>
         </div>
         <a th:href="@{/coach-panel/edit-profile}">Edytuj dane</a><br>
