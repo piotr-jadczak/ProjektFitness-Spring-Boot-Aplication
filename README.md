@@ -1,6 +1,6 @@
 #Projekt zespołowy Informatyka rok III
 
-#Grupa: Piotr Jadczak, Maciej Bażak, Karol Dargacz
+#Grupa: Piotr Jadczak, Maciej Bażak
 
 # ProjektFitness
 
@@ -31,12 +31,12 @@ h) Program lojalnościowy (zbieranie punktów za uczestniczenie w zajęciach itp
 
 Aspekt badawczy:
 
-Praktyczne wykorzystanie metody zarządzanie projektem SCRUM. Szczegółowe planowanie i rejestrowanie sprintów, przydział tasków, notatki z regularnych spotkań o postępach w realizacji projektów, backlogi itp).
+Praktyczne wykorzystanie metody zarządzanie projektem SCRUM. Szczegółowe planowanie i rejestrowanie sprintów, przydział tasków, notatki z regularnych spotkań o postępach w realizacji projektów, backlogi).
 
 
 
 
 Języki programowania/technologie:  
--Java, Spring Boot  
--JavaScript,HTML5,CSS  
--Thymeleaf/Angular/React  
+- Backend: Java, Spring Boot Framework with Thymeleaf
+- Frontend: HTML5, CSS, Javascript
+- SCRUM: Jira
