@@ -1,5 +1,7 @@
 package app.fitness.FitnessApp.controller.web;
 
+import app.fitness.FitnessApp.domain.BaseUser;
+import app.fitness.FitnessApp.domain.Coach;
 import app.fitness.FitnessApp.login.UserForm;
 import app.fitness.FitnessApp.service.UserManager;
 import org.slf4j.Logger;
@@ -14,6 +16,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import javax.validation.Valid;
 
@@ -29,7 +33,40 @@ public class MainPageController {
     }
 
     @GetMapping("")
-    public String viewHomePage() {
+    public String viewHomePage(Model model) {
+
+        String userRole = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+        String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        String profileImage = null;
+        if(!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) {
+            BaseUser loggedUser = null;
+            if(userRole.equals("[ROLE_OWNER]")) {
+                loggedUser = userManager.findOwnerByLogin(loggedUserLogin);
+                if (loggedUser.getProfileImage() != null) {
+                    profileImage = MvcUriComponentsBuilder.fromMethodName(OwnerPanelController.class,
+                            "serveFile", loggedUserLogin).build().toUri().toString();
+                }
+            }
+
+            if(userRole.equals("[ROLE_COACH]")) {
+                loggedUser = userManager.findCoachByLogin(loggedUserLogin);
+                if(loggedUser.getProfileImage() != null) {
+                    profileImage = MvcUriComponentsBuilder.fromMethodName(CoachPanelController.class,
+                            "serveFile", loggedUserLogin).build().toUri().toString();
+                }
+            }
+            if(userRole.equals("[ROLE_CUSTOMER]")) {
+                loggedUser = userManager.findCustomerByLogin(loggedUserLogin);
+                if(loggedUser.getProfileImage() != null) {
+                    profileImage = MvcUriComponentsBuilder.fromMethodName(CustomerPanelController.class,
+                            "serveFile", loggedUserLogin).build().toUri().toString();
+                }
+            }
+        }
+
+        model.addAttribute("userRole", userRole);
+        model.addAttribute("profileImage", profileImage);
+
         return "main/index";
     }
 
@@ -89,5 +126,49 @@ public class MainPageController {
     public String view403Error() {
         return "errors/error403";
     }
+
+//    @ModelAttribute("profileImage")
+//    public String getProfileImageIfSet() {
+//
+//        String profileImage = null;
+//        if(!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) {
+//            BaseUser loggedUser = null;
+//            String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+//            String userRole = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+//            logger.info(userRole);
+//            if(userRole.equals("[ROLE_OWNER]")) {
+//                loggedUser = userManager.findOwnerByLogin(loggedUserLogin);
+//                if (loggedUser.getProfileImage() != null) {
+//                    profileImage = MvcUriComponentsBuilder.fromMethodName(OwnerPanelController.class,
+//                            "serveFile", loggedUserLogin).build().toUri().toString();
+//                }
+//                return profileImage;
+//            }
+//
+//            if(userRole.equals("[ROLE_COACH]")) {
+//                loggedUser = userManager.findCoachByLogin(loggedUserLogin);
+//                if(loggedUser.getProfileImage() != null) {
+//                    profileImage = MvcUriComponentsBuilder.fromMethodName(CoachPanelController.class,
+//                            "serveFile", loggedUserLogin).build().toUri().toString();
+//                }
+//                return profileImage;
+//            }
+//            if(userRole.equals("[ROLE_CUSTOMER]")) {
+//                    loggedUser = userManager.findCustomerByLogin(loggedUserLogin);
+//                    if(loggedUser.getProfileImage() != null) {
+//                        profileImage = MvcUriComponentsBuilder.fromMethodName(CustomerPanelController.class,
+//                                "serveFile", loggedUserLogin).build().toUri().toString();
+//                    }
+//                return profileImage;
+//            }
+//        }
+//
+//        return null;
+//    }
+//
+//    @ModelAttribute("userRole")
+//    public String getUserRole() {
+//        return SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+//    }
 
 }

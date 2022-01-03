@@ -7,7 +7,18 @@
 <body>
     <header class="py-xl-5 mt-index bg-gradient text-white">
         <!-- Sticky top menu -->
-        <div th:replace="fragments/main/components-index :: top-menu"></div>
+        <span th:if="${userRole == '[ROLE_ANONYMOUS]' || userRole == null}">
+            <div th:replace="fragments/main/components-index :: top-menu"></div>
+        </span>
+        <span th:if="${userRole == '[ROLE_COACH]'}">
+            <div th:replace="fragments/main/components-index :: top-menu-coach"></div>
+        </span>
+        <span th:if="${userRole == '[ROLE_OWNER]'}">
+            <div th:replace="fragments/main/components-index :: top-menu-owner"></div>
+        </span>
+        <span th:if="${userRole == '[ROLE_CUSTOMER]'}">
+            <div th:replace="fragments/main/components-index :: top-menu-customer"></div>
+        </span>
         <!-- Big image with text -->
         <div th:replace="fragments/main/components-index :: gym-image"></div>
 
