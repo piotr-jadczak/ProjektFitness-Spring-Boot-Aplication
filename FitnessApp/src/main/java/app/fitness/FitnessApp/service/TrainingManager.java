@@ -13,6 +13,7 @@ public interface TrainingManager {
 
     void addTrainingCategory(TrainingCategory trainingCategory);
     Stream<TrainingCategory> getAllTrainingCategories();
+    TrainingCategory getTrainingCategory(int id);
     void addTraining(Training training);
     List<Training> getAllTrainings(Coach coach);
     Stream<Training> getAllTrainings();

@@ -21,6 +21,16 @@ public class TrainingForm {
     private List<RegularDate> regularDates;
     private List<OneTimeDate> oneTimeDates;
 
+    public TrainingForm(TrainingType trainingType, String name, String description, int maxParticipants, double price, List<RegularDate> regularDates, List<OneTimeDate> oneTimeDates) {
+        this.trainingType = trainingType;
+        this.name = name;
+        this.description = description;
+        this.maxParticipants = maxParticipants;
+        this.price = price;
+        this.regularDates = regularDates;
+        this.oneTimeDates = oneTimeDates;
+    }
+
     public TrainingForm() {
     }
 

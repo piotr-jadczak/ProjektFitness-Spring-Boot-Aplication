@@ -41,6 +41,11 @@ public class TrainingManagerImp implements TrainingManager {
     }
 
     @Override
+    public TrainingCategory getTrainingCategory(int id) {
+        return trainingCategoryRepository.findById(id);
+    }
+
+    @Override
     public void addTraining(Training training) {
         trainingRepository.save(training);
     }
@@ -89,12 +94,12 @@ public class TrainingManagerImp implements TrainingManager {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void enrollCustomer(Customer customer, int trainingId) {
         Training training = trainingRepository.findById(trainingId).get();
         if(!training.isTrainingFull() && !training.getCustomers().contains(customer)) {
             training.setCurrentParticipants(training.getCurrentParticipants()+1);
             training.addCustomer(customer);
-            trainingRepository.save(training);
         }
     }
 
@@ -105,7 +110,6 @@ public class TrainingManagerImp implements TrainingManager {
         if(training.getCustomers().contains(customer)) {
             training.removeCustomer(customer);
             training.setCurrentParticipants(training.getCurrentParticipants()-1);
-            trainingRepository.save(training);
         }
     }
 

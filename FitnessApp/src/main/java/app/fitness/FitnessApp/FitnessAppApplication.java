@@ -1,10 +1,8 @@
 package app.fitness.FitnessApp;
 
-import app.fitness.FitnessApp.domain.Club;
-import app.fitness.FitnessApp.domain.ClubCategory;
-import app.fitness.FitnessApp.domain.Training;
-import app.fitness.FitnessApp.domain.TrainingCategory;
-import app.fitness.FitnessApp.domain.extra.DayOfWeek;
+import app.fitness.FitnessApp.domain.*;
+import app.fitness.FitnessApp.domain.extra.TrainingForm;
+import app.fitness.FitnessApp.domain.extra.TrainingType;
 import app.fitness.FitnessApp.login.UserForm;
 import app.fitness.FitnessApp.login.UserType;
 import app.fitness.FitnessApp.service.ClubManager;
@@ -18,9 +16,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Array;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,8 @@ public class FitnessAppApplication {
 									  @Autowired @Qualifier("customer-prototypes") List<UserForm> customers,
 									  @Autowired @Qualifier("coach-prototypes") List<UserForm> coaches,
 									  @Autowired @Qualifier("owner-prototypes") List<UserForm> owners,
-									  @Autowired @Qualifier("club-prototypes") List<Club> clubs
+									  @Autowired @Qualifier("club-prototypes") List<Club> clubs,
+									  @Autowired @Qualifier("training-prototypes") List<TrainingForm> trainings
 									  ) {
 		return args -> {
 			System.out.println("Application test SetUp");
@@ -95,7 +97,72 @@ public class FitnessAppApplication {
 			clubManager.injectAddCoachToClub(userManager.findCoachByLogin("coach2"), clubManager.getClub(2));
 			clubManager.injectAddCoachToClub(userManager.findCoachByLogin("coach3"), clubManager.getClub(3));
 			clubManager.injectAddCoachToClub(userManager.findCoachByLogin("coach4"), clubManager.getClub(4));
-
+			//injecting add trainings
+			{
+				TrainingForm training = trainings.get(0);
+				training.setCoach(userManager.findCoachByLogin("coach"));
+				training.setClub(clubManager.getClub(1));
+				training.setTrainingCategory(trainingManager.getTrainingCategory(3));
+				trainingManager.addTraining(training);
+			}
+			{
+				TrainingForm training = trainings.get(1);
+				training.setCoach(userManager.findCoachByLogin("coach2"));
+				training.setClub(clubManager.getClub(1));
+				training.setTrainingCategory(trainingManager.getTrainingCategory(1));
+				trainingManager.addTraining(training);
+			}
+			{
+				TrainingForm training = trainings.get(2);
+				training.setCoach(userManager.findCoachByLogin("coach2"));
+				training.setClub(clubManager.getClub(2));
+				training.setTrainingCategory(trainingManager.getTrainingCategory(3));
+				trainingManager.addTraining(training);
+			}
+			{
+				TrainingForm training = trainings.get(3);
+				training.setCoach(userManager.findCoachByLogin("coach"));
+				training.setClub(clubManager.getClub(2));
+				training.setTrainingCategory(trainingManager.getTrainingCategory(1));
+				trainingManager.addTraining(training);
+			}
+			{
+				TrainingForm training = trainings.get(4);
+				training.setCoach(userManager.findCoachByLogin("coach3"));
+				training.setClub(clubManager.getClub(3));
+				training.setTrainingCategory(trainingManager.getTrainingCategory(4));
+				trainingManager.addTraining(training);
+			}
+			{
+				TrainingForm training = trainings.get(5);
+				training.setCoach(userManager.findCoachByLogin("coach3"));
+				training.setClub(clubManager.getClub(3));
+				training.setTrainingCategory(trainingManager.getTrainingCategory(2));
+				trainingManager.addTraining(training);
+			}
+			{
+				TrainingForm training = trainings.get(6);
+				training.setCoach(userManager.findCoachByLogin("coach4"));
+				training.setClub(clubManager.getClub(4));
+				training.setTrainingCategory(trainingManager.getTrainingCategory(4));
+				trainingManager.addTraining(training);
+			}
+			{
+				TrainingForm training = trainings.get(7);
+				training.setCoach(userManager.findCoachByLogin("coach4"));
+				training.setClub(clubManager.getClub(4));
+				training.setTrainingCategory(trainingManager.getTrainingCategory(2));
+				trainingManager.addTraining(training);
+			}
+			//injecting enroll customer on training
+			trainingManager.enrollCustomer(userManager.findCustomerByLogin("customer"), 1);
+			trainingManager.enrollCustomer(userManager.findCustomerByLogin("customer2"), 1);
+			trainingManager.enrollCustomer(userManager.findCustomerByLogin("customer2"), 2);
+			trainingManager.enrollCustomer(userManager.findCustomerByLogin("customer3"), 3);
+			trainingManager.enrollCustomer(userManager.findCustomerByLogin("customer4"), 3);
+			trainingManager.enrollCustomer(userManager.findCustomerByLogin("customer5"), 5);
+			trainingManager.enrollCustomer(userManager.findCustomerByLogin("customer6"), 8);
+			trainingManager.enrollCustomer(userManager.findCustomerByLogin("customer5"), 7);
 		};
 	}
 
@@ -145,15 +212,43 @@ public class FitnessAppApplication {
 	@Qualifier("club-prototypes")
 	public List<Club> addClubPrototypes() {
 		List<Club> clubs = new ArrayList<>();
-		String description = "Najlepsza siłownia w całym trójmieście. Posiadamy najnowocześniejszy sprzęt i wykwalifikowany personel, który pomoże Ci w treningu. Duża sala i nowoczesny wystrój ułatwi codzienny trening";
+		String description = "Najlepsza siłownia w całym trójmieście. Posiadamy najnowocześniejszy sprzęt i wykwalifikowany personel, który pomoże Ci w treningu. Duża sala i nowoczesny wystrój ułatwi codzienny trening.";
 		clubs.add(new Club("Best gym", description, "Pomorska", "23/4", "Gdańsk"));
-		String description2 = "Klub fitness dla każdego. Posiadamy szeroki wybór sprzętu do ćwiczeń, który sprawdzi się zarówno dla początkujących jak i zaawansowanych użytkowników. Dbaj o swoją kondycję rzem z nami";
+		String description2 = "Klub fitness dla każdego. Posiadamy szeroki wybór sprzętu do ćwiczeń, który sprawdzi się zarówno dla początkujących jak i zaawansowanych użytkowników. Dbaj o swoją kondycję rzem z nami.";
 		clubs.add(new Club("Super fitness", description2, "Piastowska", "12A", "Gdańsk"));
 		String description3 = "Sopocki Aquapark jest bardzo atrakcyjny zarówno dla dorosłych jak i dzieci. Posiada duży basen rekreacyjny wyposażony w bicze wodne, sztuczny prąd rzeczny, leżanki do hydromasażu i grotę z wodospadem.";
 		clubs.add(new Club("Aquapark Sopot", description3, "Zamkowa", "3", "Sopot"));
 		String description4 = "Najlepsze korty tenisowe przy samym morzu. Ćwicz swój forhend i bekhend podziwiając nadmorską przyrodę. Korty dostępne zarówno dla grup jak i klientów indywidualnych.";
 		clubs.add(new Club("Outdoor tennis", description4, "Orłowska", "4", "Gdynia"));
 		return clubs;
+	}
+
+	@Bean
+	@Qualifier("training-prototypes")
+	public List<TrainingForm> addTrainingPrototypes() {
+		List<TrainingForm> trainings = new ArrayList<>();
+		String description = "Ten trening przeznaczony jest dla osób z doświadczeniem w treningu siłowym. Nauczy Cię odpowiednich technik oddechowych i ruchowych dzięki którym będziesz mógł ćwiczyć dłużej.";
+		List<RegularDate> dates = Arrays.asList(new RegularDate(DayOfWeek.MONDAY, LocalTime.of(17, 0), LocalTime.of(18, 0)), new RegularDate(DayOfWeek.WEDNESDAY, LocalTime.of(17, 0), LocalTime.of(18, 0)), new RegularDate(DayOfWeek.FRIDAY, LocalTime.of(17, 0), LocalTime.of(18, 0)));
+		trainings.add(new TrainingForm(TrainingType.REGULAR, "Trening wytrzymałościowy", description, 12, 50, dates, null));
+		String description2 = "Podczas tych zajęć nauczę Cię jak poprawnie ćwiczyń mięsnie całego ciałą.";
+		List<OneTimeDate> dates2 = Arrays.asList(new OneTimeDate(LocalDate.of(2022, 1, 25), LocalTime.of(18, 30), LocalTime.of(19, 30)), new OneTimeDate(LocalDate.of(2022, 1, 27), LocalTime.of(18, 30), LocalTime.of(19, 30)));
+		trainings.add(new TrainingForm(TrainingType.ONETIME, "Trening obwodowy", description2, 1, 150, null, dates2));
+		String description3 = "Zrealizuj swoje postanowienie noworoczne i zgub zbędne kilogramy.";
+		List<RegularDate> dates3 = Arrays.asList(new RegularDate(DayOfWeek.TUESDAY, LocalTime.of(16, 30), LocalTime.of(18, 0)), new RegularDate(DayOfWeek.THURSDAY, LocalTime.of(16, 30), LocalTime.of(18, 0)));
+		trainings.add(new TrainingForm(TrainingType.REGULAR, "Spalanie tkank tłuszczowej", description3, 20, 40, dates3, null));
+		String description4 = "Ćwiczenia ogólnorozwojowe to takie, które angażują do pracy najważniejsze partie całego ciała jednocześnie, w trakcie jednej sesji.";
+		List<OneTimeDate> dates4 = Arrays.asList(new OneTimeDate(LocalDate.of(2022, 1, 18), LocalTime.of(18, 30), LocalTime.of(19, 30)), new OneTimeDate(LocalDate.of(2022, 1, 20), LocalTime.of(18, 30), LocalTime.of(19, 30)));
+		trainings.add(new TrainingForm(TrainingType.ONETIME, "Trening ogólnorozwojowy", description4, 1, 120, null, dates4));
+		String description5 = "Łączymy zabawę z nauką. Podczas tych zajęć twoje dziecko nauczy się pływać najpopularniejszymy stylami a jednocześnie będzie się świetnie bawić.";
+		List<RegularDate> dates5 = Arrays.asList(new RegularDate(DayOfWeek.TUESDAY, LocalTime.of(18, 15), LocalTime.of(19, 45)), new RegularDate(DayOfWeek.THURSDAY, LocalTime.of(18, 15), LocalTime.of(19, 45)));
+		trainings.add(new TrainingForm(TrainingType.REGULAR, "Nauka pływnaia", description5, 6, 90, dates5, null));
+		String description6 = "Nauka pływania dla dzieic i młodzieży dla każdego stopnia zaawansowania";
+		List<RegularDate> dates6 = Arrays.asList(new RegularDate(DayOfWeek.SATURDAY, LocalTime.of(10, 0), LocalTime.of(12, 0)));
+		trainings.add(new TrainingForm(TrainingType.REGULAR, "Nauka pływnaia", description6, 1, 100, dates6, null));
+		String description7 = "Ucz się gry w tenisa ziemnego od najlepszych";
+		trainings.add(new TrainingForm(TrainingType.REGULAR,"Nauka gry w tenisa ziemnego", description7, 4, 200, dates, null));
+		trainings.add(new TrainingForm(TrainingType.REGULAR,"Nauka gry w tenisa ziemnego", description7, 1, 120, dates6, null));
+		return trainings;
 	}
 
 }

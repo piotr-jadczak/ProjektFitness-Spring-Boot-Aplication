@@ -20,7 +20,7 @@ public interface TrainingRepository extends CrudRepository<Training, Integer>{
     public void deleteTrainingById(int id);
 
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE Training t SET t.name =?2, t.description = ?3, t.maxParticipants = ?4, t.price = ?5, t.club = ?6, t.trainingCategory = ?7 WHERE t.id = ?1")
-    public void updateClubInfo(int id, String name, String description, int maxParticipants, double price, Club club, TrainingCategory trainingCategory);
+    @Query("UPDATE Training t SET t.currentParticipants =?2 WHERE t.id = ?1")
+    public void updateTrainingCurrentParticipants(int id, int currentParticipants);
 
 }

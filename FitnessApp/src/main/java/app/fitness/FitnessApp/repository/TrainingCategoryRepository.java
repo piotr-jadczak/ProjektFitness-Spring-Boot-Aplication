@@ -8,4 +8,6 @@ import app.fitness.FitnessApp.domain.TrainingCategory;
 @Repository
 public interface TrainingCategoryRepository extends CrudRepository<TrainingCategory, Integer>{
 
+    public TrainingCategory findById(int id);
+
 }
