@@ -106,4 +106,10 @@ public class ClubManagerImp implements ClubManager {
         club.removeCoach(coach);
         clubRepository.save(club);
     }
+
+    @Override
+    public void injectAddCoachToClub(Coach coach, Club club) {
+        club.addCoach(coach);
+        clubRepository.save(club);
+    }
 }

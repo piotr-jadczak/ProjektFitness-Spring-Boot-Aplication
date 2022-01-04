@@ -47,9 +47,9 @@ public class Club {
     @ManyToOne
     private ClubCategory clubCategory;
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable (
-			name = "club_coache",
+			name = "club_coach",
 			joinColumns = @JoinColumn(name = "club_id"),
 			inverseJoinColumns = @JoinColumn(name = "coach_id")
 	)

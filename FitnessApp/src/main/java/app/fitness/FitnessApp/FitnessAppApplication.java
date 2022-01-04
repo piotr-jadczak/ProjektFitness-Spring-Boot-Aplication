@@ -17,6 +17,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -87,7 +88,13 @@ public class FitnessAppApplication {
 				club.setClubCategory(clubManager.getAllCategories().get(4));
 				clubManager.addClub(club);
 			}
-			//
+			//injecting add coaches to clubs
+			clubManager.injectAddCoachToClub(userManager.findCoachByLogin("coach"), clubManager.getClub(1));
+			clubManager.injectAddCoachToClub(userManager.findCoachByLogin("coach"), clubManager.getClub(2));
+			clubManager.injectAddCoachToClub(userManager.findCoachByLogin("coach2"), clubManager.getClub(1));
+			clubManager.injectAddCoachToClub(userManager.findCoachByLogin("coach2"), clubManager.getClub(2));
+			clubManager.injectAddCoachToClub(userManager.findCoachByLogin("coach3"), clubManager.getClub(3));
+			clubManager.injectAddCoachToClub(userManager.findCoachByLogin("coach4"), clubManager.getClub(4));
 
 		};
 	}

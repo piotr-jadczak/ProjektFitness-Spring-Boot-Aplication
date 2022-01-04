@@ -25,4 +25,7 @@ public interface ClubManager {
     void addCoachToClub(Coach coach, Club club);
     void removeCoachFromClub(Coach coach, Club club);
 
+    //injecting methods (do not use in business logic)
+    void injectAddCoachToClub(Coach coach, Club club);
+
 }
