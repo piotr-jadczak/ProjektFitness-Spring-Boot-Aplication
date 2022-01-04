@@ -17,7 +17,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -32,77 +35,38 @@ public class FitnessAppApplication {
 
 	@Bean
 	public CommandLineRunner setupApp(@Autowired UserManager userManager,
-									  @Autowired @Qualifier("customer-prototype") UserForm customer,
-									  @Autowired @Qualifier("coach-prototype") UserForm coach,
-									  @Autowired @Qualifier("owner-prototype") UserForm owner,
+									  @Autowired @Qualifier("customer-prototypes") List<UserForm> customers,
+									  @Autowired @Qualifier("coach-prototypes") List<UserForm> coaches,
+									  @Autowired @Qualifier("owner-prototypes") List<UserForm> owners,
 									  @Autowired ClubManager clubManager,
-									  @Autowired @Qualifier("coach-prototype2") UserForm coach2,
-									  @Autowired @Qualifier("coach-prototype3") UserForm coach3,
 									  @Autowired @Qualifier("club-prototype") Club club,
 									  @Autowired TrainingManager trainingManager) {
 		return args -> {
 			System.out.println("Application test SetUp");
-			userManager.addUser(customer);
-			userManager.addUser(coach);
-			userManager.addUser(owner);
-			userManager.addUser(coach2);
-			userManager.addUser(coach3);
+			//injecting user
+			for(UserForm u : customers)
+				userManager.addUser(u);
+			for(UserForm u : coaches)
+				userManager.addUser(u);
+			for(UserForm u : owners)
+				userManager.addUser(u);
+			//injecting club categories
 			clubManager.addClubCategory(new ClubCategory("siłownia"));
 			clubManager.addClubCategory(new ClubCategory("klub fitness"));
 			clubManager.addClubCategory(new ClubCategory("basen"));
 			clubManager.addClubCategory(new ClubCategory("aquapark"));
 			clubManager.addClubCategory(new ClubCategory("kort tenisowy"));
+			//injecting training categories
+			trainingManager.addTrainingCategory(new TrainingCategory("Trening personalny"));
+			trainingManager.addTrainingCategory(new TrainingCategory("Trening personalny dla dzieci"));
+			trainingManager.addTrainingCategory(new TrainingCategory("Trening grupowy"));
+			trainingManager.addTrainingCategory(new TrainingCategory("Trening grupowy dla dzieci"));
+			//
 			club.setOwner(userManager.findOwnerByLogin("owner"));
 			club.setClubCategory(clubManager.getAllCategories().get(0));
 			clubManager.addClub(club);
-			trainingManager.addTrainingCategory(new TrainingCategory("Trening personalny"));
-			trainingManager.addTrainingCategory(new TrainingCategory("Trening grupowy"));
-			trainingManager.addTrainingCategory(new TrainingCategory("Trening personalny dla dzieci"));
-			trainingManager.addTrainingCategory(new TrainingCategory("Trening grupowy dla dzieci"));
-//			clubManager.addCoachToClub(userManager.findCoachByLogin("coach"), clubManager.getClub(1));
-
-//			training.setTrainingCategory(trainingManager.getAllTrainingCategories().collect(Collectors.toList()).get(0));
-//			training.setCoach(userManager.findCoachByLogin("coach"));
-//			training.setClub(clubManager.getClub(1));
-//			trainingManager.addTraining(training);
-
 
 		};
-	}
-
-	@Bean
-	@Qualifier("customer-prototype")
-	public UserForm addCustomerPrototype() {
-		UserForm customer = new UserForm("customer", "password", "jan1@gmail.com", "Jan", "Kowalski", null , "123456789", UserType.CUSTOMER);
-		return customer;
-	}
-
-	@Bean
-	@Qualifier("coach-prototype")
-	public UserForm addCoachPrototype() {
-		UserForm coach = new UserForm("coach", "password", "jan2@gmail.com", "Marek", "Dąbrowski", null , "123456789", UserType.COACH);
-		return coach;
-	}
-
-	@Bean
-	@Qualifier("owner-prototype")
-	public UserForm addOwnerPrototype() {
-		UserForm owner = new UserForm("owner", "password", "jan3@gmail.com", "Kamil", "Nowak", null , "123456789", UserType.OWNER);
-		return owner;
-	}
-
-	@Bean
-	@Qualifier("coach-prototype2")
-	public UserForm addCoachPrototype2() {
-		UserForm coach = new UserForm("coach2", "password", "jan4@gmail.com", "Martyna", "Kowlaczyk", null , "123456789", UserType.COACH);
-		return coach;
-	}
-
-	@Bean
-	@Qualifier("coach-prototype3")
-	public UserForm addCoachPrototype3() {
-		UserForm coach = new UserForm("coach3", "password", "jan5@gmail.com", "Aneta", "Jaworska", null , "123456789", UserType.COACH);
-		return coach;
 	}
 
 	@Bean
@@ -112,12 +76,38 @@ public class FitnessAppApplication {
 		return club;
 	}
 
-//	@Bean
-//	@Qualifier("training-prototype")
-//	public Training addTrainingPrototype() {
-//		//Training training = new Training("Trening siłowy dla początkujących", "Ten trening jest super", 8, 0, DayOfWeek.MONDAY, LocalTime.MIDNIGHT, LocalTime.MIDNIGHT, 50);
-//		Training training = new Training();
-//		return training;
-//	}
+	@Bean
+	@Qualifier("customer-prototypes")
+	public List<UserForm> addCustomerPrototypes() {
+		List<UserForm> customers = new ArrayList<>();
+		customers.add(new UserForm("customer", "password", "jan.kowalski@gmail.com", "Jan", "Kowalski", LocalDate.of(1990, 12, 23), "424123505", UserType.CUSTOMER));
+		customers.add(new UserForm("customer2", "password", "bartosz.kowalski@gmail.com", "Bartosz", "Kowalski", LocalDate.of(1999, 2, 10), "522123505", UserType.CUSTOMER));
+		customers.add(new UserForm("customer3", "password", "ignacy.walczak@wp.com", "Ignacy", "Walczak", LocalDate.of(2003, 1, 11), "482123505", UserType.CUSTOMER));
+		customers.add(new UserForm("customer4", "password", "krzysztof.czerwinski@wp.com", "Krzysztof", "Czerwiński", LocalDate.of(1995, 5, 6), "612123505", UserType.CUSTOMER));
+		customers.add(new UserForm("customer5", "password", "anita.adamska@gmail.com", "Anita", "Adamska", LocalDate.of(1993, 3, 8), "212123505", UserType.CUSTOMER));
+		customers.add(new UserForm("customer6", "password", "teresa.tomaszewska@gmail.com", "Teresa", "Tomaszewska", LocalDate.of(1992, 4, 5), "712123505", UserType.CUSTOMER));
+		return customers;
+	}
+
+	@Bean
+	@Qualifier("coach-prototypes")
+	public List<UserForm> addCoachPrototypes() {
+		List<UserForm> coaches = new ArrayList<>();
+		coaches.add(new UserForm("coach", "password", "marek.dabrowski@gmail.com", "Marek", "Dąbrowski", LocalDate.of(1992, 4, 11) , "343112615", UserType.COACH));
+		coaches.add(new UserForm("coach2", "password", "martyna.kowalczyk@gmail.com", "Martyna", "Kowlaczyk", LocalDate.of(1998, 2, 4) , "543112615", UserType.COACH));
+		coaches.add(new UserForm("coach3", "password", "aneta.jawor@gmail.com", "Aneta", "Jaworska", LocalDate.of(1991, 3, 12) , "643112615", UserType.COACH));
+		coaches.add(new UserForm("coach4", "password", "mikolaj.sz@wp.com", "Mikołaj", "Szczepański", LocalDate.of(1988, 7, 21) , "483112615", UserType.COACH));
+		return coaches;
+	}
+
+	@Bean
+	@Qualifier("owner-prototypes")
+	public List<UserForm> addOwnerPrototypes() {
+		List<UserForm> owners = new ArrayList<>();
+		owners.add(new UserForm("owner", "password", "kamil.nowak@gmail.com", "Kamil", "Nowak", LocalDate.of(1992, 4, 11) , "533123412", UserType.OWNER));
+		owners.add(new UserForm("owner2", "password", "czeslaw.borkos@gmail.com", "Czesław", "Borkowski", LocalDate.of(1989, 2, 3) , "551123412", UserType.OWNER));
+		owners.add(new UserForm("owner3", "password", "emaunel.wys@wp.com", "Emanuel", "Wysocki", LocalDate.of(1981, 5, 10) , "623123412", UserType.OWNER));
+		return owners;
+	}
 
 }
