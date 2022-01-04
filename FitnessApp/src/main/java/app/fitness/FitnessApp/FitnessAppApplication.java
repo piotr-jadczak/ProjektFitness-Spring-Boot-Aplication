@@ -35,12 +35,13 @@ public class FitnessAppApplication {
 
 	@Bean
 	public CommandLineRunner setupApp(@Autowired UserManager userManager,
+									  @Autowired ClubManager clubManager,
+									  @Autowired TrainingManager trainingManager,
 									  @Autowired @Qualifier("customer-prototypes") List<UserForm> customers,
 									  @Autowired @Qualifier("coach-prototypes") List<UserForm> coaches,
 									  @Autowired @Qualifier("owner-prototypes") List<UserForm> owners,
-									  @Autowired ClubManager clubManager,
-									  @Autowired @Qualifier("club-prototype") Club club,
-									  @Autowired TrainingManager trainingManager) {
+									  @Autowired @Qualifier("club-prototypes") List<Club> clubs
+									  ) {
 		return args -> {
 			System.out.println("Application test SetUp");
 			//injecting user
@@ -61,19 +62,34 @@ public class FitnessAppApplication {
 			trainingManager.addTrainingCategory(new TrainingCategory("Trening personalny dla dzieci"));
 			trainingManager.addTrainingCategory(new TrainingCategory("Trening grupowy"));
 			trainingManager.addTrainingCategory(new TrainingCategory("Trening grupowy dla dzieci"));
+			//injecting clubs
+			{
+				Club club = clubs.get(0);
+				club.setOwner(userManager.findOwnerByLogin("owner"));
+				club.setClubCategory(clubManager.getAllCategories().get(0));
+				clubManager.addClub(club);
+			}
+			{
+				Club club = clubs.get(1);
+				club.setOwner(userManager.findOwnerByLogin("owner"));
+				club.setClubCategory(clubManager.getAllCategories().get(1));
+				clubManager.addClub(club);
+			}
+			{
+				Club club = clubs.get(2);
+				club.setOwner(userManager.findOwnerByLogin("owner2"));
+				club.setClubCategory(clubManager.getAllCategories().get(3));
+				clubManager.addClub(club);
+			}
+			{
+				Club club = clubs.get(3);
+				club.setOwner(userManager.findOwnerByLogin("owner3"));
+				club.setClubCategory(clubManager.getAllCategories().get(4));
+				clubManager.addClub(club);
+			}
 			//
-			club.setOwner(userManager.findOwnerByLogin("owner"));
-			club.setClubCategory(clubManager.getAllCategories().get(0));
-			clubManager.addClub(club);
 
 		};
-	}
-
-	@Bean
-	@Qualifier("club-prototype")
-	public Club addClubPrototype() {
-		Club club = new Club("Best gym", "To najlepsza siłownia w Trojmieście", "Pomorska", "23/4", "Gdańsk");
-		return club;
 	}
 
 	@Bean
@@ -108,6 +124,29 @@ public class FitnessAppApplication {
 		owners.add(new UserForm("owner2", "password", "czeslaw.borkos@gmail.com", "Czesław", "Borkowski", LocalDate.of(1989, 2, 3) , "551123412", UserType.OWNER));
 		owners.add(new UserForm("owner3", "password", "emaunel.wys@wp.com", "Emanuel", "Wysocki", LocalDate.of(1981, 5, 10) , "623123412", UserType.OWNER));
 		return owners;
+	}
+
+
+	@Bean
+	@Qualifier("club-prototype")
+	public Club addClubPrototype() {
+		Club club = new Club("Best gym", "To najlepsza siłownia w Trojmieście", "Pomorska", "23/4", "Gdańsk");
+		return club;
+	}
+
+	@Bean
+	@Qualifier("club-prototypes")
+	public List<Club> addClubPrototypes() {
+		List<Club> clubs = new ArrayList<>();
+		String description = "Najlepsza siłownia w całym trójmieście. Posiadamy najnowocześniejszy sprzęt i wykwalifikowany personel, który pomoże Ci w treningu. Duża sala i nowoczesny wystrój ułatwi codzienny trening";
+		clubs.add(new Club("Best gym", description, "Pomorska", "23/4", "Gdańsk"));
+		String description2 = "Klub fitness dla każdego. Posiadamy szeroki wybór sprzętu do ćwiczeń, który sprawdzi się zarówno dla początkujących jak i zaawansowanych użytkowników. Dbaj o swoją kondycję rzem z nami";
+		clubs.add(new Club("Super fitness", description2, "Piastowska", "12A", "Gdańsk"));
+		String description3 = "Sopocki Aquapark jest bardzo atrakcyjny zarówno dla dorosłych jak i dzieci. Posiada duży basen rekreacyjny wyposażony w bicze wodne, sztuczny prąd rzeczny, leżanki do hydromasażu i grotę z wodospadem.";
+		clubs.add(new Club("Aquapark Sopot", description3, "Zamkowa", "3", "Sopot"));
+		String description4 = "Najlepsze korty tenisowe przy samym morzu. Ćwicz swój forhend i bekhend podziwiając nadmorską przyrodę. Korty dostępne zarówno dla grup jak i klientów indywidualnych.";
+		clubs.add(new Club("Outdoor tennis", description4, "Orłowska", "4", "Gdynia"));
+		return clubs;
 	}
 
 }
