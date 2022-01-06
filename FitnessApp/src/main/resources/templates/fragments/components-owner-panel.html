@@ -158,6 +158,39 @@
     </div>
 </div>
 
+<div th:fragment="Sport-object-All-Clubs">
+    <div class="sport-object">
+        <div class="image_sport_card">
+            <img class="category" th:src="@{/images/tennis_court_wip.jpg}" />
+        </div>
+        <h1 class="title_sport_card">
+            <a th:text="${club.name}"></a>
+        </h1>
+
+        <div class="address_sport_card">
+            <img class="pin" th:src="@{/images/Gmap_icon.png}" />
+            <p class="text_address_sport_card">
+                <a th:text="${club.getFullAddress()}"></a>
+            </p>
+        </div>
+        <p class="description_sport_card">
+            <a th:text="${club.description}"></a><br>
+        </p>
+
+        <div class="div_category_sport_card">
+            <p class="text_category_sport_card">
+                <a th:text="${club.clubCategory.getName()}"></a>
+            </p>
+        </div>
+        <div>
+            <p>
+                <b>Właściciel:</b> <a th:text="${club.owner.fullName()}"></a>
+            </p>
+        </div>
+
+    </div>
+</div>
+
 <footer th:fragment="footer" class="py-5 bg-dark">
     <div class="container px-4">
         <p class="m-0 text-center text-white">Copyright &copy; FitApp 2021</p>
