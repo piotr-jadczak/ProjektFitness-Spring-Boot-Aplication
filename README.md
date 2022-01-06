@@ -13,27 +13,27 @@ Tworzenie aplikacji partnerskiej dla klubów fitness/siłowni/obiektów sportowy
 Funkcjonalności podstawowe:  
 a)panel użytkownika przez który może on zapisać się lub zrezygnować z zajęć
 
-b)panel firmowy gdzie podmioty sportowe mogłyby dodawać informację o swoim obiekcie, godzinach otwarcia, oferowanych zajęciach (opis zajęć, czas trwania, przebieg, aspekty zdrowotne itp)
+b)panel firmowy gdzie podmioty sportowe mogłyby dodawać informację o swoim obiekcie, godzinach otwarcia, oferowanych zajęciach (opis zajęć, czas trwania etc)
 
-c)automatyczne powiadomienia przypominające o zajęciach, wysyłanie powiadomień do klientów o ewentualnych zmianach w zajęciach ich anulowaniu 
-
-d)statystyki dla użytkowników (zajęcia w których brało się udział, badanie trendów itp)
-
-e)statystyki dla firm (dane o uczestnikach korzystających z oferty, badanie trendów itp)
+c)panel trenera gdzie pracownicy obiektów mogą dodawać informacje o zajęciach, które prowadzą
 
 Funkcjonalności dodatkowe:
 
-f)dziennik treningów  
+d)automatyczne powiadomienia przypominające o zajęciach, wysyłanie powiadomień do klientów o ewentualnych zmianach w zajęciach ich anulowaniu 
 
-g) Szybki i wygodny kontakt z trenerami za pomocą chatu
+e)statystyki dla użytkowników (zajęcia w których brało się udział, badanie trendów itp)
 
-h) Program lojalnościowy (zbieranie punktów za uczestniczenie w zajęciach itp)
+f)statystyki dla firm (dane o uczestnikach korzystających z oferty, badanie trendów itp)
+
+g)dziennik treningów  
+
+h) Szybki i wygodny kontakt z trenerami za pomocą chatu
+
+j) Program lojalnościowy (zbieranie punktów za uczestniczenie w zajęciach itp)
 
 Aspekt badawczy:
 
 Praktyczne wykorzystanie metody zarządzanie projektem SCRUM. Szczegółowe planowanie i rejestrowanie sprintów, przydział tasków, notatki z regularnych spotkań o postępach w realizacji projektów, backlogi).
-
-
 
 
 Języki programowania/technologie:  
