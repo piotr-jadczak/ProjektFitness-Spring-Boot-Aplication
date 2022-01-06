@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<html>
+<head>
+    <title>Unexpected error</title>
+    <link th:href="@{/css/bootstrap/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/styles/error.css}" rel="stylesheet"/>
+</head>
+<body class="bg-dark">
+<div class="container">
+    <div class="text-center mt-4">
+        <p class="error-message">
+            Unexpected error appeared.
+        </p>
+        <button type="button" onclick="location.href='/'" class="btn btn-light">
+            Go home
+        </button>
+
+    </div>
+</div>
+
+</body>
+</html>

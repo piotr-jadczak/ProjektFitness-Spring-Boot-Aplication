@@ -83,7 +83,7 @@ public class OwnerPanelController {
                 model.addAttribute("clubToAdd", clubToEdit);
             }
             else {
-                return "errors/error403";
+                return "error/403";
             }
         }
         else {
@@ -143,7 +143,7 @@ public class OwnerPanelController {
         //authentication
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
         if(!loggedUserLogin.equals(clubManager.getClub(Integer.parseInt(clubId)).getOwner().getLogin()))
-            return  new ModelAndView("redirect:/errors/error403");
+            return  new ModelAndView("redirect:/error");
         //end authentication
         Coach coach = userManager.findCoachById(Integer.parseInt(coachId));
         Club club = clubManager.getClub(Integer.parseInt(clubId));
@@ -159,7 +159,7 @@ public class OwnerPanelController {
         //authentication
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
         if(!loggedUserLogin.equals(clubManager.getClub(Integer.parseInt(clubId)).getOwner().getLogin()))
-            return  new ModelAndView("redirect:/errors/error403");
+            return  new ModelAndView("redirect:/error");
         //end authentication
         Coach coach = userManager.findCoachById(Integer.parseInt(coachId));
         Club club = clubManager.getClub(Integer.parseInt(clubId));
