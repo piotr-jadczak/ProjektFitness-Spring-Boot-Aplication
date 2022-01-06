@@ -116,6 +116,80 @@
     </div>
 </div>
 
+<div th:fragment="Sport-object-My-Clubs">
+    <div class="sport-object">
+        <div class="image_sport_card">
+            <img class="category" th:src="@{/images/tennis_court_wip.jpg}" />
+        </div>
+        <h1 class="title_sport_card">
+            <a th:text="${club.name}"></a>
+        </h1>
+
+        <div class="address_sport_card">
+            <img class="pin" th:src="@{/images/Gmap_icon.png}" />
+            <p class="text_address_sport_card">
+                <a th:text="${club.getFullAddress()}"></a>
+            </p>
+        </div>
+        <p class="description_sport_card">
+            <a th:text="${club.description}"></a><br>
+        </p>
+
+        <div class="div_category_sport_card">
+            <p class="text_category_sport_card">
+                <a th:text="${club.clubCategory.getName()}"></a>
+            </p>
+        </div>
+        <div th:if="${club.coaches != null && club.coaches.size() > 0}">
+            <b>Trenerzy: </b>
+            <a th:each="coach : ${club.coaches}" th:text="${coach.fullName()}">  </a>
+        </div>
+        <div class="flex-button">
+            <div class="sport-object-button">
+                <a class="btn btn-primary" th:href="@{/owner-panel/add-club/{id}(id=${club.id})}" role="button">Edytuj obiekt</a>
+            </div>
+            <div class="sport-object-button">
+                <a class="btn btn-info" th:href="@{/owner-panel/add-coaches/{id}(id=${club.id})}" role="button">Edytuj trenerów</a>
+            </div>
+            <div class="sport-object-button">
+                <a class="btn btn-danger" th:href="@{/owner-panel/delete-club/{id}(id=${club.id})}" role="button">Usuń obiekt</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="Sport-object-All-Clubs">
+    <div class="sport-object">
+        <div class="image_sport_card">
+            <img class="category" th:src="@{/images/tennis_court_wip.jpg}" />
+        </div>
+        <h1 class="title_sport_card">
+            <a th:text="${club.name}"></a>
+        </h1>
+
+        <div class="address_sport_card">
+            <img class="pin" th:src="@{/images/Gmap_icon.png}" />
+            <p class="text_address_sport_card">
+                <a th:text="${club.getFullAddress()}"></a>
+            </p>
+        </div>
+        <p class="description_sport_card">
+            <a th:text="${club.description}"></a><br>
+        </p>
+
+        <div class="div_category_sport_card">
+            <p class="text_category_sport_card">
+                <a th:text="${club.clubCategory.getName()}"></a>
+            </p>
+        </div>
+        <div>
+            <p>
+                <b>Właściciel:</b> <a th:text="${club.owner.fullName()}"></a>
+            </p>
+        </div>
+    </div>
+</div>
+
 <footer th:fragment="footer" class="py-5 bg-dark">
     <div class="container px-4">
         <p class="m-0 text-center text-white">Copyright &copy; FitApp 2021</p>

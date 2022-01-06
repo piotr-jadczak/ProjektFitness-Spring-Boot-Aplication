@@ -8,14 +8,13 @@
 <header>
     <div th:replace="fragments/components-owner-panel :: top-menu"></div>
 </header>
-<div class="py-5 mt-5 bg-white">
-    <div class="container px-4 text-center" >
+<div class="py-5 bg-white">
+    <div class="d-flex flex-wrap justify-content-center" >
+        <div class="mt-5" ></div>
         <div th:each="club : ${clubList}">
-            <a>Nazwa: </a><a th:text="${club.name}"></a><br>
-            <a>Opis: </a><a th:text="${club.description}"></a><br>
-            <a>Addres: </a><a th:text="${club.getFullAddress()}"></a><br>
-            <a>Kategoria: </a><a th:text="${club.clubCategory.getName()}"></a><br>
-            <a>Właściciel: </a><a th:text="${club.owner.fullName()}"></a>
+            <div class="p-2">
+                <div th:replace="fragments/components-owner-panel :: Sport-object-All-Clubs"></div>
+            </div>
         </div>
     </div>
 </div>

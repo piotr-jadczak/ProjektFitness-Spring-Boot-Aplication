@@ -10,27 +10,39 @@
     <div th:replace="fragments/components-owner-panel :: top-menu"></div>
 </header>
 <div class="py-5 mt-5 bg-white">
-    <div class="container px-4 text-center" style="max-width: 500px;">
-        <h1 th:text="${currentClub.name}"></h1>
-        <div>
-            <h2>Przypisani trenerzy</h2>
-            <div th:each="coach : ${presentCoaches}">
-                <a th:href="@{/owner-panel/delete-coaches/{clubId}/{coachId}(clubId = ${currentClub.id}, coachId = ${coach.id})}">Usun</a>
-                <a th:text="${coach.fullNameAndEmail()}"></a>
+    <div class="container px-4 justify-content-center">
+        <div class="add-coaches-card">
+            <div class="add-coaches-card-image">
+                <img class="category" th:src="@{/images/tennis_court_wip.jpg}" />
             </div>
-        </div>
-        <div>
-            <h2>Dostępni trenerzy</h2>
-            <div th:each="coach : ${availableCoaches}">
-                <a th:href="@{/owner-panel/add-coaches/{clubId}/{coachId}(clubId = ${currentClub.id}, coachId = ${coach.id})}">Dodaj</a>
-                <a th:text="${coach.fullNameAndEmail()}"></a>
-            </div>
-        </div>
 
+            <h1 class="add-coaches-card-title">
+                <a th:text="${currentClub.name}"></a>
+            </h1>
+            <div class="mt-2">
+                <h5>Przypisani trenerzy</h5>
+                <div th:each="coach : ${presentCoaches}">
+                    <div class="add-coaches-card-delete">
+                        <a th:text="${coach.fullNameAndEmail()}"></a>
+                        <a class="btn btn-danger btn-sm add-coaches-card-button" th:href="@{/owner-panel/delete-coaches/{clubId}/{coachId}(clubId = ${currentClub.id}, coachId = ${coach.id})}">Usun</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2">
+                <h5>Dostępni trenerzy</h5>
+                <div th:each="coach : ${availableCoaches}">
+                    <div class="add-coaches-card-add">
+                        <a th:text="${coach.fullNameAndEmail()}"></a>
+                        <a class="btn btn-primary btn-sm add-coaches-card-button" th:href="@{/owner-panel/add-coaches/{clubId}/{coachId}(clubId = ${currentClub.id}, coachId = ${coach.id})}">Dodaj</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<footer th:replace="fragments/main/components-index :: footer"></footer>
+<footer th:replace="fragments/main/components-login :: footer"></footer>
 
 </body>
 </html>
