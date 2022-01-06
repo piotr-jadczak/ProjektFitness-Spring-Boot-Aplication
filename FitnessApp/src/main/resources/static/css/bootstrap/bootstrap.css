@@ -9116,7 +9116,8 @@ a.text-dark:hover, a.text-dark:focus {
 
 .sport-object
 {
-    width: 100%;
+    margin: auto;
+    width: 60%;
     padding: 2em 0;
     display: flex;
     flex-direction: column;
@@ -9181,6 +9182,7 @@ a.text-dark:hover, a.text-dark:focus {
 .flex-button
 {
     display: flex;
+    margin: auto;
 
 }
 
