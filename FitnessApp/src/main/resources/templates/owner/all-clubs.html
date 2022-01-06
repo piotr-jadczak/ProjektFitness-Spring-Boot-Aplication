@@ -12,7 +12,9 @@
     <div class="d-flex flex-wrap justify-content-center" >
         <div class="mt-5" ></div>
         <div th:each="club : ${clubList}">
-            <div th:replace="fragments/components-owner-panel :: Sport-object-All-Clubs"></div>
+            <div class="p-2">
+                <div th:replace="fragments/components-owner-panel :: Sport-object-All-Clubs"></div>
+            </div>
         </div>
     </div>
 </div>
