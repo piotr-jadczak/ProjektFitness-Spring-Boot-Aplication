@@ -51,6 +51,6 @@ public class RegularDate {
 
     @Override
     public String toString() {
-        return "dzień: " + DayOfWeekExtension.getStringValue(dayOfWeek.getValue()) + ", rozpoczęcie: " + getStartTime() + ", zakończenie: " + getEndTime();
+        return DayOfWeekExtension.getStringValue(dayOfWeek.getValue()) + " " + getStartTime() + " - " + getEndTime();
     }
 }

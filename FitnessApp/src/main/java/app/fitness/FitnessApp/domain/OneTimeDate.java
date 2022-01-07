@@ -51,6 +51,6 @@ public class OneTimeDate {
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-        return "data: " + date.format(formatter) + ", rozpoczęcie: " + getStartTime() + ", zakończenie: " + getEndTime();
+        return date.format(formatter) + " " + getStartTime() + " - " + getEndTime();
     }
 }
