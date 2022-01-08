@@ -9,31 +9,67 @@
     <div th:replace="fragments/components-customer-panel :: top-menu"></div>
 </header>
 <div class="py-5 mt-5 bg-white">
-    <div class="container px-4 text-center" >
+    <div class="d-flex flex-wrap justify-content-center" >
         <div th:each="training : ${myTrainings}">
-            <b>Nazwa: </b><a th:text="${training.name}"></a><br>
-            <b>Opis: </b><a th:text="${training.description}"></a><br>
-            <b>Kategoria: </b><a th:text="${training.trainingCategory.getName()}"></a><br>
-            <b>Klub: </b><a th:text="${training.club.getName()}"></a><br>
-            <b>Trener: </b><a th:text="${training.coach.fullName()}"></a><br>
-            <b>Zapisanych: </b><a th:text="${training.getEnrolledCustomers()}"></a><br>
-            <b>Cena: </b><a th:text="${training.price}"></a><br>
+            <div class="p-2">
+                <div class="customer-my-training">
+                    <div class="training-image">
+                        <img class="training-club-image" th:src="@{/images/tennis_court_wip.jpg}" />
+                    </div>
 
-            <div th:if="${training.oneTimeDates != null && training.oneTimeDates.size() > 0}">
-                <a>Terminy zajęć:</a>
-                <div th:each="date : ${training.oneTimeDates}">
-                    <a th:text="${date}"></a>
-                </div>
-            </div>
+                    <h1 class="training-title">
+                        <a th:text="${training.name}"></a>
+                    </h1>
+                    <p class="training-description">
+                        <a th:text="${training.description}"></a>
+                    </p>
 
-            <div th:if="${training.regularDates != null && training.regularDates.size() > 0}">
-                <a>Terminy zajęć:</a>
-                <div th:each="date : ${training.regularDates}">
-                    <a th:text="${date}"></a>
+                    <div class="training-tags">
+                        <p class="training-tags-paragraph">
+                            <a th:text="${training.trainingCategory.getName()}"></a>
+                        </p>
+                        <p class="training-tags-paragraph">
+                            <a th:text="${training.club.getName()}"></a>
+                        </p>
+                        <p class="training-tags-paragraph">
+                            <a th:text="${training.getEnrolledCustomers()}"></a>
+                        </p>
+                    </div>
+
+                    <div class="training-trainer">
+                        <p>
+                            <b>Trener: </b><a th:text="${training.coach.fullName()}"></a>
+                        </p>
+                    </div>
+                    <div class="training-price">
+                        <p>
+                            <b>Koszt : </b> <a th:text="${training.price}"></a> zł
+                        </p>
+                    </div>
+
+
+                    <div class="training-dates bg-success bg-gradient text-white">
+                        <div th:if="${training.oneTimeDates != null && training.oneTimeDates.size() > 0}">
+                            <b>Terminy :</b>
+                            <div th:each="date : ${training.oneTimeDates}">
+                                <a th:text="${date}"></a>
+                            </div>
+                        </div>
+
+                        <div th:if="${training.regularDates != null && training.regularDates.size() > 0}">
+                            <a>Terminy zajęć:</a>
+                            <div th:each="date : ${training.regularDates}">
+                                <a th:text="${date}"></a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-1 training-buttons">
+                        <a class="btn btn-danger training-button" th:href="@{/customer-panel/resign/{id}(id=${training.id})}" role="button">Zrezygnuj</a>
+                    </div>
+
                 </div>
-            </div>
-            <div>
-                <a th:href="@{/customer-panel/resign/{id}(id=${training.id})}" role="button">Zrezygnuj</a>
             </div>
         </div>
     </div>

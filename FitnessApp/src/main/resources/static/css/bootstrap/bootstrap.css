@@ -9242,6 +9242,90 @@ a.text-dark:hover, a.text-dark:focus {
     margin-right: 1rem;
 }
 
+.customer-my-training
+{
+    margin: auto;
+    width: 60%;
+    padding: 2em 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
+    box-shadow: 28px 28px 50px -20px rgb(13 39 80 / 16%), -23px -23px 45px -25px #fff;
+    background-color: #fafafa;
+}
+
+.training-image
+{
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.training-club-image
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.training-title
+{
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.training-description
+{
+    color: #616161;
+}
+
+.training-tags
+{
+
+}
+
+.training-tags-paragraph
+{
+    display: inline-block;
+    background-color: rgb(230, 7, 100);
+    border-radius: 30px;
+    padding: 0.5em 1em;
+    color: white;
+    font-weight: 600;
+    font-size: 0.75em;
+}
+
+.training-trainer
+{
+    font-weight: 500;
+    font-size: 1em;
+}
+
+.training-price
+{
+
+}
+
+.training-dates
+{
+}
+
+.training-buttons
+{
+    display: flex;
+    margin: auto;
+}
+
+.training-button
+{
+    border: 0;
+    color: white;
+    border-radius: 5px;
+    padding: 0.5em 2em;
+}
+
+
 
 
 
