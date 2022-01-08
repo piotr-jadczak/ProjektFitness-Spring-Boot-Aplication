@@ -8,7 +8,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Embeddable
-public class OneTimeDate {
+public class OneTimeDate implements Comparable<OneTimeDate> {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
@@ -52,5 +52,10 @@ public class OneTimeDate {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
         return date.format(formatter) + " " + getStartTime() + " - " + getEndTime();
+    }
+
+    @Override
+    public int compareTo(OneTimeDate o) {
+        return this.date.compareTo(o.date);
     }
 }

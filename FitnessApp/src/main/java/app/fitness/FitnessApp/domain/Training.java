@@ -45,12 +45,12 @@ public class Training {
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "training_one_time_dates", joinColumns = @JoinColumn(name = "training_id"))
     @Column(name = "one_time_date")
-    private Set<OneTimeDate> oneTimeDates;
+    private List<OneTimeDate> oneTimeDates;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "training_regular_dates", joinColumns = @JoinColumn(name = "training_id"))
     @Column(name = "regular_date")
-    private Set<RegularDate> regularDates;
+    private List<RegularDate> regularDates;
 
 	public Training() {
 	}
@@ -176,19 +176,19 @@ public class Training {
         this.trainingType = trainingType;
     }
 
-    public Set<OneTimeDate> getOneTimeDates() {
+    public List<OneTimeDate> getOneTimeDates() {
         return oneTimeDates;
     }
 
-    public void setOneTimeDates(Set<OneTimeDate> oneTimeDates) {
+    public void setOneTimeDates(List<OneTimeDate> oneTimeDates) {
         this.oneTimeDates = oneTimeDates;
     }
 
-    public Set<RegularDate> getRegularDates() {
+    public List<RegularDate> getRegularDates() {
         return regularDates;
     }
 
-    public void setRegularDates(Set<RegularDate> regularDates) {
+    public void setRegularDates(List<RegularDate> regularDates) {
         this.regularDates = regularDates;
     }
 

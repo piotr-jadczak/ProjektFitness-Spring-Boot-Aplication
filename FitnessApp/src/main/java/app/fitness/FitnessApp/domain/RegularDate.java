@@ -1,16 +1,13 @@
 package app.fitness.FitnessApp.domain;
 
 import app.fitness.FitnessApp.domain.extra.DayOfWeekExtension;
-import org.apache.tomcat.jni.Local;
-
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.time.format.TextStyle;
-import java.util.Locale;
+
 
 @Embeddable
-public class RegularDate {
+public class RegularDate implements Comparable<RegularDate> {
 
     private DayOfWeek dayOfWeek;
     private LocalTime startTime;
@@ -52,5 +49,10 @@ public class RegularDate {
     @Override
     public String toString() {
         return DayOfWeekExtension.getStringValue(dayOfWeek.getValue()) + " " + getStartTime() + " - " + getEndTime();
+    }
+
+    @Override
+    public int compareTo(RegularDate o) {
+        return this.getDayOfWeek().getValue() - o.getDayOfWeek().getValue();
     }
 }

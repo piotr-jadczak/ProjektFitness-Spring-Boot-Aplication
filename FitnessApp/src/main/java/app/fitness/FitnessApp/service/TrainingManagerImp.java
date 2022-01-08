@@ -71,12 +71,14 @@ public class TrainingManagerImp implements TrainingManager {
         savedTraining.update(trainingForm);
         if(savedTraining.getTrainingType() == TrainingType.ONETIME) {
             trainingForm.filterValidOneTimeDates();
-            Set<OneTimeDate> dateSet = new HashSet<>(trainingForm.getOneTimeDates());
+            List<OneTimeDate> dateSet = new ArrayList<>(trainingForm.getOneTimeDates());
+            dateSet.sort(OneTimeDate::compareTo);
             savedTraining.setOneTimeDates(dateSet);
         }
         if(savedTraining.getTrainingType() == TrainingType.REGULAR) {
             trainingForm.filterValidRegularDates();
-            Set<RegularDate> dateSet = new HashSet<>(trainingForm.getRegularDates());
+            List<RegularDate> dateSet = new ArrayList<>(trainingForm.getRegularDates());
+            dateSet.sort(RegularDate::compareTo);
             savedTraining.setRegularDates(dateSet);
         }
 
@@ -120,12 +122,14 @@ public class TrainingManagerImp implements TrainingManager {
 
         if(training.getTrainingType() == TrainingType.ONETIME) {
             trainingForm.filterValidOneTimeDates();
-            Set<OneTimeDate> dateSet = new HashSet<>(trainingForm.getOneTimeDates());
+            List<OneTimeDate> dateSet = new ArrayList<>(trainingForm.getOneTimeDates());
+            dateSet.sort(OneTimeDate::compareTo);
             training.setOneTimeDates(dateSet);
         }
         if(training.getTrainingType() == TrainingType.REGULAR) {
             trainingForm.filterValidRegularDates();
-            Set<RegularDate> dateSet = new HashSet<>(trainingForm.getRegularDates());
+            List<RegularDate> dateSet = new ArrayList<>(trainingForm.getRegularDates());
+            dateSet.sort(RegularDate::compareTo);
             training.setRegularDates(dateSet);
         }
 
