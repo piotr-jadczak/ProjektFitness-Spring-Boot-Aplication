@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -58,7 +59,7 @@ public class OwnerPanelController {
     @GetMapping("/owner-panel/all-clubs")
     public String viewAllObjects(Model model) {
         model.addAttribute("categoryList", clubManager.getAllCategories());
-        model.addAttribute("clubList", clubManager.getAllClubs());
+        model.addAttribute("clubList", clubManager.getAllClubs().stream().sorted(Comparator.comparingInt(Club::getId)).collect(Collectors.toList()));
 
         return "owner/all-clubs";
     }
@@ -68,7 +69,7 @@ public class OwnerPanelController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String ownerLogin = authentication.getName();
         Owner loggedOwner = userManager.findOwnerByLogin(ownerLogin);
-        model.addAttribute("myClubsList", clubManager.getAllClubs(loggedOwner));
+        model.addAttribute("myClubsList", clubManager.getAllClubs(loggedOwner).stream().sorted(Comparator.comparingInt(Club::getId)).collect(Collectors.toList()));
 
         return "owner/my-clubs";
     }
@@ -112,7 +113,7 @@ public class OwnerPanelController {
             clubManager.addClub(clubToAdd);
         }
 
-        model.addAttribute("myClubsList", clubManager.getAllClubs(loggedOwner));
+        model.addAttribute("myClubsList", clubManager.getAllClubs(loggedOwner).stream().sorted(Comparator.comparingInt(Club::getId)).collect(Collectors.toList()));
         return "owner/my-clubs";
     }
 
