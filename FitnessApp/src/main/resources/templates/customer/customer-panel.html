@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<header class="py-xl-5 mt-5 bg-primary bg-gradient text-white">
+<header class="py-xl-5 text-white">
     <!-- Sticky top menu -->
     <div th:replace="fragments/components-customer-panel :: top-menu"></div>
 
@@ -16,7 +16,11 @@
 
 <div th:replace="fragments/components-customer-panel :: main-content"></div>
 
-<footer th:replace="fragments/components-customer-panel :: footer"></footer>
+<footer class="py-5 bg-dark fixed-bottom">
+    <div class="container px-4">
+        <p class="m-0 text-center text-white">Copyright &copy; FitApp 2021</p>
+    </div>
+</footer>
 
 </body>
 </html>
