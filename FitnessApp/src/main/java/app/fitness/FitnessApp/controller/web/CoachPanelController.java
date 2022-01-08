@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Controller
@@ -55,7 +56,7 @@ public class CoachPanelController {
     @GetMapping("/coach-panel/all-trainings")
     public String viewAllTrainings(Model model) {
 
-        model.addAttribute("allTrainings", trainingManager.getAllTrainings().collect(Collectors.toList()));
+        model.addAttribute("allTrainings", trainingManager.getAllTrainings().sorted(Comparator.comparingInt(Training::getId)).collect(Collectors.toList()));
         return "/coach/all-trainings";
     }
 

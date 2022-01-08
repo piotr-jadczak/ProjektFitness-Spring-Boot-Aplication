@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,7 +63,7 @@ public class CustomerPanelController {
 
         allNotFullTrainings.removeAll(customerTrainings);
 
-        model.addAttribute("allTrainings", allNotFullTrainings);
+        model.addAttribute("allTrainings", allNotFullTrainings.stream().sorted(Comparator.comparingInt(Training::getId)).collect(Collectors.toList()));
         return "customer/available-trainings";
     }
 
