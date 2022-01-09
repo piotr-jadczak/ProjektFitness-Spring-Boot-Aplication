@@ -7,6 +7,7 @@ import app.fitness.FitnessApp.domain.Training;
 import app.fitness.FitnessApp.domain.extra.ClubTrainingsWrapper;
 import app.fitness.FitnessApp.domain.extra.PasswordForm;
 import app.fitness.FitnessApp.domain.extra.ProfileForm;
+import app.fitness.FitnessApp.exception.NotUniqueEmailException;
 import app.fitness.FitnessApp.exception.WrongOldPasswordException;
 import app.fitness.FitnessApp.repository.CustomerRepository;
 import app.fitness.FitnessApp.service.ClubManager;
@@ -155,7 +156,9 @@ public class CustomerPanelController {
             return "customer/edit-profile";
         }
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-        userManager.updateUserDetails(profileForm, loggedUserLogin);
+        if(userManager.isEmailUnique(profileForm.getEmail(), loggedUserLogin)) {
+            userManager.updateUserDetails(profileForm, loggedUserLogin);
+        }
 
         return "redirect:/customer-panel/profile";
     }
@@ -212,6 +215,15 @@ public class CustomerPanelController {
                 exc.getMessage());
 
         return "redirect:/customer-panel/change-password";
+    }
+
+    @ExceptionHandler(NotUniqueEmailException.class)
+    public String handleNotUniqueEmailException(NotUniqueEmailException exc, RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("notUniqueEmailException",
+                exc.getMessage());
+
+        return "redirect:/customer-panel/edit-profile";
     }
 
     @ModelAttribute("profileImage")

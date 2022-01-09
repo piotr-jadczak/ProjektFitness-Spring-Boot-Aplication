@@ -2,6 +2,7 @@ package app.fitness.FitnessApp.service;
 
 import app.fitness.FitnessApp.domain.*;
 import app.fitness.FitnessApp.domain.extra.ProfileForm;
+import app.fitness.FitnessApp.exception.NotUniqueEmailException;
 import app.fitness.FitnessApp.login.UserForm;
 import org.springframework.security.core.Authentication;
 
@@ -21,4 +22,5 @@ public interface UserManager {
     boolean isCorrectPassword(String login, String currentPassword);
     void userChangePassword(String login, String newPassword);
     void changeProfilePicture(String login, byte[] byteImage);
+    boolean isEmailUnique(String email, String login) throws NotUniqueEmailException;
 }

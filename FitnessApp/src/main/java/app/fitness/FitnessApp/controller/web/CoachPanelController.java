@@ -8,6 +8,7 @@ import app.fitness.FitnessApp.domain.extra.PasswordForm;
 import app.fitness.FitnessApp.domain.extra.ProfileForm;
 import app.fitness.FitnessApp.domain.extra.TrainingForm;
 import app.fitness.FitnessApp.exception.CoachNotInAnyClubException;
+import app.fitness.FitnessApp.exception.NotUniqueEmailException;
 import app.fitness.FitnessApp.exception.WrongOldPasswordException;
 import app.fitness.FitnessApp.service.TrainingManager;
 import app.fitness.FitnessApp.service.UserManager;
@@ -164,8 +165,11 @@ public class CoachPanelController {
         if(bindingResult.hasErrors()) {
             return "coach/edit-profile";
         }
+
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-        userManager.updateUserDetails(profileForm, loggedUserLogin);
+        if(userManager.isEmailUnique(profileForm.getEmail(), loggedUserLogin)) {
+            userManager.updateUserDetails(profileForm, loggedUserLogin);
+        }
 
         return "redirect:/coach-panel/profile";
     }
@@ -231,6 +235,15 @@ public class CoachPanelController {
                 exc.getMessage());
 
         return "redirect:/coach-panel/change-password";
+    }
+
+    @ExceptionHandler(NotUniqueEmailException.class)
+    public String handleNotUniqueEmailException(NotUniqueEmailException exc, RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("notUniqueEmailException",
+                exc.getMessage());
+
+        return "redirect:/coach-panel/edit-profile";
     }
 
     @ModelAttribute("profileImage")

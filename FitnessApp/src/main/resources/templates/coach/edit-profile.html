@@ -9,7 +9,7 @@
   <div th:replace="fragments/components-coach-panel :: top-menu"></div>
 </header>
 <div class="py-5 mt-5 bg-white">
-  <div class="container px-4 text-center" >
+  <p class="container px-4 text-center" >
     <form th:action="@{/coach-panel/profile}" th:object="${profileDetails}" method="post">
       <fieldset>
         <legend>Dane</legend>
@@ -19,6 +19,7 @@
         <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</p>
         <input type="text" th:field="*{email}" placeholder="email" required /><br>
         <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</p>
+        <p th:if="${notUniqueEmailException}" th:text="${notUniqueEmailException}"></p>
         <input type="date" th:field="*{dob}" required /><br>
         <p th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}">Name Error</p>
         <input type="text" th:field="*{phoneNumber}" placeholder="numer telefonu" required /><br>

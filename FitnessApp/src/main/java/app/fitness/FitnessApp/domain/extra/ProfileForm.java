@@ -3,6 +3,7 @@ package app.fitness.FitnessApp.domain.extra;
 import app.fitness.FitnessApp.validators.UniqueEmail;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -12,6 +13,7 @@ public class ProfileForm {
     private String firstName;
     @Size(min=2, max=24)
     private String lastName;
+    @Email
     private String email;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;

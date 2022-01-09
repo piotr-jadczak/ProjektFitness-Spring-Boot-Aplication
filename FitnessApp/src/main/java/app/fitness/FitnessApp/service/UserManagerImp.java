@@ -3,6 +3,7 @@ package app.fitness.FitnessApp.service;
 import app.fitness.FitnessApp.controller.web.MainPageController;
 import app.fitness.FitnessApp.domain.*;
 import app.fitness.FitnessApp.domain.extra.ProfileForm;
+import app.fitness.FitnessApp.exception.NotUniqueEmailException;
 import app.fitness.FitnessApp.login.UserForm;
 import app.fitness.FitnessApp.login.UserRole;
 import app.fitness.FitnessApp.repository.CoachRepository;
@@ -213,6 +214,34 @@ public class UserManagerImp implements UserManager {
             ownerRepository.save(ownerToUpdate);
             return;
         }
+    }
+
+    @Override
+    public boolean isEmailUnique(String email, String login) throws NotUniqueEmailException {
+
+        Coach coach = coachRepository.findByEmail(email);
+        if(coach != null) {
+            if(coach.getLogin().equals(login)) {
+                return true;
+            }
+            throw new NotUniqueEmailException("Ten email jest zajęty");
+        }
+        Customer customer = customerRepository.findByEmail(email);
+        if(customer != null) {
+            if(customer.getLogin().equals(login)) {
+                return true;
+            }
+            throw new NotUniqueEmailException("Ten email jest zajęty");
+        }
+        Owner owner = ownerRepository.findByEmail(email);
+        if(owner != null) {
+            if(owner.getLogin().equals(login)) {
+                return true;
+            }
+            throw new NotUniqueEmailException("Ten email jest zajęty");
+        }
+
+        return true;
     }
 
 

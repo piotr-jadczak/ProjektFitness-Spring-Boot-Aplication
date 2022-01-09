@@ -235,7 +235,7 @@ public class FitnessAppApplication {
 		trainings.add(new TrainingForm(TrainingType.ONETIME, "Trening obwodowy", description2, 1, 150, null, dates2));
 		String description3 = "Zrealizuj swoje postanowienie noworoczne i zgub zbędne kilogramy.";
 		List<RegularDate> dates3 = Arrays.asList(new RegularDate(DayOfWeek.TUESDAY, LocalTime.of(16, 30), LocalTime.of(18, 0)), new RegularDate(DayOfWeek.THURSDAY, LocalTime.of(16, 30), LocalTime.of(18, 0)));
-		trainings.add(new TrainingForm(TrainingType.REGULAR, "Spalanie tkank tłuszczowej", description3, 20, 40, dates3, null));
+		trainings.add(new TrainingForm(TrainingType.REGULAR, "Spalanie tkanki tłuszczowej", description3, 20, 40, dates3, null));
 		String description4 = "Ćwiczenia ogólnorozwojowe to takie, które angażują do pracy najważniejsze partie całego ciała jednocześnie, w trakcie jednej sesji.";
 		List<OneTimeDate> dates4 = Arrays.asList(new OneTimeDate(LocalDate.of(2022, 1, 18), LocalTime.of(18, 30), LocalTime.of(19, 30)), new OneTimeDate(LocalDate.of(2022, 1, 20), LocalTime.of(18, 30), LocalTime.of(19, 30)));
 		trainings.add(new TrainingForm(TrainingType.ONETIME, "Trening ogólnorozwojowy", description4, 1, 120, null, dates4));
