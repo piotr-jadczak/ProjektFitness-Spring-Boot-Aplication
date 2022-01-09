@@ -109,16 +109,16 @@ public class CoachPanelController {
     }
 
     @PostMapping("/coach-panel/my-trainings")
-    public String addTrainingFormDetails(@ModelAttribute("trainingToAdd") TrainingForm trainingToAdd, BindingResult bindingResult, Model model) {
+    public String addTrainingFormDetails(@ModelAttribute("trainingToAdd") @Valid TrainingForm trainingToAdd, BindingResult bindingResult, Model model) {
 
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
         Coach loggedCoach = userManager.findCoachByLogin(loggedUserLogin);
 
-//        if(bindingResult.hasErrors()) {
-//            model.addAttribute("trainingCategories", trainingManager.getAllTrainingCategories().collect(Collectors.toList()));
-//            model.addAttribute("availableClubs", loggedCoach.getClubs());
-//            return "/coach/add-training";
-//        }
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("trainingCategories", trainingManager.getAllTrainingCategories().collect(Collectors.toList()));
+            model.addAttribute("availableClubs", loggedCoach.getClubs());
+            return "/coach/add-training";
+        }
 
         if(trainingManager.isTrainingInDB(trainingToAdd.getId())) {
             trainingManager.updateTraining(trainingToAdd);

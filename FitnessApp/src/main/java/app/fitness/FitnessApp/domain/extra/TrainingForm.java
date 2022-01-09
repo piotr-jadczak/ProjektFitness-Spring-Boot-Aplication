@@ -1,7 +1,11 @@
 package app.fitness.FitnessApp.domain.extra;
 
 import app.fitness.FitnessApp.domain.*;
+import org.springframework.lang.NonNull;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,12 +14,20 @@ public class TrainingForm {
 
     private int id;
     private TrainingType trainingType;
+
+    @Size(min=2, max = 32)
     private String name;
+    @Size(min=8, max = 512)
     private String description;
+    @Min(1)
+    @Max(1024)
     private int maxParticipants;
     private TrainingCategory trainingCategory;
     private Coach coach;
     private Club club;
+
+    @Min(0)
+    @Max(10000)
     private double price;
 
     private List<RegularDate> regularDates;

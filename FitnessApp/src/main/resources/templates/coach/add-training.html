@@ -6,6 +6,9 @@
     <script type="text/javascript" th:src="@{/scripts/showDivTraining.js}"></script>
 </head>
 <body>
+<span th:if="${trainingToAdd.getId() != 0}">
+    <script type="text/javascript" th:src="@{/scripts/triggerShowDivTrainingOnPageLoad.js}"></script>
+</span>
 <header>
     <div th:replace="fragments/components-coach-panel :: top-menu"></div>
 </header>

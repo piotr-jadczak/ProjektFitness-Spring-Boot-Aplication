@@ -3,12 +3,16 @@ package app.fitness.FitnessApp.domain;
 import app.fitness.FitnessApp.domain.extra.DayOfWeek;
 import app.fitness.FitnessApp.domain.extra.TrainingForm;
 import app.fitness.FitnessApp.domain.extra.TrainingType;
+import org.springframework.lang.NonNull;
 
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "training")
@@ -18,10 +22,21 @@ public class Training {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
     private TrainingType trainingType;
+
+    @NonNull
+    @Size(max = 32)
+    @Column(length = 32)
     private String name;
+
+    @NonNull
+    @Size(max = 512)
+    @Column(length = 512)
     private String description;
+
+    @Min(1)
+    @Max(1024)
     private int maxParticipants;
-	private int currentParticipants = 0;
+	private Integer currentParticipants = 0;
 
     private double price;
 
