@@ -8974,8 +8974,17 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
-#nav-item-right{
+
+@media only screen and (max-width: 575.98px){
+    #nav-item-right{
+    margin-left:0;
+    }
+}
+
+@media only screen and (min-width: 575.98px){
+    #nav-item-right{
     margin-left:auto;
+    }
 }
 
 #navbar-full-width{
