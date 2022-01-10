@@ -9401,6 +9401,29 @@ a.text-dark:hover, a.text-dark:focus {
 
 }
 
+.owner-my-club-heading
+{
+
+}
+
+.owner-my-club-heading
+{
+    margin-top: 4rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.owner-add-club-button
+{
+    border-radius: 2rem;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+}
 
 
 

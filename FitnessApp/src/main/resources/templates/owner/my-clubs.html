@@ -9,13 +9,14 @@
     <!-- Sticky top menu -->
     <div th:replace="fragments/components-owner-panel :: top-menu"></div>
 </header>
-<div class="py-5 mt-5 bg-white">
-    <div class="container px-4 text-center" >
-        <a class="btn btn-primary" th:href="@{/owner-panel/add-club/0}">Dodaj obiekt</a><br>
-    </div>
-</div>
 
 <div class="py-5 bg-white">
+    <div class="owner-my-club-heading">
+        <h1>Moje Obiekty</h1>
+        <a class="btn btn-success owner-add-club-button" th:href="@{/owner-panel/add-club/0}">+</a>
+    </div>
+
+
     <div class="d-flex flex-wrap justify-content-center sport-object-container">
         <div th:each="club : ${myClubsList}">
             <div class="p-2">
