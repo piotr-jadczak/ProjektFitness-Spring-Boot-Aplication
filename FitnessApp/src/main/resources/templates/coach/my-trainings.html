@@ -15,42 +15,86 @@
     <div th:if="${exceptionMessage}">
         <a th:text="${exceptionMessage}"></a>
     </div>
-    <div class="container px-4 text-center" >
+    <div class="d-flex flex-wrap justify-content-center training-container" >
         <div th:each="training : ${coachTrainings}">
-            <b>Nazwa: </b><a th:text="${training.name}"></a><br>
-            <b>Opis: </b><a th:text="${training.description}"></a><br>
-            <b>Kategoria: </b><a th:text="${training.trainingCategory.getName()}"></a><br>
-            <b>Klub: </b><a th:text="${training.club.getName()}"></a><br>
-            <b>Maksymalna liczba uczestników: </b><a th:text="${training.maxParticipants}"></a><br>
-            <b>Zapisanych uczestników: </b><a th:text="${training.currentParticipants}"></a><br>
-            <b>Cena: </b><a th:text="${training.price}"></a><br>
+            <div class="p-2">
+                <div class="coach-my-trainings">
+                    <div class="training-image">
+                        <img class="training-club-image" th:src="@{/images/tennis_court_wip.jpg}" />
+                    </div>
 
-            <div th:if="${training.oneTimeDates != null && training.oneTimeDates.size() > 0}">
-                <a>Terminy zajęć:</a>
-                <div th:each="date : ${training.oneTimeDates}">
-                    <a th:text="${date}"></a>
+                    <h1 class="training-title">
+                        <a th:text="${training.name}"></a>
+                    </h1>
+                    <p class="training-description">
+                        <a th:text="${training.description}"></a>
+                    </p>
+
+                    <div class="training-tags">
+                        <p class="training-tags-paragraph">
+                            <a th:text="${training.trainingCategory.getName()}"></a>
+                        </p>
+                        <p class="training-tags-paragraph">
+                            <a th:text="${training.club.getName()}"></a>
+                        </p>
+                        <p class="training-tags-paragraph">
+                            <a th:text="${training.getEnrolledCustomers()}"></a>
+                        </p>
+                    </div>
+
+                    <div class="training-trainer">
+                        <p>
+                            <b>Trener: </b><a th:text="${training.coach.fullName()}"></a>
+                        </p>
+                    </div>
+                    <div class="training-price">
+                        <p>
+                            <b>Koszt : </b> <a th:text="${training.price}"></a> zł
+                        </p>
+                    </div>
+
+
+                    <div class="training-dates">
+                        <div th:if="${training.oneTimeDates != null && training.oneTimeDates.size() > 0}">
+                            <div th:each="date : ${training.oneTimeDates}">
+                                <p>
+                                    <img class="training-calendar-icon" th:src="@{/images/calendar-date.svg}" />
+                                    <a th:text="${date}"></a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div th:if="${training.regularDates != null && training.regularDates.size() > 0}">
+                            <div th:each="date : ${training.regularDates}">
+                                <p>
+                                    <img class="training-calendar-icon" th:src="@{/images/calendar-date.svg}" />
+                                    <a th:text="${date}"></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div th:if="${training.customers != null && training.customers.size() > 0}" >
+                        <div class="coach-my-training-participants">
+                            <p>
+                                <b>Uczestnicy :</b>
+                            <div th:each="customer : ${training.customers}">
+                                <a th:text="${customer.fullName()}"></a>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="training-buttons">
+                        <div class="training-button">
+                            <a class="btn btn-primary" th:href="@{/coach-panel/add-training/{id}(id=${training.id})}" role="button">Edytuj</a>
+                        </div>
+                        <div class="training-button">
+                            <a class="btn btn-danger" th:href="@{/coach-panel/delete-training/{id}(id=${training.id})}" role="button">Usuń</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div th:if="${training.regularDates != null && training.regularDates.size() > 0}">
-                <a>Terminy zajęć:</a>
-                <div th:each="date : ${training.regularDates}">
-                    <a th:text="${date}"></a>
-                </div>
-            </div>
-
-            <div th:if="${training.customers != null && training.customers.size() > 0}" >
-                <a>Uczestnicy</a>
-                <div th:each="customer : ${training.customers}">
-                    <a th:text="${customer.fullName()}"></a>
-                </div>
-            </div>
-
-            <div>
-                <a th:href="@{/coach-panel/add-training/{id}(id=${training.id})}" role="button">Edytuj</a>
-            </div>
-            <div>
-                <a th:href="@{/coach-panel/delete-training/{id}(id=${training.id})}" role="button">Usuń</a>
             </div>
         </div>
     </div>

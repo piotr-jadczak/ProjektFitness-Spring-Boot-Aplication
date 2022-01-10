@@ -2012,7 +2012,7 @@ pre code {
 }
 
 select.form-control:not([size]):not([multiple]) {
-  height: calc(2.25rem + 2px);
+  height: calc(2.5rem + 2px);
 }
 
 select.form-control:focus::-ms-value {
@@ -9371,6 +9371,36 @@ a.text-dark:hover, a.text-dark:focus {
 .customer-club
 {
 }
+
+.coach-all-trainings
+{
+    margin: auto;
+    width: 60%;
+    padding: 2em 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
+    box-shadow: 28px 28px 50px -20px rgb(13 39 80 / 16%), -23px -23px 45px -25px #fff;
+    background-color: #fafafa;
+}
+
+.coach-my-trainings
+{
+    margin: auto;
+    width: 60%;
+    padding: 2em 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
+    box-shadow: 28px 28px 50px -20px rgb(13 39 80 / 16%), -23px -23px 45px -25px #fff;
+    background-color: #fafafa;
+}
+
+.coach-my-training-participants
+{
+
+}
+
 
 
 
