@@ -9,39 +9,95 @@
     <div th:replace="fragments/components-customer-panel :: top-menu"></div>
 </header>
 <div class="py-5 mt-5 bg-white">
-    <div class="container px-4 text-center" >
+    <div class="d-flex flex-wrap justify-content-center training-container" >
         <div th:each="clubTrainings : ${wrapTrainings}">
-            <div th:object="${clubTrainings.club}">
-                <a th:text="*{clubCategory.getName()}"></a><br>
-                <a th:text="*{name}"></a><br>
-                <a th:text="*{description}"></a><br>
-                <a th:text="*{fullAddress}"></a><br>
+            <div class="customer-club" th:object="${clubTrainings.club}">
+                <p>
+                    <h2>
+                        <a th:text="*{clubCategory.getName()}"></a>
+                    </h2>
+                    <h4>
+                        <a th:text="*{name}"></a>
+                    </h4>
+
+                    <div class="customer-club-description">
+                        <a th:text="*{description}"></a>
+                    </div>
+
+                    <a th:text="*{fullAddress}"></a>
+                </p>
+
+
+
+
+
+
             </div>
             <div th:each="training : ${clubTrainings.trainings}">
-                <b>Nazwa: </b><a th:text="${training.name}"></a><br>
-                <b>Opis: </b><a th:text="${training.description}"></a><br>
-                <b>Kategoria: </b><a th:text="${training.trainingCategory.getName()}"></a><br>
-                <b>Klub: </b><a th:text="${training.club.getName()}"></a><br>
-                <b>Trener: </b><a th:text="${training.coach.fullName()}"></a><br>
-                <b>Zapisanych: </b><a th:text="${training.getEnrolledCustomers()}"></a><br>
-                <b>Cena: </b><a th:text="${training.price}"></a><br>
+                <div class="p-2">
+                    <div class="customer-trainings-sorted">
+                        <div class="training-image">
+                            <img class="training-club-image" th:src="@{/images/tennis_court_wip.jpg}" />
+                        </div>
 
-                <div th:if="${training.oneTimeDates != null && training.oneTimeDates.size() > 0}">
-                    <a>Terminy zajęć:</a>
-                    <div th:each="date : ${training.oneTimeDates}">
-                        <a th:text="${date}"></a>
+
+                        <h1 class="training-title">
+                            <a th:text="${training.name}"></a>
+                        </h1>
+                        <p class="training-description">
+                            <a th:text="${training.description}"></a>
+                        </p>
+
+                        <div class="training-tags">
+                            <p class="training-tags-paragraph">
+                                <a th:text="${training.trainingCategory.getName()}"></a>
+                            </p>
+                            <p class="training-tags-paragraph">
+                                <a th:text="${training.club.getName()}"></a>
+                            </p>
+                            <p class="training-tags-paragraph">
+                                <a th:text="${training.getEnrolledCustomers()}"></a>
+                            </p>
+                        </div>
+
+                        <div class="training-trainer">
+                            <p>
+                                <b>Trener: </b><a th:text="${training.coach.fullName()}"></a>
+                            </p>
+                        </div>
+                        <div class="training-price">
+                            <p>
+                                <b>Koszt : </b> <a th:text="${training.price}"></a> zł
+                            </p>
+                        </div>
+
+
+                        <div class="training-dates">
+                            <div th:if="${training.oneTimeDates != null && training.oneTimeDates.size() > 0}">
+                                <div th:each="date : ${training.oneTimeDates}">
+                                    <p>
+                                        <img class="training-calendar-icon" th:src="@{/images/calendar-date.svg}" />
+                                        <a th:text="${date}"></a>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div th:if="${training.regularDates != null && training.regularDates.size() > 0}">
+                                <div th:each="date : ${training.regularDates}">
+                                    <p>
+                                        <img class="training-calendar-icon" th:src="@{/images/calendar-date.svg}" />
+                                        <a th:text="${date}"></a>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-1 training-buttons">
+                            <a class="btn btn-primary training-button" th:href="@{/customer-panel/enroll-object/{id}(id=${training.id})}" role="button">Zapisz się</a>
+                        </div>
+
                     </div>
-                </div>
-
-                <div th:if="${training.regularDates != null && training.regularDates.size() > 0}">
-                    <a>Terminy zajęć:</a>
-                    <div th:each="date : ${training.regularDates}">
-                        <a th:text="${date}"></a>
-                    </div>
-                </div>
-
-                <div>
-                    <a th:href="@{/customer-panel/enroll-object/{id}(id=${training.id})}" role="button">Zapisz się</a>
                 </div>
             </div>
         </div>
