@@ -102,8 +102,20 @@
 
 <div th:fragment="Sport-object-My-Clubs">
     <div class="sport-object">
-        <div class="image_sport_card">
-            <img class="category" th:src="@{/images/tennis_court_wip.jpg}" />
+        <div class="image_sport_card" th:if="${club.clubCategory.getName()} == 'aquapark'">
+            <img class="category" th:src="@{/images/aquapark_banner.jpg}"/>
+        </div>
+        <div class="image_sport_card" th:if="${club.clubCategory.getName()} == 'siłownia'">
+            <img class="category" th:src="@{/images/siłownia_banner.jpg}"/>
+        </div>
+        <div class="image_sport_card" th:if="${club.clubCategory.getName()} == 'klub fitness'">
+            <img class="category" th:src="@{/images/klub fitness_banner.jpg}"/>
+        </div>
+        <div class="image_sport_card" th:if="${club.clubCategory.getName()} == 'kort tenisowy'">
+            <img class="category" th:src="@{/images/kort tenisowy_banner.jpg}"/>
+        </div>
+        <div class="image_sport_card" th:if="${club.clubCategory.getName()} == 'basen'">
+            <img class="category" th:src="@{/images/basen_banner.jpg}"/>
         </div>
         <h1 class="title_sport_card">
             <a th:text="${club.name}"></a>
@@ -144,8 +156,20 @@
 
 <div th:fragment="Sport-object-All-Clubs">
     <div class="sport-object">
-        <div class="image_sport_card">
-            <img class="category" th:src="@{/images/tennis_court_wip.jpg}" />
+        <div class="image_sport_card" th:if="${club.clubCategory.getName()} == 'aquapark'">
+            <img class="category" th:src="@{/images/aquapark_banner.jpg}"/>
+        </div>
+        <div class="image_sport_card" th:if="${club.clubCategory.getName()} == 'siłownia'">
+            <img class="category" th:src="@{/images/siłownia_banner.jpg}"/>
+        </div>
+        <div class="image_sport_card" th:if="${club.clubCategory.getName()} == 'klub fitness'">
+            <img class="category" th:src="@{/images/klub fitness_banner.jpg}"/>
+        </div>
+        <div class="image_sport_card" th:if="${club.clubCategory.getName()} == 'kort tenisowy'">
+            <img class="category" th:src="@{/images/kort tenisowy_banner.jpg}"/>
+        </div>
+        <div class="image_sport_card" th:if="${club.clubCategory.getName()} == 'basen'">
+            <img class="category" th:src="@{/images/basen_banner.jpg}"/>
         </div>
         <h1 class="title_sport_card">
             <a th:text="${club.name}"></a>
