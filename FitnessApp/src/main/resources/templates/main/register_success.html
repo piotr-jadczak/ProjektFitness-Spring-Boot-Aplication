@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Registration Success</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <th:block th:replace="fragments/main/components-index :: headContent"></th:block>
 </head>
 <body>
+
+<header class="py-xl-5 mt-index bg-gradient text-white">
+    <!-- Sticky top menu -->
+    <span th:if="${userRole == '[ROLE_ANONYMOUS]' || userRole == null}">
+            <div th:replace="fragments/main/components-index :: top-menu"></div>
+        </span>
+    <span th:if="${userRole == '[ROLE_COACH]'}">
+            <div th:replace="fragments/main/components-index :: top-menu-coach"></div>
+        </span>
+    <span th:if="${userRole == '[ROLE_OWNER]'}">
+            <div th:replace="fragments/main/components-index :: top-menu-owner"></div>
+        </span>
+    <span th:if="${userRole == '[ROLE_CUSTOMER]'}">
+            <div th:replace="fragments/main/components-index :: top-menu-customer"></div>
+        </span>
+
+
+
+</header>
+
 <div class="container text-center">
     <h3>Udało Ci się pomyślnie zarejestrować</h3>
-    <h3><a th:href="@{/}">Powrót do strony głównej</a></h3>
+    <h3><a class="btn btn-primary" th:href="@{/}">Powrót do strony głównej</a></h3>
 </div>
 
+
+<footer th:replace="fragments/main/components-login :: footer"></footer>
 </body>
 </html>
