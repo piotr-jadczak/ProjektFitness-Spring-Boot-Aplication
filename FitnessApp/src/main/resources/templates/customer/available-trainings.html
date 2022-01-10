@@ -8,7 +8,11 @@
 <header>
     <div th:replace="fragments/components-customer-panel :: top-menu"></div>
 </header>
-<div class="py-5 mt-5 bg-white">
+<div class="py-5 mt-3 bg-white">
+    <div class="customer-available-training-heading">
+        <h1>Dostępne Treningi</h1>
+    </div>
+
     <div class="d-flex flex-wrap justify-content-center training-container" >
         <div th:each="training : ${allTrainings}">
             <div class="p-2">

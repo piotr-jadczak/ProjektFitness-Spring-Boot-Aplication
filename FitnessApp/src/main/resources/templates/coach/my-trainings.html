@@ -8,9 +8,10 @@
 <header>
     <div th:replace="fragments/components-coach-panel :: top-menu"></div>
 </header>
-<div class="py-5 mt-5 bg-white">
-    <div class="container px-4 text-center" >
-        <a th:href="@{/coach-panel/add-training/0}">Dodaj zajęcia</a><br>
+<div class="py-5 mt-3 bg-white">
+    <div class="coach-my-training-heading">
+        <h1>Moje Treningi</h1>
+        <a class="btn btn-success coach-add-training-button" th:href="@{/coach-panel/add-training/0}">+</a>
     </div>
     <div th:if="${exceptionMessage}">
         <a th:text="${exceptionMessage}"></a>

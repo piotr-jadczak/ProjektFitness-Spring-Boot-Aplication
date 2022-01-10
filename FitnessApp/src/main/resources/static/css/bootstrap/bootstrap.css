@@ -9401,9 +9401,10 @@ a.text-dark:hover, a.text-dark:focus {
 
 }
 
-.owner-my-club-heading
+.owner-all-club-heading
 {
-
+    margin-top: 4rem;
+    text-align: center;
 }
 
 .owner-my-club-heading
@@ -9478,5 +9479,41 @@ a.text-dark:hover, a.text-dark:focus {
     margin: auto;
 }
 
+.coach-all-training-heading
+{
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.coach-my-training-heading
+{
+    margin-top: 4rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.coach-add-training-button
+{
+    border-radius: 2rem;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+}
+
+.customer-available-training-heading
+{
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.customer-my-training-heading
+{
+    margin-top: 4rem;
+    text-align: center;
+}
 
 /*# sourceMappingURL=bootstrap.css.map */
