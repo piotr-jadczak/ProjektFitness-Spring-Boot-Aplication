@@ -48,18 +48,22 @@
                     </div>
 
 
-                    <div class="training-dates bg-success bg-gradient text-white">
+                    <div class="training-dates">
                         <div th:if="${training.oneTimeDates != null && training.oneTimeDates.size() > 0}">
-                            <b>Terminy :</b>
                             <div th:each="date : ${training.oneTimeDates}">
-                                <a th:text="${date}"></a>
+                                <p>
+                                    <img class="training-calendar-icon" th:src="@{/images/calendar-date.svg}" />
+                                    <a th:text="${date}"></a>
+                                </p>
                             </div>
                         </div>
 
                         <div th:if="${training.regularDates != null && training.regularDates.size() > 0}">
-                            <a>Terminy zajęć:</a>
                             <div th:each="date : ${training.regularDates}">
-                                <a th:text="${date}"></a>
+                                <p>
+                                    <img class="training-calendar-icon" th:src="@{/images/calendar-date.svg}" />
+                                    <a th:text="${date}"></a>
+                                </p>
                             </div>
                         </div>
 
