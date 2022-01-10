@@ -9425,7 +9425,58 @@ a.text-dark:hover, a.text-dark:focus {
     height: fit-content;
 }
 
+.profile-card
+{
+    margin: auto;
+    width: 80%;
+    padding: 2em 0;
+    display: flex;
+    flex-direction: row;
+    border-radius: 3px;
+    box-shadow: 28px 28px 50px -20px rgb(13 39 80 / 16%), -23px -23px 45px -25px #fff;
+    background-color: #fafafa;
+    justify-content: center;
+    align-items: center;
+}
 
+.profile-buttons
+{
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+
+.profile-button
+{
+    border: 0;
+    color: white;
+    border-radius: 5px;
+    padding: 0.5em 2em;
+}
+
+.profile-avatar-form
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profile-avatar
+{
+    text-align: center;
+}
+
+.profile-avatar-form-button
+{
+    width:60%;
+    margin : auto;
+}
+
+.profile-avatar-form-choose
+{
+    width: 80%;
+    margin: auto;
+}
 
 
 /*# sourceMappingURL=bootstrap.css.map */

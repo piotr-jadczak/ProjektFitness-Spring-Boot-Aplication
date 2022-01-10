@@ -9,26 +9,43 @@
     <div th:replace="fragments/components-owner-panel :: top-menu"></div>
 </header>
 <div class="py-5 mt-5 bg-white">
-    <div class="container px-4 text-center" >
-        <div th:if="${profileImage}">
-            <img th:src="${profileImage}"  width="150px" height="150px" >
-        </div>
-            <div>
-                <form method="POST" enctype="multipart/form-data" action="/owner-panel/change-image">
-                    <input type="file" name="picture"  accept="image/png, image/jpeg" /><br>
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                    <input type="submit" value="Zapisz" />
-                </form>
+    <div class=" mt-3 container px-4 justify-content-center" >
+        <div class="profile-card">
+            <div class="profile-card-left">
+                <div class="profile-avatar" th:if="${profileImage}">
+                    <img th:src="${profileImage}"  width="150px" height="150px" >
+                </div>
+                <div class="profile-avatar" th:unless="${profileImage}">
+                    <img th:src="@{/images/avatarTransparent.png}" width="150px" height="150px" />
+                </div>
+                    <form class="profile-avatar-form" method="POST" enctype="multipart/form-data" action="/owner-panel/change-image">
+                        <input class="profile-avatar-form-choose" type="file" name="picture"  accept="image/png, image/jpeg" /><br>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input class="btn btn-secondary profile-avatar-form-button" type="submit" value="Zapisz" />
+                    </form>
             </div>
-        <div th:object="${profileDetails}">
-            <b>Imię: </b><a th:text="${profileDetails.firstName}"></a><br>
-            <b>Nazwisko: </b><a th:text="${profileDetails.lastName}"></a><br>
-            <b>Adres-email: </b><a th:text="${profileDetails.email}"></a><br>
-            <b>Data urodzenia: </b><a th:text="${profileDetails.dobFormatted()}"></a><br>
-            <b>Numer telefonu: </b><a th:text="${profileDetails.phoneNumber}"></a><br>
+
+            <div class="profile-card-right">
+
+                <div th:object="${profileDetails}">
+                    <b>Imię: </b><a th:text="${profileDetails.firstName}"></a><br>
+                    <b>Nazwisko: </b><a th:text="${profileDetails.lastName}"></a><br>
+                    <b>Adres-email: </b><a th:text="${profileDetails.email}"></a><br>
+                    <b>Data urodzenia: </b><a th:text="${profileDetails.dobFormatted()}"></a><br>
+                    <b>Numer telefonu: </b><a th:text="${profileDetails.phoneNumber}"></a><br>
+                </div>
+
+                <div class="profile-buttons">
+                    <div class="profile-button">
+                        <a class="btn btn-primary" th:href="@{/owner-panel/edit-profile}">Edytuj dane</a>
+                    </div>
+                    <div class="profile-button">
+                        <a class="btn btn-primary" th:href="@{/owner-panel/change-password}">Zmiana hasła</a>
+                    </div>
+
+                </div>
+            </div>
         </div>
-        <a th:href="@{/owner-panel/edit-profile}">Edytuj dane</a><br>
-        <a th:href="@{/owner-panel/change-password}">Zmień hasło</a>
     </div>
 </div>
 
