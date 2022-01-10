@@ -9114,6 +9114,11 @@ a.text-dark:hover, a.text-dark:focus {
     margin-top: 1rem !important;
 }
 
+.sport-object-container
+{
+    flex-direction: column;
+}
+
 .sport-object
 {
     margin: auto;
@@ -9155,7 +9160,6 @@ a.text-dark:hover, a.text-dark:focus {
 
 .pin
 {
-    width: 22px;
     height: 28px;
     margin-right: 1rem;
 }
@@ -9196,6 +9200,13 @@ a.text-dark:hover, a.text-dark:focus {
 .div_category_sport_card
 {
 
+}
+
+.description_sport_card
+{
+    color: #616161;
+    padding-left: 0.125rem;
+    padding-right: 0.125rem;
 }
 
 .add-coaches-card
@@ -9242,6 +9253,11 @@ a.text-dark:hover, a.text-dark:focus {
     margin-right: 1rem;
 }
 
+.training-container
+{
+    flex-direction: column;
+}
+
 .customer-my-training
 {
     margin: auto;
@@ -9278,6 +9294,8 @@ a.text-dark:hover, a.text-dark:focus {
 .training-description
 {
     color: #616161;
+    padding-left: 0.125rem;
+    padding-right: 0.125rem;
 }
 
 .training-tags
