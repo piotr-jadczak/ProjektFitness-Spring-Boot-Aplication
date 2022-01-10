@@ -20,8 +20,20 @@
         <div th:each="training : ${coachTrainings}">
             <div class="p-2">
                 <div class="coach-my-trainings">
-                    <div class="training-image">
-                        <img class="training-club-image" th:src="@{/images/tennis_court_wip.jpg}" />
+                    <div class="training-image" th:if="${training.club.clubCategory.getName()} == 'aquapark'">
+                        <img class="category" th:src="@{/images/aquapark_banner.jpg}"/>
+                    </div>
+                    <div class="training-image" th:if="${training.club.clubCategory.getName()} == 'siłownia'">
+                        <img class="category" th:src="@{/images/siłownia_banner.jpg}"/>
+                    </div>
+                    <div class="training-image" th:if="${training.club.clubCategory.getName()} == 'klub fitness'">
+                        <img class="category" th:src="@{/images/klub fitness_banner.jpg}"/>
+                    </div>
+                    <div class="training-image" th:if="${training.club.clubCategory.getName()} == 'kort tenisowy'">
+                        <img class="category" th:src="@{/images/kort tenisowy_banner.jpg}"/>
+                    </div>
+                    <div class="training-image" th:if="${training.club.clubCategory.getName()} == 'basen'">
+                        <img class="category" th:src="@{/images/basen_banner.jpg}"/>
                     </div>
 
                     <h1 class="training-title">
