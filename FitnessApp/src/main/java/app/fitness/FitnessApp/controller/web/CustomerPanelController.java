@@ -99,34 +99,40 @@ public class CustomerPanelController {
     }
 
     @GetMapping("/customer-panel/enroll/{id}")
-    public String enrollOnTraining(@PathVariable("id") String id, Model model) {
+    public String enrollOnTraining(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
 
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
         Customer loggedCustomer = userManager.findCustomerByLogin(loggedUserLogin);
 
         trainingManager.enrollCustomer(loggedCustomer, Integer.parseInt(id));
+        String trainingName = trainingManager.getTraining(Integer.parseInt(id)).getName();
+        redirectAttributes.addFlashAttribute("popupMessage", new String("Pomyślnie zapisano na zajęcia: " + trainingName));
 
         return "redirect:/customer-panel/available-trainings";
     }
 
     @GetMapping("/customer-panel/enroll-object/{id}")
-    public String enrollOnTrainingInObject(@PathVariable("id") String id, Model model) {
+    public String enrollOnTrainingInObject(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
 
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
         Customer loggedCustomer = userManager.findCustomerByLogin(loggedUserLogin);
 
         trainingManager.enrollCustomer(loggedCustomer, Integer.parseInt(id));
+        String trainingName = trainingManager.getTraining(Integer.parseInt(id)).getName();
+        redirectAttributes.addFlashAttribute("popupMessage", new String("Pomyślnie zapisano na zajęcia: " + trainingName));
 
         return "redirect:/customer-panel/all-objects";
     }
 
     @GetMapping("/customer-panel/resign/{id}")
-    public String resignFromTraining(@PathVariable("id") String id, Model model) {
+    public String resignFromTraining(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
 
         String loggedUserLogin = SecurityContextHolder.getContext().getAuthentication().getName();
         Customer loggedCustomer = userManager.findCustomerByLogin(loggedUserLogin);
 
         trainingManager.resignCustomer(loggedCustomer, Integer.parseInt(id));
+        String trainingName = trainingManager.getTraining(Integer.parseInt(id)).getName();
+        redirectAttributes.addFlashAttribute("popupMessage", new String("Zrezygnowano z zajęć: " + trainingName));
 
         return "redirect:/customer-panel/my-trainings";
     }

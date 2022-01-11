@@ -77,6 +77,31 @@
     </section>
 </div>
 
+<div th:fragment="popup-success">
+    <!-- Button trigger modal -->
+    <script type="text/javascript" th:src="@{/scripts/showModal.js}"></script>
+    <button id="popup-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="display: none;">
+        Launch success button
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <br/>
+                    <i class="fa fa-check-circle" style="font-size:48px;color:green"></i><br/>
+                    <a th:text="${popupMessage}"></a>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <footer th:fragment="footer" class="py-5 bg-dark">
     <div class="container px-4">
         <p class="m-0 text-center text-white">Copyright &copy; FitApp 2021</p>

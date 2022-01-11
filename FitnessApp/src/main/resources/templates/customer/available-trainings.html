@@ -3,6 +3,7 @@
 <head>
     <title>Dostępne zajęcia</title>
     <th:block th:replace="fragments/components-customer-panel :: headContent"></th:block>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <header>
@@ -12,7 +13,6 @@
     <div class="customer-available-training-heading">
         <h1>Dostępne Treningi</h1>
     </div>
-
     <div class="d-flex flex-wrap justify-content-center training-container" >
         <div th:each="training : ${allTrainings}">
             <div class="p-2">
@@ -95,6 +95,10 @@
     </div>
 
 </div>
+<span th:if="${popupMessage}">
+    <div th:replace="fragments/components-customer-panel :: popup-success"></div>
+</span>
+
 
 <footer th:replace="fragments/components-customer-panel :: footer"></footer>
 
