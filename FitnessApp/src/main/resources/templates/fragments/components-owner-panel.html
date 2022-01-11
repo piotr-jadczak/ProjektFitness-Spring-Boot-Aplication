@@ -138,7 +138,7 @@
         </div>
         <div th:if="${club.coaches != null && club.coaches.size() > 0}">
             <b>Trenerzy: </b>
-            <a th:each="coach : ${club.coaches}" th:text="${coach.fullName()}">  </a>
+            <a th:each="coach : ${club.coaches}" th:text="${coach.fullName()} +' '">  </a>
         </div>
         <div class="flex-button">
             <div class="sport-object-button">

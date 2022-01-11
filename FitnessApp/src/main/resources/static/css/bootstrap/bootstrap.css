@@ -8975,13 +8975,13 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 
-@media only screen and (max-width: 575.98px){
+@media only screen and (max-width: 992px){
     #nav-item-right{
     margin-left:0;
     }
 }
 
-@media only screen and (min-width: 575.98px){
+@media only screen and (min-width: 992px){
     #nav-item-right{
     margin-left:auto;
     }
@@ -9524,5 +9524,6 @@ a.text-dark:hover, a.text-dark:focus {
     margin-top: 4rem;
     text-align: center;
 }
+
 
 /*# sourceMappingURL=bootstrap.css.map */
