@@ -9214,8 +9214,8 @@ a.text-dark:hover, a.text-dark:focus {
 .description_sport_card
 {
     color: #616161;
-    padding-left: 0.125rem;
-    padding-right: 0.125rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
 }
 
 .add-coaches-card
@@ -9303,8 +9303,8 @@ a.text-dark:hover, a.text-dark:focus {
 .training-description
 {
     color: #616161;
-    padding-left: 0.125rem;
-    padding-right: 0.125rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
 }
 
 .training-tags
