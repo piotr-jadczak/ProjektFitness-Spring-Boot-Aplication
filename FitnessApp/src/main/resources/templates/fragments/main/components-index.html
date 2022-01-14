@@ -270,7 +270,8 @@
                         <input type="text" th:field="*{lastName}" placeholder="Last Name" required minlength="2" maxlength="32" />
                     </div>
                     <div>
-                        <input type="date" th:field="*{dob}" placeholder="Day of birth" required />
+                        <label for="date">Data ur.</label>
+                        <input type="date" id="date" th:field="*{dob}" placeholder="Day of birth" required />
                     </div>
                     <div>
                         <input type="tel" th:field="*{phoneNumber}" placeholder="Telephone Number" required minlength="9" maxlength="9" />
