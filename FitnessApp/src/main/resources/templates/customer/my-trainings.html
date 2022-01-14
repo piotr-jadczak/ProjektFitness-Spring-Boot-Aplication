@@ -40,6 +40,13 @@
                         <a th:text="${training.description}"></a>
                     </p>
 
+
+                    <div class="training-address-box mb-2">
+                        <img class="pin" th:src="@{/images/Gmap_icon.png}" />
+                        <p class="training-address-text">
+                            <a th:text="${training.club.getFullAddress()}"></a>
+                        </p>
+                    </div>
                     <div class="training-tags">
                         <p class="training-tags-paragraph">
                             <a th:text="${training.trainingCategory.getName()}"></a>
