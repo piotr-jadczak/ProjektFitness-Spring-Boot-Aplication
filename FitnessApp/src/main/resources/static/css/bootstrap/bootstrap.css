@@ -9344,6 +9344,8 @@ a.text-dark:hover, a.text-dark:focus {
 {
     display: flex;
     margin: auto;
+
+    justify-content: center;
 }
 
 .training-button
@@ -9358,28 +9360,63 @@ a.text-dark:hover, a.text-dark:focus {
 {
     margin: auto;
     width: 60%;
-    padding: 2em 0;
+    padding: 2rem 0;
     display: flex;
     flex-direction: column;
     border-radius: 3px;
     box-shadow: 28px 28px 50px -20px rgb(13 39 80 / 16%), -23px -23px 45px -25px #fff;
     background-color: #fafafa;
+
+    margin-top: 2rem;
 }
 
 .customer-trainings-sorted
 {
-    margin: auto;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: 2rem 0;
+}
+
+.customer-club
+{
+    margin: 0 auto 2rem;
     width: 60%;
     padding: 2em 0;
     display: flex;
     flex-direction: column;
     border-radius: 3px;
     box-shadow: 28px 28px 50px -20px rgb(13 39 80 / 16%), -23px -23px 45px -25px #fff;
-    background-color: #fafafa;
+    background-color: #fff;
 }
 
-.customer-club
+.customer-club-tags
 {
+
+}
+
+.customer-club-description
+{
+    padding: 1rem 0.25rem 0;
+    color: #616161;
+}
+
+.customer-training-description
+{
+    color: #888;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+.customer-club-tag
+{
+    display: inline-block;
+    background-color: rgb(230, 7, 100);
+    border-radius: 30px;
+    padding: 0.5em 1em;
+    color: white;
+    font-weight: 600;
+    font-size: 0.75em;
 }
 
 .coach-all-trainings

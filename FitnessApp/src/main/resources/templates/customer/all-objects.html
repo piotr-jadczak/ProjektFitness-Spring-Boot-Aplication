@@ -9,59 +9,71 @@
 <header>
     <div th:replace="fragments/components-customer-panel :: top-menu"></div>
 </header>
-<div class="py-5 mt-5 bg-white">
-    <div class="d-flex flex-wrap justify-content-center training-container" >
+<div class="py-5 mt-3 bg-white">
+    <div class="customer-available-training-heading">
+        <h1>Treningi w obiektach</h1>
+    </div>
+    <div class="d-flex flex-wrap  justify-content-center training-container" >
         <div th:each="clubTrainings : ${wrapTrainings}">
             <div class="customer-club" th:object="${clubTrainings.club}">
-                <p>
-                    <h2>
+
+                <div class="training-image" th:if="*{clubCategory.getName()} == 'basen'">
+                    <img class="category" th:src="@{/images/basen_banner.jpg}"/>
+                </div>
+                <div class="training-image" th:if="*{clubCategory.getName()} == 'aquapark'">
+                    <img class="category" th:src="@{/images/aquapark_banner.jpg}"/>
+                </div>
+                <div class="training-image" th:if="*{clubCategory.getName()} == 'siłownia'">
+                    <img class="category" th:src="@{/images/siłownia_banner.jpg}"/>
+                </div>
+                <div class="training-image" th:if="*{clubCategory.getName()} == 'klub fitness'">
+                    <img class="category" th:src="@{/images/klub fitness_banner.jpg}"/>
+                </div>
+                <div class="training-image" th:if="*{clubCategory.getName()} == 'kort tenisowy'">
+                    <img class="category" th:src="@{/images/kort tenisowy_banner.jpg}"/>
+                </div>
+
+                <h1>
+                    <a th:text="*{name}"></a>
+                </h1>
+
+                <div class="customer-club-tags">
+                    <p class="customer-club-tag">
                         <a th:text="*{clubCategory.getName()}"></a>
-                    </h2>
-                    <h4>
-                        <a th:text="*{name}"></a>
-                    </h4>
+                    </p>
+                </div>
 
-                    <div class="customer-club-description">
+                <div class="training-address-box">
+                    <img class="pin" th:src="@{/images/Gmap_icon.png}" />
+                    <p class="training-address-text">
+                        <a th:text="*{fullAddress}"></a>
+                    </p>
+                </div>
+
+                <div>
+                    <p class="customer-club-description">
                         <a th:text="*{description}"></a>
-                    </div>
+                    </p>
+                </div>
 
-                    <a th:text="*{fullAddress}"></a>
-                </p>
 
-            </div>
-            <div th:each="training : ${clubTrainings.trainings}">
-                <div class="p-2">
+
+
+                <div th:each="training : ${clubTrainings.trainings}">
                     <div class="customer-trainings-sorted">
-                        <div class="training-image" th:if="${training.club.clubCategory.getName()} == 'aquapark'">
-                            <img class="category" th:src="@{/images/aquapark_banner.jpg}"/>
-                        </div>
-                        <div class="training-image" th:if="${training.club.clubCategory.getName()} == 'siłownia'">
-                            <img class="category" th:src="@{/images/siłownia_banner.jpg}"/>
-                        </div>
-                        <div class="training-image" th:if="${training.club.clubCategory.getName()} == 'klub fitness'">
-                            <img class="category" th:src="@{/images/klub fitness_banner.jpg}"/>
-                        </div>
-                        <div class="training-image" th:if="${training.club.clubCategory.getName()} == 'kort tenisowy'">
-                            <img class="category" th:src="@{/images/kort tenisowy_banner.jpg}"/>
-                        </div>
-                        <div class="training-image" th:if="${training.club.clubCategory.getName()} == 'basen'">
-                            <img class="category" th:src="@{/images/basen_banner.jpg}"/>
-                        </div>
 
 
-                        <h1 class="training-title">
+
+                        <h3 class="training-title">
                             <a th:text="${training.name}"></a>
-                        </h1>
-                        <p class="training-description">
+                        </h3>
+                        <p class="customer-training-description">
                             <a th:text="${training.description}"></a>
                         </p>
 
                         <div class="training-tags">
                             <p class="training-tags-paragraph">
                                 <a th:text="${training.trainingCategory.getName()}"></a>
-                            </p>
-                            <p class="training-tags-paragraph">
-                                <a th:text="${training.club.getName()}"></a>
                             </p>
                             <p class="training-tags-paragraph">
                                 <a th:text="${training.getEnrolledCustomers()}"></a>
@@ -107,7 +119,10 @@
 
                     </div>
                 </div>
+
+
             </div>
+
         </div>
     </div>
 </div>
