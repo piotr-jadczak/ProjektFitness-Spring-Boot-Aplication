@@ -69,5 +69,29 @@
     </div>
 </footer>
 
+<div th:fragment="popup-error">
+    <!-- Button trigger modal -->
+    <script type="text/javascript" th:src="@{/scripts/showModal.js}"></script>
+    <button id="popup-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="display: none;">
+        Launch success button
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <br/>
+                    <a th:text="${exceptionMessage}"></a>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
