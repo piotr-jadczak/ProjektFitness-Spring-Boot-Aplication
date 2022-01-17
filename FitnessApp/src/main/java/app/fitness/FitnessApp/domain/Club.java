@@ -55,7 +55,7 @@ public class Club {
 	)
     private Set<Coach> coaches;
     
-    @OneToMany(mappedBy = "club")
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL)
     private Set<Training> trainings;
 
 	public Club() {
